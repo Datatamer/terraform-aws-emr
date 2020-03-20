@@ -8,6 +8,9 @@
 # local .tfvars files
 *.tfvars
 
+# local .idea files
+**/.idea/*
+
 # Crash log files
 crash.log
 
