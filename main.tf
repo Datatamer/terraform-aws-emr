@@ -27,7 +27,7 @@ module "emr-hbase-cluster" {
   instance_profile = module.emr-hbase-iam.emr_ec2_instance_profile_arn
   key_name = var.key_pair_name
   name = "hbase-cluster-from-repo"
-  path_to_config_file = "git::https://github.com/Datatamer/terraform-emr-hbase.git//modules/aws-emr-hbase/config.json?ref=v0.1.0"
+  path_to_config_file = "modules/aws-emr-hbase/config.json"
   service_access_security_group = module.emr-hbase-sgs.emr_service_access_sg_id
   service_role = module.emr-hbase-iam.emr_service_role_arn
   subnet_id = var.subnet_id
