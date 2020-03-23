@@ -27,17 +27,6 @@ This terraform module will create 5 Security Groups
 
 This terraform module alse creates 7 Security Group Rules (6 ingress, 1 egress) for `tamr-EMR-Agent` Security Group because `tamr-EMR-Master` and `tamr-EMR-Agent` are interdependent on each other and so require either one of them to have its rules created externally to avoid `terraform cycle error`.
 
-## File structure
-```
-aws-emr-sgs
-├── README.md
-├── examples/
-├── main.tf
-├── outputs.tf
-├── security-group-rules.tf
-└── variables.tf
-```
-
 ## Usage Example
 main.tf: 
 ```
