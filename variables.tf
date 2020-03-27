@@ -27,3 +27,120 @@ variable "subnet_id" {
   type = string
   description = "ID of the subnet where the emr cluster will be created"
 }
+
+variable "cluster_name" {
+  type = string
+  description = "Name for the EMR Hbase cluster to be created"
+}
+
+variable "emr_hbase_config_file_path" {
+  type = string
+  description = "Path to the EMR Hbase config file. Please include the file name as well."
+}
+
+variable "tamr_cidrs" {
+  type        = list(string)
+  description = "List of CIDRs for Tamr"
+  default = []
+}
+
+variable "tamr_sgs" {
+  type = list(string)
+  description = "Security Group for the Tamr Instance"
+  default = []
+}
+
+variable "emrfs_metadata_table_name" {
+  type = string
+  description = "Table name of EMRFS metadata table in Dynamodb"
+  default = "EmrFSMetadata"
+}
+
+variable "emrfs_metadata_read_capacity" {
+  type = number
+  description = "Read capacity units of the dynamodb table used for EMRFS metadata"
+  default = 600
+}
+
+variable "emrfs_metadata_write_capacity" {
+  type = number
+  description = "Write capacity units of the dynamodb table used for EMRFS metadata"
+  default = 300
+}
+
+variable "additional_tags" {
+  type = map(string)
+  description = "Additional tags to be attached to the resources created"
+  default = {}
+}
+
+variable "aws_region_of_dynamodb_table" {
+  type = string
+  description = "AWS region where the Dynamodb table for EMRFS metadata is located"
+  default = "us-east-1"
+}
+
+variable "emr_service_role_name" {
+  type = string
+  description = "Name for the new iam service role for the EMR Hbase cluster"
+  default = "tamr_emr_service_role"
+}
+
+variable "emr_ec2_role_name" {
+  type = string
+  description = "Name for the new iam role for the EMR Hbase EC2 instances"
+  default = "tamr_emr_ec2_role"
+}
+
+variable "emr_ec2_instance_profile_name" {
+  type = string
+  description = "Name for the new instance profile for the EMR Hbase EC2 instances"
+  default = "tamr_emr_ec2_instance_profile"
+}
+
+variable "master_instance_group_name" {
+  type = string
+  description = "Friendly name given to the instance group."
+  default = "MasterInstanceGroup"
+}
+
+variable "core_instance_group_name" {
+  type = string
+  description = "Friendly name given to the instance group."
+  default = "CoreInstanceGroup"
+}
+
+variable "release_label" {
+  type = string
+  description = "The release label for the Amazon EMR release."
+  default = "emr-5.11.2"
+}
+
+variable "master_instance_type" {
+  type = string
+  description = "The EC2 instance type of the master nodes"
+  default = "m4.xlarge"
+}
+
+variable "core_instance_type" {
+  type = string
+  description = "The EC2 instance type of the core nodes"
+  default = "m4.xlarge"
+}
+
+variable "master_group_instance_count" {
+  type = number
+  default = 1
+  description = "Number of instances for the master instance group. Must be 1 or 3."
+}
+
+variable "core_group_instance_count" {
+  default = 1
+  description = "Number of Amazon EC2 instances used to execute the job flow"
+}
+
+variable "tags" {
+  type = map(string)
+  description = "Map of tags"
+  default = {}
+}
