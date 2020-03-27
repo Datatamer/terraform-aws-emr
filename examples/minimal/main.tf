@@ -1,3 +1,0 @@
-module "minimal" {
-  source = "../../"
-}

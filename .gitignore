@@ -5,9 +5,6 @@
 *.tfstate
 *.tfstate.*
 
-# local .tfvars files
-*.tfvars
-
 # local .idea files
 **/.idea/*
 
