@@ -177,6 +177,7 @@ data "aws_iam_policy_document" "emr_hbase_ec2_policy" {
       "dynamodb:Query",
       "dynamodb:UpdateItem",
       "dynamodb:UpdateTable",
+      "dynamodb:CreateTable",
     ]
     resources = [
       "arn:aws:dynamodb:${var.aws_region_of_dynamodb_table}:${var.aws_account_id}:table/${var.emrfs_metadata_table_name}"
