@@ -1,13 +1,3 @@
-/*
-Assumptions:
- 1. The EMR cluster is deployed in private subnet
- 2. A Tamr Instance or A Tamr SG is deployed
-*/
-
-//Security groups for EMR cluster as specified:
-//Reference 1: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-man-sec-groups.html#emr-sg-elasticmapreduce-master-private
-//Reference 2: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-sg-specify.html
-
 //Security group mapped to reference 1: ElasticMapReduce-Master-Private
 resource "aws_security_group" "emr_managed_master" {
   vpc_id = var.vpc_id
