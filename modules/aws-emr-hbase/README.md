@@ -12,7 +12,7 @@ module "emr_hbase_module" {
   additional_master_security_groups = "sg-examplesg2"
   emr_managed_slave_security_group = "sg-examplesg3"
   additional_slave_security_groups = "sg-examplesg4"
-  service_access_security_group = "sg-z0444nyawn16a8vai"
+  service_access_security_group = "sg-examplesg5"
   instance_profile = "arn:aws:iam::123456789098:instance-profile/example_emr_instance_profile"
   service_role = "arn:aws:iam::123456789098:role/example_emr_service_role"
   key_name = "exampleKeyPair"
