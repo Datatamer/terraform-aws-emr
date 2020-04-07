@@ -1,0 +1,27 @@
+[
+  {
+    "classification":"emrfs-site",
+    "properties":{
+      "fs.s3.consistent.retryPeriodSeconds":"10",
+      "fs.s3.consistent":"true",
+      "fs.s3.consistent.retryCount":"5",
+      "fs.s3.consistent.metadata.autoCreate": "true",
+      "fs.s3.consistent.metadata.read.capacity":"${emrfs_metadata_read_capacity}",
+      "fs.s3.consistent.metadata.write.capacity":"${emrfs_metadata_write_capacity}",
+      "fs.s3.consistent.metadata.tableName":"${emrfs_metadata_table_name}"
+    },
+    "configurations":[
+    ]
+  },
+  {
+    "Classification": "hbase-site",
+    "Properties": {
+      "hbase.rootdir": "s3://${emr_hbase_s3_bucket_root_dir}/"}
+  },
+  {
+    "Classification": "hbase",
+    "Properties": {
+      "hbase.emr.storageMode":"s3"
+    }
+  }
+]
