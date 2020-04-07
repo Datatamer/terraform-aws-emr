@@ -5,7 +5,7 @@ This terraform module creates an Apache HBase cluster on Amazon EMR.
 main.tf:
 ```
 module "emr_hbase_module" {
-  source = "git::git@github.com:Datatamer/terraform-emr-hbase.git//modules/aws-emr-hbase?ref=v0.1.0"
+  source = "git::git@github.com:Datatamer/terraform-emr-hbase.git//modules/aws-emr-hbase?ref=0.1.0"
   name = "example-hbase-cluster"
   subnet_id = "subnet-examplesubnet"
   emr_managed_master_security_group = "sg-examplesg1"
