@@ -10,3 +10,7 @@ tamr_cidrs = [
   "1.2.3.4/32"
 ]
 emrfs_metadata_table_name = "example-emrfs-table"
+additional_tags = {
+  tag1 = "value1",
+  tag2 = "value2"
+}
