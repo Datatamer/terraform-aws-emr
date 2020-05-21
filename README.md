@@ -23,6 +23,7 @@ This modules creates:
     * Tamr EMR service IAM role
     * Tamr EMR EC2 IAM role
 * 1 IAM instance profile for EMR EC2 instances
+* 1 Dynamodb table for EMRFS
 * 1 EMR Hbase Cluster
 
 # Variables 
