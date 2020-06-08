@@ -85,7 +85,7 @@ data "aws_iam_policy_document" "emr_hbase_policy" {
 
 //The policy that attaches the minimal policy document
 resource "aws_iam_policy" "emr_hbase_policy" {
-  name = var.emr_service_iam_policy_name
+  name   = var.emr_service_iam_policy_name
   policy = data.aws_iam_policy_document.emr_hbase_policy.json
 }
 
@@ -203,7 +203,7 @@ resource "aws_iam_role" "emr_ec2_instance_profile" {
 
 //The IAM policy that connects the minimal IAM policy document
 resource "aws_iam_policy" "emr_ec2_iam_policy" {
-  name = var.emr_ec2_iam_policy_name
+  name   = var.emr_ec2_iam_policy_name
   policy = data.aws_iam_policy_document.emr_hbase_ec2_policy.json
 }
 

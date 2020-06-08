@@ -1,62 +1,62 @@
 variable "emr_service_role_name" {
-  type = string
+  type        = string
   description = "Name for the new iam service role for the EMR Hbase cluster"
-  default = "tamr_emr_service_role"
+  default     = "tamr_emr_service_role"
 }
 
 variable "emr_ec2_role_name" {
-  type = string
+  type        = string
   description = "Name for the new iam role for the EMR Hbase EC2 instances"
-  default = "tamr_emr_ec2_role"
+  default     = "tamr_emr_ec2_role"
 }
 
 variable "emr_ec2_instance_profile_name" {
-  type = string
+  type        = string
   description = "Name for the new instance profile for the EMR Hbase EC2 instances"
-  default = "tamr_emr_ec2_instance_profile"
+  default     = "tamr_emr_ec2_instance_profile"
 }
 
 variable "additional_tags" {
-  type = map(string)
+  type        = map(string)
   description = "Additional tags to be attached to the resources created"
-  default = {}
+  default     = {}
 }
 
 variable "s3_bucket_name_for_hbase_root_directory" {
-  type = string
+  type        = string
   description = "S3 Bucket name of the hbase root directory"
 }
 
 variable "aws_region_of_dynamodb_table" {
-  type = string
+  type        = string
   description = "AWS region where the Dynamodb table for EMRFS metadata is located"
-  default = "us-east-1"
+  default     = "us-east-1"
 }
 
 variable "aws_account_id" {
-  type = string
+  type        = string
   description = "Account ID for the AWS account"
 }
 
 variable "emrfs_metadata_table_name" {
-  type = string
+  type        = string
   description = "Table name of EMRFS metadata table in Dynamodb"
-  default = "EmrFSMetadata"
+  default     = "EmrFSMetadata"
 }
 
 variable "s3_bucket_name_for_hbase_logs" {
-  type = string
+  type        = string
   description = "S3 bucket name/directory of EMR Hbase logs"
 }
 
 variable "emr_service_iam_policy_name" {
-  type = string
+  type        = string
   description = "Name for the IAM policy attached to the EMR Service role"
-  default = "tamr-emr-hbase-policy"
+  default     = "tamr-emr-hbase-policy"
 }
 
 variable "emr_ec2_iam_policy_name" {
-  type = string
+  type        = string
   description = "Name for the IAM policy attached to the EMR Service role"
-  default = "tamr-emr-ec2-policy"
+  default     = "tamr-emr-ec2-policy"
 }
