@@ -26,53 +26,71 @@ This modules creates:
 * 1 Dynamodb table for EMRFS
 * 1 EMR Hbase Cluster
 
-# Variables 
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
+## Providers
+
+No provider.
+
 ## Inputs
-* `aws_account_id` (required): Account ID of the AWS account
-* `vpc_id` (required): VPC id of the network
-* `key_pair_name` (required): Name of the Key Pair that will be attached to the EC2 instances
-* `subnet_id` (required): ID of the subnet where the emr cluster will be created
-* `emr_hbase_config_file_path` (required): Path to the EMR Hbase config file. Please include the file name as well
-* `bucket_name_for_logs` (required): S3 bucket name for EMR Hbase logs
-* `bucket_name_for_hbase_root_dir` (required): S3 bucket name for EMR Hbase root directory
-* `cluster_name` (optional): Name for the EMR Hbase cluster to be created
-* `tamr_cidrs` (optional): List of CIDRs for Tamr
-* `tamr_sgs` (optional): Security Groups for the Tamr Instance
-* `emrfs_metadata_table_name` (optional): Table name of EMRFS metadata table in Dynamodb
-* `emrfs_metadata_read_capacity` (optional): Read capacity units of the dynamodb table used for EMRFS metadata
-* `emrfs_metadata_write_capacity` (optional): Write capacity units of the dynamodb table used for EMRFS metadata
-* `additional_tags` (optional): Additional tags to be attached to the resources created
-* `aws_region_of_dynamodb_table` (optional): AWS region where the Dynamodb table for EMRFS metadata is located
-* `emr_service_iam_policy_name` (optional): Name for the IAM policy attached to the EMR Service role
-* `emr_ec2_iam_policy_name` (optional): Name for the IAM policy attached to the EMR Service role
-* `emr_service_role_name` (optional): Name for the new iam service role for the EMR Hbase cluster
-* `emr_ec2_role_name` (optional): Name for the new iam role for the EMR Hbase EC2 instances
-* `emr_ec2_instance_profile_name` (optional): Name for the new instance profile for the EMR Hbase EC2 instances
-* `master_instance_group_name` (optional): Name for the master instance group
-* `core_instance_group_name` (optional): Name for the core instance group
-* `release_label` (optional): The release label for the Amazon EMR release
-* `master_instance_type` (optional): The EC2 instance type of the master nodes
-* `core_instance_type` (optional): The EC2 instance type of the core nodes
-* `master_group_instance_count` (optional): Number of instances for the master instance group. Must be 1 or 3.
-* `core_group_instance_count` (optional): Number of Amazon EC2 instances used to execute the job flow
-* `emr_managed_master_sg_name` (optional): Name for the EMR managed master security group
-* `emr_managed_core_sg_name` (optional): Name for the EMR managed core security group
-* `emr_additional_master_sg_name` (optional): Name for the EMR additional master security group
-* `emr_additional_core_sg_name` (optional): Name for the EMR additional core security group
-* `emr_service_access_sg_name` (optional): Name for the EMR service access security group
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| aws\_account\_id | Account ID of the AWS account | `string` | n/a | yes |
+| bucket\_name\_for\_hbase\_root\_dir | S3 bucket name for EMR Hbase root directory | `string` | n/a | yes |
+| bucket\_name\_for\_logs | S3 bucket name for EMR Hbase logs | `string` | n/a | yes |
+| emr\_hbase\_config\_file\_path | Path to the EMR Hbase config file. Please include the file name as well. | `string` | n/a | yes |
+| key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
+| subnet\_id | ID of the subnet where the emr cluster will be created | `string` | n/a | yes |
+| vpc\_id | VPC id of the network | `string` | n/a | yes |
+| additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
+| aws\_region\_of\_dynamodb\_table | AWS region where the Dynamodb table for EMRFS metadata is located | `string` | `"us-east-1"` | no |
+| cluster\_name | Name for the EMR Hbase cluster to be created | `string` | `"TAMR-EMR-Hbase-Cluster"` | no |
+| core\_group\_instance\_count | Number of Amazon EC2 instances used to execute the job flow | `number` | `1` | no |
+| core\_instance\_group\_name | Name for the core instance group | `string` | `"CoreInstanceGroup"` | no |
+| core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
+| emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
+| emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
+| emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR Service role | `string` | `"tamr-emr-ec2-policy"` | no |
+| emr\_ec2\_instance\_profile\_name | Name for the new instance profile for the EMR Hbase EC2 instances | `string` | `"tamr_emr_ec2_instance_profile"` | no |
+| emr\_ec2\_role\_name | Name for the new iam role for the EMR Hbase EC2 instances | `string` | `"tamr_emr_ec2_role"` | no |
+| emr\_managed\_core\_sg\_name | Name for the EMR managed core security group | `string` | `"TAMR-EMR-Core"` | no |
+| emr\_managed\_master\_sg\_name | Name for the EMR managed master security group | `string` | `"TAMR-EMR-Master"` | no |
+| emr\_service\_access\_sg\_name | Name for the EMR service access security group | `string` | `"TAMR-EMR-Service-Access"` | no |
+| emr\_service\_iam\_policy\_name | Name for the IAM policy attached to the EMR Service role | `string` | `"tamr-emr-hbase-policy"` | no |
+| emr\_service\_role\_name | Name for the new iam service role for the EMR Hbase cluster | `string` | `"tamr_emr_service_role"` | no |
+| emrfs\_metadata\_read\_capacity | Read capacity units of the dynamodb table used for EMRFS metadata | `number` | `600` | no |
+| emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in Dynamodb | `string` | `"EmrFSMetadata"` | no |
+| emrfs\_metadata\_write\_capacity | Write capacity units of the dynamodb table used for EMRFS metadata | `number` | `300` | no |
+| master\_group\_instance\_count | Number of instances for the master instance group. Must be 1 or 3. | `number` | `1` | no |
+| master\_instance\_group\_name | Name for the master instance group | `string` | `"MasterInstanceGroup"` | no |
+| master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |
+| release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.11.2"` | no |
+| tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
+| tamr\_sgs | Security Groups for the Tamr Instance | `list(string)` | `[]` | no |
 
 ## Outputs
-* `s3_bucket_name_for_logs`: Name of the S3 bucket used for EMR Hbase logs
-* `s3_bucket_name_for_hbase_rootdir`: Name of the S3 bucket used for EMR Hbase root directory
-* `emr_managed_master_sg_id`: Security group id of the EMR Managed Master Security Group
-* `emr_managed_core_sg_id`: Security group id of the EMR Managed Core Security Group
-* `emr_additional_master_sg_id`: Security group id of the EMR Additional Master Security Group
-* `emr_additional_core_sg_id`: Security group id of the EMR Additional Core Security Group
-* `emr_service_access_sg_id`: Security group id of Service Access Security Group
-* `emr_service_role_arn`: ARN for the EMR service IAM role created
-* `emr_ec2_role_arn`: ARN for the EMR EC2 IAM role created
-* `emr_ec2_instance_profile_arn`: ARN for the IAM instance profile created
-* `tamr_emr_cluster_id`: Identifier for the AWS EMR cluster created
+
+| Name | Description |
+|------|-------------|
+| emr\_additional\_core\_sg\_id | Security group id of the EMR Additional Core Security Group |
+| emr\_additional\_master\_sg\_id | Security group id of the EMR Additional Master Security Group |
+| emr\_ec2\_instance\_profile\_arn | ARN of the EMR Hbase service role created |
+| emr\_ec2\_role\_arn | ARN of the EMR Hbase role created for EC2 instances |
+| emr\_managed\_core\_sg\_id | Security group id of the EMR Managed Core Security Group |
+| emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group |
+| emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
+| emr\_service\_role\_arn | ARN of the EMR Hbase service role created |
+| s3\_bucket\_name\_for\_hbase\_rootdir | S3 bucket name for EMR Hbase root directory |
+| s3\_bucket\_name\_for\_logs | S3 bucket name for EMR logs |
+| tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 # References
 This repo is based on:

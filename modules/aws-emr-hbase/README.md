@@ -26,34 +26,57 @@ module "emr_hbase_module" {
 This terraform module creates:
 * 1 AWS EMR Cluster with Apache Hbase application installed. 
 
-# Variables
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | n/a |
+| template | n/a |
+| time | n/a |
+
 ## Inputs
-* `subnet_id` (required): VPC subnet id where you want the job flow to launch
-* `emr_managed_master_security_group` (required): Identifier of the Amazon EC2 EMR-Managed security group for the master node
-* `additional_master_security_groups` (required): String containing a comma separated list of additional Amazon EC2 security group IDs for the master node
-* `emr_managed_slave_security_group` (required): Identifier of the Amazon EC2 EMR-Managed security group for the slave nodes
-* `additional_slave_security_groups` (required): String containing a comma separated list of additional Amazon EC2 security group IDs for the slave nodes as a comma separated string
-* `service_access_security_group` (required): Identifier of the Amazon EC2 service-access security group - required when the cluster runs on a private subnet
-* `instance_profile` (required): ARN of the Instance Profile for EC2 instances of the cluster assume this role
-* `service_role` (required): ARN of the service role for the EMR cluster
-* `key_name` (required): Amazon EC2 key pair that can be used to ssh to the master node as the user called hadoop
-* `emr_hbase_s3_bucket_logs` (required): Name of the S3 bucket for EMR logs
-* `emr_hbase_s3_bucket_root_dir` (required): Name of the S3 bucket used as EMR Hbase root directory
-* `path_to_config_file` (required): Path to the EMR Hbase config file. Include filename too.
-* `name` (optional): Name of EMR HBase cluster
-* `master_instance_group_name` (optional): Name to be given to the instance group for Master instances.
-* `core_instance_group_name` (optional): Name to be given to the instance group for the core/slave/worker/agent instances.
-* `release_label` (optional): The release label for the Amazon EMR release.
-* `instance_type` (optional): The EC2 instance type of the master and slave nodes
-* `master_group_instance_count` (optional): Number of instances for the master instance group. Must be 1 or 3.
-* `core_group_instance_count` (optional): Number of Amazon EC2 instances used to execute the job flow
-* `tags` (optional): Additional tags for the cluster
-* `emrfs_metadata_table_name` (optional): EMRFS metadata table name in Dynamodb
-* `emrfs_metadata_read_capacity` (optional): Read capacity units of the Dynamodb table used for EMRFS metadata
-* `emrfs_metadata_write_capacity` (optional): Write capacity units of the Dynamodb table used for EMRFS metadata
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| additional\_master\_security\_groups | String containing a comma separated list of additional Amazon EC2 security group IDs for the master node | `string` | n/a | yes |
+| additional\_slave\_security\_groups | String containing a comma separated list of additional Amazon EC2 security group IDs for the slave nodes as a comma separated string | `string` | n/a | yes |
+| emr\_hbase\_s3\_bucket\_logs | S3 bucket for logs for EMR Hbase | `string` | n/a | yes |
+| emr\_hbase\_s3\_bucket\_root\_dir | S3 bucket for root directory for EMR Hbase | `string` | n/a | yes |
+| emr\_managed\_master\_security\_group | Identifier of the Amazon EC2 EMR-Managed security group for the master node | `string` | n/a | yes |
+| emr\_managed\_slave\_security\_group | Identifier of the Amazon EC2 EMR-Managed security group for the slave nodes | `string` | n/a | yes |
+| instance\_profile | ARN of the Instance Profile for EC2 instances of the cluster assume this role | `string` | n/a | yes |
+| key\_name | Amazon EC2 key pair that can be used to ssh to the master node as the user called hadoop | `string` | n/a | yes |
+| path\_to\_config\_file | Path to the EMR Hbase JSON config file. Please include filename too. | `string` | n/a | yes |
+| service\_access\_security\_group | Identifier of the Amazon EC2 service-access security group - required when the cluster runs on a private subnet | `string` | n/a | yes |
+| service\_role | ARN of the service role for AWS EMR cluster | `string` | n/a | yes |
+| subnet\_id | VPC subnet id where you want the job flow to launch | `string` | n/a | yes |
+| core\_group\_instance\_count | Number of Amazon EC2 instances used to execute the job flow | `number` | `1` | no |
+| core\_instance\_group\_name | Friendly name given to the instance group. | `string` | `"CoreInstanceGroup"` | no |
+| core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
+| emrfs\_metadata\_read\_capacity | Read capacity units of the dynamodb table used for EMRFS metadata | `number` | `600` | no |
+| emrfs\_metadata\_table\_name | Table name of the dynamodb table for EMRFS metadata | `string` | `"EmrFSMetadata"` | no |
+| emrfs\_metadata\_write\_capacity | Write capacity units of the dynamodb table used for EMRFS metadata | `number` | `300` | no |
+| master\_group\_instance\_count | Number of instances for the master instance group. Must be 1 or 3. | `number` | `1` | no |
+| master\_instance\_group\_name | Friendly name given to the instance group. | `string` | `"MasterInstanceGroup"` | no |
+| master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |
+| name | Name of EMR HBase cluster | `string` | `"TAMR-EMR-Hbase-Cluster"` | no |
+| release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.11.2"` | no |
+| tags | Map of tags | `map(string)` | `{}` | no |
 
 ## Outputs
-* `tamr_emr_cluster_id`: Identifier for the AWS EMR cluster created
+
+| Name | Description |
+|------|-------------|
+| tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 # Reference documents:
 * AWS EMR HBase: https://aws.amazon.com/emr/features/hbase/

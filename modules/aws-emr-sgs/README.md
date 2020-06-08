@@ -10,28 +10,44 @@ module "emr_security_groups" {
 }
 ``` 
 
-# Variables
-## Inputs:
-* `vpc_id` (required): VPC Id where the Security Groups are to be created
-* `emr_managed_master_sg_name` (optional): Name for the EMR managed master security group
-* `emr_managed_core_sg_name`(optional): Name for the EMR managed core security group
-* `emr_additional_master_sg_name`(optional): Name for the EMR additional master security group
-* `emr_additional_core_sg_name`(optional): Name for the EMR additional core security group
-* `emr_service_access_sg_name`(optional): Name for the EMR service access security group
-* `tamr_ips` (optional): IP(s) for the Tamr software that would have access to the EMR cluster
-* `tamr_sgs` (optional): Security Groups for the instances running the Tamr software that would have access to the EMR cluster
-* `additional_tags` (optional): Tags that will be added to all the Security Groups created
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
 
-```
-Note: It is essential to have a Tamr instance IP or a Tamr instance Security Group mentioned in either `tamr-ips` or `tamr-sgs`, respectively, so that the Tamr instance has access to the EMR Hbase cluster.
-```
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
 
-## Outputs:
-* `emr_managed_master_sg_id`: Security group id of the EMR Managed Master Security Group
-* `emr_managed_core_sg_id`: Security group id of the EMR Managed Core Security Group
-* `emr_additional_master_sg_id`: Security group id of the EMR Additional Master Security Group
-* `emr_additional_core_sg_id`: Security group id of the EMR Additional Core Security Group
-* `emr_service_access_sg_id`: Security group id of Service Access Security Group
+## Providers
+
+| Name | Version |
+|------|---------|
+| aws | n/a |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| vpc\_id | VPC ID | `string` | n/a | yes |
+| additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
+| emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
+| emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
+| emr\_managed\_core\_sg\_name | Name for the EMR managed core security group | `string` | `"TAMR-EMR-Core"` | no |
+| emr\_managed\_master\_sg\_name | Name for the EMR managed master security group | `string` | `"TAMR-EMR-Master"` | no |
+| emr\_service\_access\_sg\_name | Name for the EMR service access security group | `string` | `"TAMR-EMR-Service-Access"` | no |
+| tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
+| tamr\_sgs | Security Group for the Tamr Instance | `list(string)` | `[]` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| emr\_additional\_core\_sg\_id | Security group id of the EMR Additional Core Security Group |
+| emr\_additional\_master\_sg\_id | Security group id of the EMR Additional Master Security Group |
+| emr\_managed\_core\_sg\_id | Security group id of the EMR Managed Core Security Group |
+| emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group |
+| emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 # AWS Resources created
 This terraform module creates 5 Security Groups:
