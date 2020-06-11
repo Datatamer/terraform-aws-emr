@@ -5,26 +5,26 @@
 data "template_file" "load_file_to_upload" {
   template = file(var.path_to_config_file)
   vars = {
-    emrfs_metadata_read_capacity = var.emrfs_metadata_read_capacity
+    emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
     emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
-    emrfs_metadata_table_name = var.emrfs_metadata_table_name
-    emr_hbase_s3_bucket_root_dir = var.emr_hbase_s3_bucket_root_dir
+    emrfs_metadata_table_name     = var.emrfs_metadata_table_name
+    emr_hbase_s3_bucket_root_dir  = var.emr_hbase_s3_bucket_root_dir
   }
 }
 
 resource "aws_s3_bucket_object" "upload_config" {
-  bucket = var.emr_hbase_s3_bucket_root_dir
-  key = "config.json"
-  content = data.template_file.load_file_to_upload.rendered
+  bucket       = var.emr_hbase_s3_bucket_root_dir
+  key          = "config.json"
+  content      = data.template_file.load_file_to_upload.rendered
   content_type = "application/json"
 }
 
 resource "aws_dynamodb_table" "emrfs_dynamodb_table" {
-  name = var.emrfs_metadata_table_name
-  read_capacity = var.emrfs_metadata_read_capacity
+  name           = var.emrfs_metadata_table_name
+  read_capacity  = var.emrfs_metadata_read_capacity
   write_capacity = var.emrfs_metadata_write_capacity
-  hash_key = "hashKey"
-  range_key = "rangeKey"
+  hash_key       = "hashKey"
+  range_key      = "rangeKey"
 
   attribute {
     name = "hashKey"
@@ -43,9 +43,9 @@ resource "time_static" "current_time" {}
 
 resource "aws_dynamodb_table_item" "test_item" {
   table_name = aws_dynamodb_table.emrfs_dynamodb_table.name
-  hash_key = aws_dynamodb_table.emrfs_dynamodb_table.hash_key
-  range_key = aws_dynamodb_table.emrfs_dynamodb_table.range_key
-  item = <<ITEM
+  hash_key   = aws_dynamodb_table.emrfs_dynamodb_table.hash_key
+  range_key  = aws_dynamodb_table.emrfs_dynamodb_table.range_key
+  item       = <<ITEM
 {
   "hashKey": {"S": "MultiKeyStoreTag"},
   "rangeKey": {"S": "TableRole"},
@@ -58,12 +58,10 @@ ITEM
 }
 
 resource "aws_emr_cluster" "emr-hbase" {
-  depends_on = [aws_dynamodb_table.emrfs_dynamodb_table]
-  name          = var.name
-  release_label = var.release_label
-  applications = [
-    "Hbase",
-  ]
+  depends_on     = [aws_dynamodb_table.emrfs_dynamodb_table]
+  name           = var.name
+  release_label  = var.release_label
+  applications   = var.applications
   configurations = data.template_file.load_file_to_upload.rendered
 
   ec2_attributes {
