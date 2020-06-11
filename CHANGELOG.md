@@ -4,6 +4,7 @@
 * Adds more hbase configuration
 * Updates READMEs to use generated documentation
 * More consistent formatting applied
+* Makes the list of applications configurable
 
 ## v0.3.0 - May 19th 2020
 * Added creation of Dynamodb table for EMRFS for better control of the resources through terraform module. Previously it was controlled by EMR.

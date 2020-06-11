@@ -57,6 +57,7 @@ This terraform module creates:
 | service\_access\_security\_group | Identifier of the Amazon EC2 service-access security group - required when the cluster runs on a private subnet | `string` | n/a | yes |
 | service\_role | ARN of the service role for AWS EMR cluster | `string` | n/a | yes |
 | subnet\_id | VPC subnet id where you want the job flow to launch | `string` | n/a | yes |
+| applications | List of applications to run on EMR | `list(string)` | <pre>[<br>  "Hbase"<br>]</pre> | no |
 | core\_group\_instance\_count | Number of Amazon EC2 instances used to execute the job flow | `number` | `1` | no |
 | core\_instance\_group\_name | Friendly name given to the instance group. | `string` | `"CoreInstanceGroup"` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |

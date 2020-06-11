@@ -182,3 +182,9 @@ variable "emr_ec2_iam_policy_name" {
   description = "Name for the IAM policy attached to the EMR Service role"
   default     = "tamr-emr-ec2-policy"
 }
+
+variable "applications" {
+  type        = list(string)
+  description = "List of applications to run on EMR"
+  default     = ["Hbase"]
+}

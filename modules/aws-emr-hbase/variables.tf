@@ -128,3 +128,9 @@ variable "emrfs_metadata_write_capacity" {
   description = "Write capacity units of the dynamodb table used for EMRFS metadata"
   default     = 300
 }
+
+variable "applications" {
+  type        = list(string)
+  description = "List of applications to run on EMR"
+  default     = ["Hbase"]
+}

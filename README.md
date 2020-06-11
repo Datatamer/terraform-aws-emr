@@ -49,6 +49,7 @@ No provider.
 | subnet\_id | ID of the subnet where the emr cluster will be created | `string` | n/a | yes |
 | vpc\_id | VPC id of the network | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
+| applications | List of applications to run on EMR | `list(string)` | <pre>[<br>  "Hbase"<br>]</pre> | no |
 | aws\_region\_of\_dynamodb\_table | AWS region where the Dynamodb table for EMRFS metadata is located | `string` | `"us-east-1"` | no |
 | cluster\_name | Name for the EMR Hbase cluster to be created | `string` | `"TAMR-EMR-Hbase-Cluster"` | no |
 | core\_group\_instance\_count | Number of Amazon EC2 instances used to execute the job flow | `number` | `1` | no |

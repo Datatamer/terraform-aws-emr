@@ -58,12 +58,10 @@ ITEM
 }
 
 resource "aws_emr_cluster" "emr-hbase" {
-  depends_on    = [aws_dynamodb_table.emrfs_dynamodb_table]
-  name          = var.name
-  release_label = var.release_label
-  applications = [
-    "Hbase",
-  ]
+  depends_on     = [aws_dynamodb_table.emrfs_dynamodb_table]
+  name           = var.name
+  release_label  = var.release_label
+  applications   = var.applications
   configurations = data.template_file.load_file_to_upload.rendered
 
   ec2_attributes {

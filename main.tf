@@ -58,5 +58,6 @@ module "emr-hbase-cluster" {
   master_instance_group_name        = var.master_instance_group_name
   master_instance_type              = var.master_instance_type
   release_label                     = var.release_label
+  applications                      = var.applications
   tags                              = var.additional_tags
 }
