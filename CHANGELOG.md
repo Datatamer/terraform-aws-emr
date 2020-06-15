@@ -1,5 +1,9 @@
 # TAMR AWS EMR Hbase module
 
+## v0.5.0 - June 15th 2020
+* Moves the EMR cluster creation to the root of the module
+* Adds EBS configuration variables
+
 ## v0.4.0 - June 8th 2020
 * Adds more hbase configuration
 * Updates READMEs to use generated documentation
