@@ -35,7 +35,10 @@ This modules creates:
 
 ## Providers
 
-No provider.
+| Name | Version |
+|------|---------|
+| aws | n/a |
+| template | n/a |
 
 ## Inputs
 
@@ -52,6 +55,9 @@ No provider.
 | applications | List of applications to run on EMR | `list(string)` | <pre>[<br>  "Hbase"<br>]</pre> | no |
 | aws\_region\_of\_dynamodb\_table | AWS region where the Dynamodb table for EMRFS metadata is located | `string` | `"us-east-1"` | no |
 | cluster\_name | Name for the EMR Hbase cluster to be created | `string` | `"TAMR-EMR-Hbase-Cluster"` | no |
+| core\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"500"` | no |
+| core\_ebs\_type | Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
+| core\_ebs\_volumes\_count | Number of volumes to attach to the core nodes | `number` | `1` | no |
 | core\_group\_instance\_count | Number of Amazon EC2 instances used to execute the job flow | `number` | `1` | no |
 | core\_instance\_group\_name | Name for the core instance group | `string` | `"CoreInstanceGroup"` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
@@ -68,6 +74,9 @@ No provider.
 | emrfs\_metadata\_read\_capacity | Read capacity units of the dynamodb table used for EMRFS metadata | `number` | `600` | no |
 | emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in Dynamodb | `string` | `"EmrFSMetadata"` | no |
 | emrfs\_metadata\_write\_capacity | Write capacity units of the dynamodb table used for EMRFS metadata | `number` | `300` | no |
+| master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
+| master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
+| master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |
 | master\_group\_instance\_count | Number of instances for the master instance group. Must be 1 or 3. | `number` | `1` | no |
 | master\_instance\_group\_name | Name for the master instance group | `string` | `"MasterInstanceGroup"` | no |
 | master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |

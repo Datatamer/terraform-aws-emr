@@ -188,3 +188,34 @@ variable "applications" {
   description = "List of applications to run on EMR"
   default     = ["Hbase"]
 }
+
+variable "core_ebs_volumes_count" {
+  type        = number
+  description = "Number of volumes to attach to the core nodes"
+  default     = 1
+}
+variable "core_ebs_type" {
+  type        = string
+  description = "Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1"
+  default     = "gp2"
+}
+variable "core_ebs_size" {
+  type        = string
+  description = "The volume size, in gibibytes (GiB)."
+  default     = "500"
+}
+variable "master_ebs_volumes_count" {
+  type        = number
+  description = "Number of volumes to attach to the master nodes"
+  default     = 1
+}
+variable "master_ebs_type" {
+  type        = string
+  description = "Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1"
+  default     = "gp2"
+}
+variable "master_ebs_size" {
+  type        = string
+  description = "The volume size, in gibibytes (GiB)."
+  default     = "100"
+}
