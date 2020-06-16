@@ -49,6 +49,17 @@ output "emr_ec2_instance_profile_arn" {
 }
 
 output "tamr_emr_cluster_id" {
-  value       = module.emr-hbase-cluster.tamr_emr_cluster_id
+  value       = aws_emr_cluster.emr-hbase.id
   description = "Identifier for the AWS EMR cluster created"
 }
+
+output "emrfs_dynamodb_table_id" {
+  value       = module.emrfs-dynamodb.emrfs_dynamodb_table_id
+  description = "ID for the emrfs dynamodb table"
+}
+
+output "emrfs_dynamodb_table_name" {
+  value       = module.emrfs-dynamodb.emrfs_dynamodb_table_name
+  description = "Name for the emrfs dynamodb table"
+}
+

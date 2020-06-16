@@ -34,32 +34,11 @@ module "emr-hbase-iam" {
 }
 
 module "emrfs-dynamodb" {
-  source                            = "./modules/aws-emr-emrfs"
-  additional_master_security_groups = module.emr-hbase-sgs.emr_additional_master_sg_id
-  additional_slave_security_groups  = module.emr-hbase-sgs.emr_additional_core_sg_id
-  emr_hbase_s3_bucket_logs          = module.emr-hbase-s3.s3_bucket_name_for_logs
-  emr_hbase_s3_bucket_root_dir      = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
-  emr_managed_master_security_group = module.emr-hbase-sgs.emr_managed_master_sg_id
-  emr_managed_slave_security_group  = module.emr-hbase-sgs.emr_managed_core_sg_id
-  instance_profile                  = module.emr-hbase-iam.emr_ec2_instance_profile_arn
-  key_name                          = var.key_pair_name
-  name                              = var.cluster_name
-  path_to_config_file               = var.emr_hbase_config_file_path
-  service_access_security_group     = module.emr-hbase-sgs.emr_service_access_sg_id
-  service_role                      = module.emr-hbase-iam.emr_service_role_arn
-  subnet_id                         = var.subnet_id
-  emrfs_metadata_read_capacity      = var.emrfs_metadata_read_capacity
-  emrfs_metadata_write_capacity     = var.emrfs_metadata_write_capacity
-  emrfs_metadata_table_name         = var.emrfs_metadata_table_name
-  core_group_instance_count         = var.core_group_instance_count
-  core_instance_group_name          = var.core_instance_group_name
-  core_instance_type                = var.core_instance_type
-  master_group_instance_count       = var.master_group_instance_count
-  master_instance_group_name        = var.master_instance_group_name
-  master_instance_type              = var.master_instance_type
-  release_label                     = var.release_label
-  applications                      = var.applications
-  tags                              = var.additional_tags
+  source                        = "./modules/aws-emr-emrfs"
+  emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
+  emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
+  emrfs_metadata_table_name     = var.emrfs_metadata_table_name
+  tags                          = var.additional_tags
 }
 
 data "template_file" "load_file_to_upload" {
