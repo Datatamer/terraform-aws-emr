@@ -8,7 +8,7 @@ module "emr_security_groups" {
   tamr_ips = ["1.2.3.4/32"]
   vpc_id = "vpc-examplevpcid"
 }
-``` 
+```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements

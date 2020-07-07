@@ -21,4 +21,3 @@ variable "emrfs_metadata_write_capacity" {
   description = "Write capacity units of the dynamodb table used for EMRFS metadata"
   default     = 300
 }
-
