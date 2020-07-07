@@ -12,7 +12,7 @@ module "emrfs-table" {
 
 # Resources Created
 This terraform module creates:
-* 1 dynamodb table for EMRFS 
+* 1 dynamodb table for EMRFS
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -48,4 +48,3 @@ This terraform module creates:
 # Reference documents:
 * AWS EMRFS Consistent View: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emrfs-files-tracked.html
 * Terraform module structure: https://www.terraform.io/docs/modules/index.html#standard-module-structure
-

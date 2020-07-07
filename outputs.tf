@@ -62,4 +62,3 @@ output "emrfs_dynamodb_table_name" {
   value       = module.emrfs-dynamodb.emrfs_dynamodb_table_name
   description = "Name for the emrfs dynamodb table"
 }
-
