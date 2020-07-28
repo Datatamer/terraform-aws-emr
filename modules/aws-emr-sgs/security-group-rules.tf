@@ -572,6 +572,17 @@ resource "aws_security_group_rule" "icmp_service_access_sg_tamr_sgs" {
   description              = "ICMP Access for Tamr SG"
 }
 
+//HTTPS Access to master - Service Access SG TAMR SGs
+resource "aws_security_group_rule" "new_https_service_access_sg_tamr_sgs" {
+  from_port                = 9443
+  to_port                  = 9443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.emr_service_access_sg.id
+  type                     = "ingress"
+  source_security_group_id = aws_security_group.emr_managed_master.id
+  description              = "HTTPS Access for Master SG"
+}
+
 //Egress SG rule for Service Access SG
 resource "aws_security_group_rule" "egress_for_service_access_sg" {
   from_port         = 0
