@@ -1,5 +1,8 @@
 # TAMR AWS EMR Hbase module
 
+## v0.6.1 - August 5th 2020
+* Enables logging for the s3 data bucket
+
 ## v0.6.0 - July 29th 2020
 * Adds support for EMR 5.30.0
 

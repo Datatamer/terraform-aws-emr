@@ -15,3 +15,8 @@ variable "additional_tags" {
   description = "Additional tags to be attached to the resources created"
   default     = {}
 }
+
+variable "data_bucket_logging_prefix" {
+  default = "tamr-data-s3-logging/"
+  description = "To specify a key prefix for log objects of the data bucket"
+}
