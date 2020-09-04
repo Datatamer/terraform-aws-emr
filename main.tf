@@ -58,9 +58,23 @@ resource "aws_s3_bucket_object" "upload_config" {
   content_type = "application/json"
 }
 
+data "template_file" "upload_hbase_config" {
+  template = file("${path.module}/upload_hbase_config.sh")
+  vars = {
+    emr_hbase_s3_bucket_root_dir = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
+    hbase_config_path            = var.hbase_config_path
+    hadoop_config_path           = var.hadoop_config_path
+  }
+}
+
+resource "aws_s3_bucket_object" "upload_bootstrap_script" {
+  bucket  = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
+  key     = "util/upload_hbase_config.sh"
+  content = data.template_file.upload_hbase_config.rendered
+}
 
 resource "aws_emr_cluster" "emr-hbase" {
-  depends_on     = [module.emrfs-dynamodb]
+  depends_on     = [module.emrfs-dynamodb, aws_s3_bucket_object.upload_bootstrap_script]
   name           = var.cluster_name
   release_label  = var.release_label
   applications   = var.applications
@@ -103,9 +117,24 @@ resource "aws_emr_cluster" "emr-hbase" {
   log_uri      = "s3n://${module.emr-hbase-s3.s3_bucket_name_for_logs}/"
   service_role = module.emr-hbase-iam.emr_service_role_arn
 
+  # Upload HBase/Hadoop configuration to s3
+  step {
+    action_on_failure = "TERMINATE_CLUSTER"
+    name              = "Sync HBase/Hadoop configuration to S3"
+
+    hadoop_jar_step {
+      jar = "command-runner.jar" # Native to AMI for running script using AWS CLI
+      args = [
+        "bash",
+        "-c",
+        " aws s3 cp s3://${module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir}/util/upload_hbase_config.sh .; chmod +x upload_hbase_config.sh; ./upload_hbase_config.sh"
+      ]
+    }
+  }
+
   # Optional: ignore outside changes to running cluster steps
   lifecycle {
-    ignore_changes = ["step"]
+    ignore_changes = [step]
   }
 
   tags = var.additional_tags
