@@ -99,6 +99,18 @@ variable "emr_ec2_instance_profile_name" {
   default     = "tamr_emr_ec2_instance_profile"
 }
 
+variable "hbase_config_path" {
+  type        = string
+  description = "Path in data bucket to upload HBase config to"
+  default     = "config/hbase/conf.dist/"
+}
+
+variable "hadoop_config_path" {
+  type        = string
+  description = "Path in data bucket to upload Hadoop config to"
+  default     = "config/hadoop/conf/"
+}
+
 variable "master_instance_group_name" {
   type        = string
   description = "Name for the master instance group"

@@ -139,6 +139,7 @@ data "aws_iam_policy_document" "emr_hbase_ec2_policy" {
       "s3:ListBucketByTags",
       "s3:ListBucket",
       "s3:ListObjects",
+      "s3:ListObjectsV2",
       "s3:ListBucketMultipartUploads",
       "s3:PutObject",
       "s3:PutObjectTagging",
