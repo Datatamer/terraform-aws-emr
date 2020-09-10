@@ -30,6 +30,8 @@ module "emr-hbase-s3" {
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
 | bucket\_name\_for\_hbase\_root\_dir | S3 bucket name for EMR Hbase root directory | `string` | `"tamr-emr-hbase-root-dir"` | no |
 | bucket\_name\_for\_logs | S3 bucket name for EMR Hbase logs | `string` | `"tamr-emr-hbase-logs"` | no |
+| create\_new\_logs\_bucket | True if a new logs bucket should be created | `bool` | true |
+| create\_new\_rootdir\_bucket | True if a new root directory bucket should be created | `bool` | true
 
 ## Outputs
 

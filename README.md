@@ -1,4 +1,4 @@
-# TAMR AWS EMR Hbase root module
+****# TAMR AWS EMR Hbase root module
 This module creates the entire AWS infrastructure required for Tamr to work with AWS EMR Hbase
 
 # Example
@@ -6,7 +6,7 @@ A complete working example is specified in the `/examples` directory.
 
 # Resources Created
 This modules creates:
-* 2 S3 buckets
+* 2 S3 buckets (if existing ones are not provided)
     * One S3 bucket for EMR Hbase logs
     * One S3 bucket for EMR Hbase Root Directory
 * 5 Security Groups
@@ -45,8 +45,10 @@ This modules creates:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | aws\_account\_id | Account ID of the AWS account | `string` | n/a | yes |
-| bucket\_name\_for\_hbase\_root\_dir | S3 bucket name for EMR Hbase root directory | `string` | n/a | yes |
-| bucket\_name\_for\_logs | S3 bucket name for EMR Hbase logs | `string` | n/a | yes |
+| bucket\_name\_for\_hbase\_root\_dir | Name of S3 bucket to create for EMR Hbase root directory | `string` | "" | no |
+| bucket\_name\_for\_logs | Name of S3 bucket to create for EMR Hbase logs | `string` | "" | no |
+| existing\_hbase\_logs\_bucket\_name | Name of existing S3 bucket for EMR HBase logs | `string` | "" | no |
+| existing\_hbase\_root\_dir\_bucket\_name | Name of existing S3 bucket for EMR HBase root directory | `string` | "" | no |
 | emr\_hbase\_config\_file\_path | Path to the EMR Hbase config file. Please include the file name as well. | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the emr cluster will be created | `string` | n/a | yes |

@@ -1,5 +1,8 @@
 # TAMR AWS EMR Hbase module
 
+## v0.9.0 -
+* Adds `existing_hbase_logs_bucket_name` and `existing_hbase_root_dir_bucket_name` to provide option to pass in exsting logs and/or root directory S3 bucket.
+
 ## v0.8.0 - September 8th 2020
 * Uploads HBase configuration to S3.
 * Enables SSE for EMRFS data in S3.

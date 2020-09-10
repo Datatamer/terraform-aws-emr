@@ -1,7 +1,14 @@
+locals {
+  new_logs_s3    = var.existing_hbase_logs_bucket_name == "" ? true : false
+  new_rootdir_s3 = var.existing_hbase_root_dir_bucket_name == "" ? true : false
+}
+
 module "emr-hbase-s3" {
   source                         = "./modules/aws-emr-s3"
-  bucket_name_for_hbase_root_dir = var.bucket_name_for_hbase_root_dir
-  bucket_name_for_logs           = var.bucket_name_for_logs
+  create_new_rootdir_bucket      = local.new_rootdir_s3
+  create_new_logs_bucket         = local.new_logs_s3
+  bucket_name_for_hbase_root_dir = local.new_rootdir_s3 ? var.bucket_name_for_hbase_root_dir : var.existing_hbase_root_dir_bucket_name
+  bucket_name_for_logs           = local.new_logs_s3 ? var.bucket_name_for_logs : var.existing_hbase_logs_bucket_name
   additional_tags                = var.additional_tags
 }
 
@@ -52,10 +59,11 @@ data "template_file" "load_file_to_upload" {
 }
 
 resource "aws_s3_bucket_object" "upload_config" {
-  bucket       = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
-  key          = "config.json"
-  content      = data.template_file.load_file_to_upload.rendered
-  content_type = "application/json"
+  bucket                 = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
+  key                    = "config.json"
+  content                = data.template_file.load_file_to_upload.rendered
+  content_type           = "application/json"
+  server_side_encryption = "AES256"
 }
 
 data "template_file" "upload_hbase_config" {
@@ -68,9 +76,10 @@ data "template_file" "upload_hbase_config" {
 }
 
 resource "aws_s3_bucket_object" "upload_bootstrap_script" {
-  bucket  = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
-  key     = "util/upload_hbase_config.sh"
-  content = data.template_file.upload_hbase_config.rendered
+  bucket                 = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
+  key                    = "util/upload_hbase_config.sh"
+  content                = data.template_file.upload_hbase_config.rendered
+  server_side_encryption = "AES256"
 }
 
 resource "aws_emr_cluster" "emr-hbase" {

@@ -25,12 +25,26 @@ variable "emr_hbase_config_file_path" {
 
 variable "bucket_name_for_logs" {
   type        = string
-  description = "S3 bucket name for EMR Hbase logs"
+  description = "Name of S3 bucket for EMR Hbase logs to create if an existing one wasn't supplied"
+  default     = ""
 }
 
 variable "bucket_name_for_hbase_root_dir" {
   type        = string
-  description = "S3 bucket name for EMR Hbase root directory"
+  description = "Name of S3 bucket for EMR Hbase root directory to create if an existing one wasn't supplied"
+  default     = ""
+}
+
+variable "existing_hbase_logs_bucket_name" {
+  description = "Name of existing bucket for EMR HBase logs"
+  type        = string
+  default     = ""
+}
+
+variable "existing_hbase_root_dir_bucket_name" {
+  description = "Name of existing bucket for EMR HBase root directory"
+  type        = string
+  default     = ""
 }
 
 variable "cluster_name" {
