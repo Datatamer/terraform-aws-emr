@@ -56,6 +56,7 @@ resource "aws_s3_bucket_object" "upload_config" {
   key          = "config.json"
   content      = data.template_file.load_file_to_upload.rendered
   content_type = "application/json"
+  server_side_encryption = "AES256"
 }
 
 data "template_file" "upload_hbase_config" {
@@ -71,6 +72,7 @@ resource "aws_s3_bucket_object" "upload_bootstrap_script" {
   bucket  = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
   key     = "util/upload_hbase_config.sh"
   content = data.template_file.upload_hbase_config.rendered
+  server_side_encryption = "AES256"
 }
 
 resource "aws_emr_cluster" "emr-hbase" {

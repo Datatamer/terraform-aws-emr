@@ -1,5 +1,8 @@
 # TAMR AWS EMR Hbase module
 
+## v0.8.1 - September 11th 2020
+* Add AES256 server side encryption on aws_s3_bucket_object resources
+
 ## v0.8.0 - September 8th 2020
 * Uploads HBase configuration to S3.
 * Enables SSE for EMRFS data in S3.
