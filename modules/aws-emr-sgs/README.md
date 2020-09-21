@@ -4,7 +4,7 @@ This terraform module creates all the security groups and opens ports required f
 # Example
 ```
 module "emr_security_groups" {
-  source = "git::git@github.com:Datatamer/terraform-emr-hbase.git//modules/aws-emr-sgs?ref=0.4.0"
+  source = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.8.1"
   tamr_ips = ["1.2.3.4/32"]
   vpc_id = "vpc-examplevpcid"
 }

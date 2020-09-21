@@ -1,5 +1,5 @@
 module "emr-hbase" {
-  source                         = "git::git@github.com:Datatamer/terraform-emr-hbase.git?ref=0.5.0"
+  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.8.1"
   aws_account_id                 = var.aws_account_id
   bucket_name_for_hbase_root_dir = var.bucket_name_for_hbase_root_dir
   bucket_name_for_logs           = var.bucket_name_for_logs
