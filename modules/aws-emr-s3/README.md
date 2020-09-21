@@ -4,7 +4,7 @@ This terraform module creates the AWS S3 buckets required for EMR Hbase logs and
 # Example
 ```
 module "emr-hbase-s3" {
-  source = "git::git@github.com:Datatamer/terraform-aws-emr-hbase.git//modules/aws-emr-s3?ref=0.8.1"
+  source = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-s3?ref=0.8.1"
   bucket_name_for_hbase_root_dir = "examplebucketname1"
   bucket_name_for_logs = "examplebucketname2"
 }
