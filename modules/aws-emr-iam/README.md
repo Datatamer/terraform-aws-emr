@@ -4,7 +4,7 @@ This terraform module creates the required IAM roles and instance profile to run
 # Example
 ```
 module "emr_hbase_iam" {
-  source = "git::git@github.com:Datatamer/terraform-emr-hbase.git//modules/aws-emr-iam?ref=0.5.0"
+  source = "git::git@github.com:Datatamer/terraform-aws-emr-hbase.git//modules/aws-emr-iam?ref=0.8.1"
   aws_account_id = "1234567890"
   s3_bucket_name_for_hbase_logs = "example-emr-hbase-logs"
   s3_bucket_name_for_hbase_root_directory = "example-emr-hbase-rootdir"

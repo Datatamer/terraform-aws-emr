@@ -5,7 +5,7 @@ This terraform module creates a dynamodb table for EMRFS
 main.tf:
 ```
 module "emrfs-table" {
-  source = "git::git@github.com:Datatamer/terraform-emr-hbase.git/modules/aws-emr-emrfs?ref=0.5.0"
+  source = "git::git@github.com:Datatamer/terraform-aws-emr-hbase.git/modules/aws-emr-emrfs?ref=0.8.1"
   emrfs_metadata_table_name = "example-emrfs-table"
 }
 ```
