@@ -1,10 +1,10 @@
-# TAMR AWS EMR HBase Terraform Module
-This module creates the entire AWS infrastructure required for Tamr to work with AWS EMR HBase
+# TAMR AWS EMR Terraform Module
+This module creates the entire AWS infrastructure required for Tamr to work with AWS EMR.
 
 # Examples
 ## Minimal
 Smallest complete fully working example. This example might require extra resources to run the example.
-- [Minimal](https://github.com/Datatamer/terraform-template-repo/tree/master/examples/minimal)
+- [Minimal](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/minimal)
 
 # Resources Created
 This modules creates:

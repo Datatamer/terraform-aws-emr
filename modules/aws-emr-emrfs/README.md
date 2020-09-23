@@ -51,6 +51,3 @@ This terraform module creates:
 # Reference documents:
 * AWS EMRFS Consistent View: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emrfs-files-tracked.html
 * Terraform module structure: https://www.terraform.io/docs/modules/index.html#standard-module-structure
-
-# License
-Apache 2 Licensed. See LICENSE for full details.

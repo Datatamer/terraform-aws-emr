@@ -68,6 +68,3 @@ This module creates:
 * Service role for EMR: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-role.html
 * EC2 role for EMR (Instance Profile): https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-role-for-ec2.html
 * Best Practices for EMR: https://aws.amazon.com/blogs/big-data/best-practices-for-securing-amazon-emr/
-
-# License
-Apache 2 Licensed. See LICENSE for full details.

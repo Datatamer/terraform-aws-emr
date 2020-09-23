@@ -66,6 +66,3 @@ This terraform module creates:
 * AWS EMR Security Groups: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-man-sec-groups.html
 * AWS EMR Additional Security Groups: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-sg-specify.html
 * Terraform module structure: https://www.terraform.io/docs/modules/index.html#standard-module-structure
-
-# License
-Apache 2 Licensed. See LICENSE for full details.
