@@ -1,14 +1,26 @@
 # Tamr AWS EMR Security Groups Terraform Module
 This terraform module creates all the security groups and opens ports required for an AWS EMR cluster to run and connect to Tamr software.
 
-# Example
+# Examples
+## Basic
+Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr_security_groups" {
-  source = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.8.1"
+  source   = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.8.1"
   tamr_ips = ["1.2.3.4/32"]
-  vpc_id = "vpc-examplevpcid"
+  vpc_id   = "vpc-examplevpcid"
 }
 ```
+
+# Resources created
+This terraform module creates:
+* 5 Security Groups:
+  * The EMR Managed Master Security Group for the master instance(s)
+  * The EMR Managed Core Security Group for the core instance(s)
+  * The additional security group for the master instance(s)
+  * The additional security group for the core instance(s)
+  * The service access security group that can be attached to any instance for SSH or ICMP
+* Several Security Group Rules. The number of Security Group rules vary depending on the IP/SG provided in CIDR/Source, respectively.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -16,12 +28,13 @@ module "emr_security_groups" {
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
+| aws | >= 2.45.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 2.45.0 |
 
 ## Inputs
 
@@ -48,16 +61,6 @@ module "emr_security_groups" {
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
-# AWS Resources created
-This terraform module creates 5 Security Groups:
-* The EMR Managed Master Security Group for the master instance(s)
-* The EMR Managed Core Security Group for the core instance(s)
-* The additional security group for the master instance(s)
-* The additional security group for the core instance(s)
-* The service access security group that can be attached to any instance for SSH or ICMP
-
-This terraform module also creates several Security Group Rules. The number of Security Group rules vary depending on the IP/SG provided in CIDR/Source, respectively.
 
 # Reference documents:
 * AWS EMR Security Groups: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-man-sec-groups.html

@@ -1,11 +1,12 @@
-# Tamr AWS EMR HBase Terraform Module
+# Tamr AWS EMRFS Terraform Module
 This terraform module creates a dynamodb table for EMRFS
 
-# Example
-main.tf:
+# Examples
+## Basic
+Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emrfs-table" {
-  source = "git::git@github.com:Datatamer/terraform-aws-emr.git/modules/aws-emr-emrfs?ref=0.8.1"
+  source                    = "git::git@github.com:Datatamer/terraform-aws-emr.git/modules/aws-emr-emrfs?ref=0.8.1"
   emrfs_metadata_table_name = "example-emrfs-table"
 }
 ```
@@ -20,12 +21,13 @@ This terraform module creates:
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
+| aws | >= 2.45.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 2.45.0 |
 | time | n/a |
 
 ## Inputs
@@ -41,7 +43,8 @@ This terraform module creates:
 
 | Name | Description |
 |------|-------------|
-| tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
+| emrfs\_dynamodb\_table\_id | ID for the emrfs dynamodb table |
+| emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
