@@ -1,14 +1,16 @@
-# TAMR AWS EMR Hbase root module
-This module creates the entire AWS infrastructure required for Tamr to work with AWS EMR Hbase
+# TAMR AWS EMR HBase Terraform Module
+This module creates the entire AWS infrastructure required for Tamr to work with AWS EMR HBase
 
-# Example
-A complete working example is specified in the `/examples` directory.
+# Examples
+## Minimal
+Smallest complete fully working example. This example might require extra resources to run the example.
+- [Minimal](https://github.com/Datatamer/terraform-template-repo/tree/master/examples/minimal)
 
 # Resources Created
 This modules creates:
 * 2 S3 buckets
-    * One S3 bucket for EMR Hbase logs
-    * One S3 bucket for EMR Hbase Root Directory
+    * One S3 bucket for EMR HBase logs
+    * One S3 bucket for EMR HBase Root Directory
 * 5 Security Groups
     * One security group for EMR Managed Master instance(s)
     * One security group for EMR Managed Core instance(s)
@@ -24,7 +26,7 @@ This modules creates:
     * Tamr EMR EC2 IAM role
 * 1 IAM instance profile for EMR EC2 instances
 * 1 Dynamodb table for EMRFS
-* 1 EMR Hbase Cluster
+* 1 EMR HBase Cluster
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -32,12 +34,13 @@ This modules creates:
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
+| aws | >= 2.45.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 2.45.0 |
 | template | n/a |
 
 ## Inputs
@@ -74,6 +77,8 @@ This modules creates:
 | emrfs\_metadata\_read\_capacity | Read capacity units of the dynamodb table used for EMRFS metadata | `number` | `600` | no |
 | emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in Dynamodb | `string` | `"EmrFSMetadata"` | no |
 | emrfs\_metadata\_write\_capacity | Write capacity units of the dynamodb table used for EMRFS metadata | `number` | `300` | no |
+| hadoop\_config\_path | Path in data bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
+| hbase\_config\_path | Path in data bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |
@@ -96,6 +101,8 @@ This modules creates:
 | emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group |
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
 | emr\_service\_role\_arn | ARN of the EMR Hbase service role created |
+| emrfs\_dynamodb\_table\_id | ID for the emrfs dynamodb table |
+| emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
 | s3\_bucket\_name\_for\_hbase\_rootdir | S3 bucket name for EMR Hbase root directory |
 | s3\_bucket\_name\_for\_logs | S3 bucket name for EMR logs |
 | tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |

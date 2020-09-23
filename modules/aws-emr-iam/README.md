@@ -1,18 +1,20 @@
 # Tamr AWS EMR IAM Terraform Module
 This terraform module creates the required IAM roles and instance profile to run an EMR Hbase cluster.
 
-# Example
+# Examples
+## Basic
+Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr_hbase_iam" {
-  source = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=0.8.1"
-  aws_account_id = "1234567890"
-  s3_bucket_name_for_hbase_logs = "example-emr-hbase-logs"
+  source                                  = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=0.8.1"
+  aws_account_id                          = "1234567890"
+  s3_bucket_name_for_hbase_logs           = "example-emr-hbase-logs"
   s3_bucket_name_for_hbase_root_directory = "example-emr-hbase-rootdir"
 }
 ```
 
 # Resources created
-This terraform module creates the following resources:
+This module creates:
 * 2 IAM Policies:
     1) Minimum required EMR service policy
     2) Minimum required EMR EC2 policy
@@ -27,12 +29,13 @@ This terraform module creates the following resources:
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
+| aws | >= 2.45.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 2.45.0 |
 
 ## Inputs
 
@@ -65,3 +68,6 @@ This terraform module creates the following resources:
 * Service role for EMR: https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-role.html
 * EC2 role for EMR (Instance Profile): https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-role-for-ec2.html
 * Best Practices for EMR: https://aws.amazon.com/blogs/big-data/best-practices-for-securing-amazon-emr/
+
+# License
+Apache 2 Licensed. See LICENSE for full details.
