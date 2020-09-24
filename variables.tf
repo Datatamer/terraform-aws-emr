@@ -4,14 +4,14 @@ variable "create_static_cluster" {
   default     = true
 }
 
+variable "name_prefix" {
+  type        = string
+  description = "A prefix to add to the names of all created resources"
+}
+
 variable "vpc_id" {
   type        = string
   description = "VPC ID of the network"
-}
-
-variable "key_pair_name" {
-  type        = string
-  description = "Name of the Key Pair that will be attached to the EC2 instances"
 }
 
 variable "subnet_id" {
@@ -58,12 +58,6 @@ variable "tamr_sgs" {
   default     = []
 }
 
-variable "emrfs_metadata_table_name" {
-  type        = string
-  description = "Table name of EMRFS metadata table in DynamoDB"
-  default     = "EmrFSMetadata"
-}
-
 variable "emrfs_metadata_read_capacity" {
   type        = number
   description = "Read capacity units of the DynamoDB table used for EMRFS metadata"
@@ -88,24 +82,6 @@ variable "aws_region_of_dynamodb_table" {
   default     = "us-east-1"
 }
 
-variable "emr_service_role_name" {
-  type        = string
-  description = "Name of the new IAM service role for the EMR cluster"
-  default     = "tamr_emr_service_role"
-}
-
-variable "emr_ec2_role_name" {
-  type        = string
-  description = "Name of the new IAM role for EMR EC2 instances"
-  default     = "tamr_emr_ec2_role"
-}
-
-variable "emr_ec2_instance_profile_name" {
-  type        = string
-  description = "Name of the new instance profile for EMR EC2 instances"
-  default     = "tamr_emr_ec2_instance_profile"
-}
-
 variable "s3_policy_arns" {
   type        = list(string)
   description = "List of policy ARNs to attach to EMR EC2 instance profile."
@@ -121,18 +97,6 @@ variable "hadoop_config_path" {
   type        = string
   description = "Path in root directory bucket to upload Hadoop config to"
   default     = "config/hadoop/conf/"
-}
-
-variable "master_instance_group_name" {
-  type        = string
-  description = "Name for the master instance group"
-  default     = "MasterInstanceGroup"
-}
-
-variable "core_instance_group_name" {
-  type        = string
-  description = "Name for the core instance group"
-  default     = "CoreInstanceGroup"
 }
 
 variable "release_label" {
@@ -163,48 +127,6 @@ variable "core_group_instance_count" {
   type        = number
   default     = 1
   description = "Number of Amazon EC2 instances used to execute the job flow"
-}
-
-variable "emr_managed_master_sg_name" {
-  type        = string
-  description = "Name for the EMR managed master security group"
-  default     = "TAMR-EMR-Master"
-}
-
-variable "emr_managed_core_sg_name" {
-  type        = string
-  description = "Name for the EMR managed core security group"
-  default     = "TAMR-EMR-Core"
-}
-
-variable "emr_additional_master_sg_name" {
-  type        = string
-  description = "Name for the EMR additional master security group"
-  default     = "TAMR-EMR-Master-Additional"
-}
-
-variable "emr_additional_core_sg_name" {
-  type        = string
-  description = "Name for the EMR additional core security group"
-  default     = "TAMR-EMR-Core-Additional"
-}
-
-variable "emr_service_access_sg_name" {
-  type        = string
-  description = "Name for the EMR service access security group"
-  default     = "TAMR-EMR-Service-Access"
-}
-
-variable "emr_service_iam_policy_name" {
-  type        = string
-  description = "Name for the IAM policy attached to the EMR Service role"
-  default     = "tamr-emr-service-policy"
-}
-
-variable "emr_ec2_iam_policy_name" {
-  type        = string
-  description = "Name for the IAM policy attached to the EMR service role"
-  default     = "tamr-emr-ec2-policy"
 }
 
 variable "applications" {
