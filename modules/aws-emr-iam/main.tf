@@ -57,20 +57,6 @@ data "aws_iam_policy_document" "emr_hbase_policy" {
     ]
     resources = ["*"]
   }
-  //The following permissions are for hbase cluster get S3 bucket info and objects for EMR Hbase logs (read only permissions)
-  statement {
-    effect = "Allow"
-    actions = [
-      "s3:Get*",
-      "s3:List*",
-      "s3:PutObject",
-      "s3:PutObjectTagging"
-    ]
-    resources = [
-      "arn:aws:s3:::${var.s3_bucket_name_for_hbase_logs}",
-      "arn:aws:s3:::${var.s3_bucket_name_for_hbase_logs}/*"
-    ]
-  }
   //The following permission passes the EC2 instance profile role to the EC2 instances created by the EMR cluster
   statement {
     effect = "Allow"
