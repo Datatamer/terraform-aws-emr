@@ -1,10 +1,3 @@
-module "emr-hbase-s3" {
-  source                         = "./modules/aws-emr-s3"
-  bucket_name_for_hbase_root_dir = var.bucket_name_for_hbase_root_dir
-  bucket_name_for_logs           = var.bucket_name_for_logs
-  additional_tags                = var.additional_tags
-}
-
 module "emr-hbase-sgs" {
   source                        = "./modules/aws-emr-sgs"
   emr_managed_master_sg_name    = var.emr_managed_master_sg_name
@@ -21,8 +14,8 @@ module "emr-hbase-sgs" {
 module "emr-hbase-iam" {
   source                                  = "./modules/aws-emr-iam"
   aws_account_id                          = var.aws_account_id
-  s3_bucket_name_for_hbase_logs           = module.emr-hbase-s3.s3_bucket_name_for_logs
-  s3_bucket_name_for_hbase_root_directory = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
+  s3_bucket_name_for_hbase_logs           = var.bucket_name_for_logs
+  s3_bucket_name_for_hbase_root_directory = var.bucket_name_for_hbase_root_dir
   emrfs_metadata_table_name               = var.emrfs_metadata_table_name
   aws_region_of_dynamodb_table            = var.aws_region_of_dynamodb_table
   emr_ec2_iam_policy_name                 = var.emr_ec2_iam_policy_name
@@ -47,12 +40,12 @@ data "template_file" "load_file_to_upload" {
     emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
     emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
     emrfs_metadata_table_name     = var.emrfs_metadata_table_name
-    emr_hbase_s3_bucket_root_dir  = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
+    emr_hbase_s3_bucket_root_dir  = var.bucket_name_for_hbase_root_dir
   }
 }
 
 resource "aws_s3_bucket_object" "upload_config" {
-  bucket                 = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
+  bucket                 = var.bucket_name_for_hbase_root_dir
   key                    = "config.json"
   content                = data.template_file.load_file_to_upload.rendered
   content_type           = "application/json"
@@ -62,14 +55,14 @@ resource "aws_s3_bucket_object" "upload_config" {
 data "template_file" "upload_hbase_config" {
   template = file("${path.module}/upload_hbase_config.sh")
   vars = {
-    emr_hbase_s3_bucket_root_dir = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
+    emr_hbase_s3_bucket_root_dir = var.bucket_name_for_hbase_root_dir
     hbase_config_path            = var.hbase_config_path
     hadoop_config_path           = var.hadoop_config_path
   }
 }
 
 resource "aws_s3_bucket_object" "upload_bootstrap_script" {
-  bucket                 = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
+  bucket                 = var.bucket_name_for_hbase_root_dir
   key                    = "util/upload_hbase_config.sh"
   content                = data.template_file.upload_hbase_config.rendered
   server_side_encryption = "AES256"
@@ -116,7 +109,7 @@ resource "aws_emr_cluster" "emr-hbase" {
     }
   }
 
-  log_uri      = "s3n://${module.emr-hbase-s3.s3_bucket_name_for_logs}/"
+  log_uri      = "s3n://${var.bucket_name_for_logs}/"
   service_role = module.emr-hbase-iam.emr_service_role_arn
 
   # Upload HBase/Hadoop configuration to s3
@@ -129,7 +122,7 @@ resource "aws_emr_cluster" "emr-hbase" {
       args = [
         "bash",
         "-c",
-        " aws s3 cp s3://${module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir}/util/upload_hbase_config.sh .; chmod +x upload_hbase_config.sh; ./upload_hbase_config.sh"
+        " aws s3 cp s3://${var.bucket_name_for_hbase_root_dir}/util/upload_hbase_config.sh .; chmod +x upload_hbase_config.sh; ./upload_hbase_config.sh"
       ]
     }
   }

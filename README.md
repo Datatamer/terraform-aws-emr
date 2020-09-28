@@ -8,9 +8,6 @@ Smallest complete fully working example. This example might require extra resour
 
 # Resources Created
 This modules creates:
-* 2 S3 buckets
-    * One S3 bucket for EMR HBase logs
-    * One S3 bucket for EMR HBase Root Directory
 * 5 Security Groups
     * One security group for EMR Managed Master instance(s)
     * One security group for EMR Managed Core instance(s)
@@ -101,10 +98,9 @@ This modules creates:
 | emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group |
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
 | emr\_service\_role\_arn | ARN of the EMR Hbase service role created |
+| emr\_service\_role\_name | Name of the EMR HBase service role created |
 | emrfs\_dynamodb\_table\_id | ID for the emrfs dynamodb table |
 | emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
-| s3\_bucket\_name\_for\_hbase\_rootdir | S3 bucket name for EMR Hbase root directory |
-| s3\_bucket\_name\_for\_logs | S3 bucket name for EMR logs |
 | tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -122,9 +118,17 @@ This repo is based on:
 * [AWS EMR Additional Security Groups](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-sg-specify.html)
 
 # Development
+## Generating Docs
+Run `make terraform/docs` to generate the section of docs around terraform inputs, outputs and requirements.
+
+## Checkstyles
+Run `make lint`, this will run terraform fmt, in addition to a few other checks to detect whitespace issues.
+NOTE: this requires having docker working on the machine running the test
+
 ## Releasing new versions
-* Updated version contained in `VERSION`
-* Documented changes in `CHANGELOG.md`
+* Update version contained in `VERSION`
+* Document changes in `CHANGELOG.md`
+* Create a tag in github for the commit associated with the version
 
 # License
 Apache 2 Licensed. See LICENSE for full details.

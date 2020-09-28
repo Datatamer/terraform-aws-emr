@@ -60,6 +60,7 @@ This module creates:
 | emr\_ec2\_instance\_profile\_arn | ARN of the EMR Hbase service role created |
 | emr\_ec2\_role\_arn | ARN of the EMR Hbase role created for EC2 instances |
 | emr\_service\_role\_arn | ARN of the EMR Hbase service role created |
+| emr\_service\_role\_name | Name of the EMR HBase service role created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
