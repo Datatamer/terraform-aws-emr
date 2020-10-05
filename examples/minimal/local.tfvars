@@ -1,6 +1,5 @@
 bucket_name_for_logs           = "example-emr-hbase-logs"
 bucket_name_for_hbase_root_dir = "example-emr-hbase-root-dir"
-aws_account_id                 = "12345667899987"
 vpc_id                         = "vpc-examplevpc"
 key_pair_name                  = "example-key-pair"
 subnet_id                      = "subnet-examplesubnet"

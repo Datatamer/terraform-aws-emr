@@ -1,8 +1,3 @@
-variable "aws_account_id" {
-  type        = string
-  description = "Account ID of the AWS account"
-}
-
 variable "vpc_id" {
   type        = string
   description = "VPC id of the network"

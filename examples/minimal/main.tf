@@ -20,7 +20,6 @@ module "emr-rootdir-bucket" {
 # EMR HBase cluster
 module "emr-hbase" {
   source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.9.0"
-  aws_account_id                 = var.aws_account_id
   bucket_name_for_hbase_root_dir = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   key_pair_name                  = var.key_pair_name

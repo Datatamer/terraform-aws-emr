@@ -7,7 +7,6 @@ Inline example implementation of the module.  This is the most basic example of 
 ```
 module "emr_hbase_iam" {
   source                                  = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=0.8.1"
-  aws_account_id                          = "1234567890"
   s3_bucket_name_for_hbase_logs           = "example-emr-hbase-logs"
   s3_bucket_name_for_hbase_root_directory = "example-emr-hbase-rootdir"
 }
