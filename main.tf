@@ -70,13 +70,7 @@ resource "aws_s3_bucket_object" "upload_bootstrap_script" {
 
 resource "aws_emr_security_configuration" "security_configuration" {
   name = "${var.cluster_name}_security_configuration"
-  configuration = templatefile(
-    "${path.module}/security_configuration.json",
-    {
-      logs_bucket_name           = var.bucket_name_for_logs,
-      root_directory_bucket_name = var.bucket_name_for_hbase_root_dir
-    }
-  )
+  configuration = file("${path.module}/security_configuration.json")
 }
 
 resource "aws_emr_cluster" "emr-hbase" {
