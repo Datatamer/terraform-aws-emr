@@ -1,9 +1,12 @@
 # TAMR AWS EMR Hbase module
 
-## v0.9.0 - September 28th 2020
-* Remove logs and root directory S3 bucket creation in root module.
-* Deprecate S3 submodule.
-* Modify minimal example to rely on the [terraform-aws-s3 module](https://github.com/Datatamer/terraform-aws-s3) for the creation of bucket(s) and bucket-related IAM policies.
+## v0.9.0 - October 6th 2020
+* Removes logs and root directory S3 bucket creation in root module.
+* Deprecates S3 submodule.
+* Adds s3_policy_arns input variable to pass bucket access policies to EMR EC2 instance profile.
+* Modifies minimal example to rely on the [terraform-aws-s3 module](https://github.com/Datatamer/terraform-aws-s3) for the creation of bucket(s).
+* Removes aws_account_id variable.
+* Adds EMR security configuration.
 
 ## v0.8.1 - September 11th 2020
 * Add AES256 server side encryption on aws_s3_bucket_object resources
