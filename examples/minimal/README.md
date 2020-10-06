@@ -11,7 +11,6 @@ No provider.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws\_account\_id | Account ID of the AWS account | `string` | n/a | yes |
 | bucket\_name\_for\_hbase\_root\_dir | S3 bucket name for EMR Hbase root directory | `string` | n/a | yes |
 | bucket\_name\_for\_logs | S3 bucket name for EMR Hbase logs | `string` | n/a | yes |
 | cluster\_name | Name for the EMR Hbase cluster to be created | `string` | n/a | yes |

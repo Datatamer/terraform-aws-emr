@@ -8,9 +8,6 @@ Smallest complete fully working example. This example might require extra resour
 
 # Resources Created
 This modules creates:
-* 2 S3 buckets
-    * One S3 bucket for EMR HBase logs
-    * One S3 bucket for EMR HBase Root Directory
 * 5 Security Groups
     * One security group for EMR Managed Master instance(s)
     * One security group for EMR Managed Core instance(s)
@@ -27,6 +24,8 @@ This modules creates:
 * 1 IAM instance profile for EMR EC2 instances
 * 1 Dynamodb table for EMRFS
 * 1 EMR HBase Cluster
+
+Note: For creating the logs and root directory buckets and/or S3-related permissions, use the [terraform-aws-s3](https://github.com/Datatamer/terraform-aws-s3) module.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -47,11 +46,11 @@ This modules creates:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws\_account\_id | Account ID of the AWS account | `string` | n/a | yes |
 | bucket\_name\_for\_hbase\_root\_dir | S3 bucket name for EMR Hbase root directory | `string` | n/a | yes |
 | bucket\_name\_for\_logs | S3 bucket name for EMR Hbase logs | `string` | n/a | yes |
 | emr\_hbase\_config\_file\_path | Path to the EMR Hbase config file. Please include the file name as well. | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
+| s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
 | subnet\_id | ID of the subnet where the emr cluster will be created | `string` | n/a | yes |
 | vpc\_id | VPC id of the network | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
@@ -101,10 +100,9 @@ This modules creates:
 | emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group |
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
 | emr\_service\_role\_arn | ARN of the EMR Hbase service role created |
+| emr\_service\_role\_name | Name of the EMR HBase service role created |
 | emrfs\_dynamodb\_table\_id | ID for the emrfs dynamodb table |
 | emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
-| s3\_bucket\_name\_for\_hbase\_rootdir | S3 bucket name for EMR Hbase root directory |
-| s3\_bucket\_name\_for\_logs | S3 bucket name for EMR logs |
 | tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -122,9 +120,17 @@ This repo is based on:
 * [AWS EMR Additional Security Groups](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-sg-specify.html)
 
 # Development
+## Generating Docs
+Run `make terraform/docs` to generate the section of docs around terraform inputs, outputs and requirements.
+
+## Checkstyles
+Run `make lint`, this will run terraform fmt, in addition to a few other checks to detect whitespace issues.
+NOTE: this requires having docker working on the machine running the test
+
 ## Releasing new versions
-* Updated version contained in `VERSION`
-* Documented changes in `CHANGELOG.md`
+* Update version contained in `VERSION`
+* Document changes in `CHANGELOG.md`
+* Create a tag in github for the commit associated with the version
 
 # License
 Apache 2 Licensed. See LICENSE for full details.

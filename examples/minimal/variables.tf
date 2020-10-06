@@ -8,11 +8,6 @@ variable "bucket_name_for_hbase_root_dir" {
   description = "S3 bucket name for EMR Hbase root directory"
 }
 
-variable "aws_account_id" {
-  type        = string
-  description = "Account ID of the AWS account"
-}
-
 variable "vpc_id" {
   type        = string
   description = "VPC id of the network"

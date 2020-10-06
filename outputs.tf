@@ -1,13 +1,3 @@
-output "s3_bucket_name_for_logs" {
-  value       = module.emr-hbase-s3.s3_bucket_name_for_logs
-  description = "S3 bucket name for EMR logs"
-}
-
-output "s3_bucket_name_for_hbase_rootdir" {
-  value       = module.emr-hbase-s3.s3_bucket_name_for_hbase_rootdir
-  description = "S3 bucket name for EMR Hbase root directory"
-}
-
 output "emr_managed_master_sg_id" {
   value       = module.emr-hbase-sgs.emr_managed_master_sg_id
   description = "Security group id of the EMR Managed Master Security Group"
@@ -36,6 +26,11 @@ output "emr_service_access_sg_id" {
 output "emr_service_role_arn" {
   value       = module.emr-hbase-iam.emr_service_role_arn
   description = "ARN of the EMR Hbase service role created"
+}
+
+output "emr_service_role_name" {
+  value       = module.emr-hbase-iam.emr_service_role_name
+  description = "Name of the EMR HBase service role created"
 }
 
 output "emr_ec2_role_arn" {

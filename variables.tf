@@ -1,8 +1,3 @@
-variable "aws_account_id" {
-  type        = string
-  description = "Account ID of the AWS account"
-}
-
 variable "vpc_id" {
   type        = string
   description = "VPC id of the network"
@@ -97,6 +92,11 @@ variable "emr_ec2_instance_profile_name" {
   type        = string
   description = "Name for the new instance profile for the EMR Hbase EC2 instances"
   default     = "tamr_emr_ec2_instance_profile"
+}
+
+variable "s3_policy_arns" {
+  type        = list(string)
+  description = "List of policy ARNs to attach to EMR EC2 instance profile."
 }
 
 variable "hbase_config_path" {

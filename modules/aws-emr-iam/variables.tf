@@ -16,6 +16,11 @@ variable "emr_ec2_instance_profile_name" {
   default     = "tamr_emr_ec2_instance_profile"
 }
 
+variable "s3_policy_arns" {
+  type        = list(string)
+  description = "List of policy ARNs to attach to EMR EC2 instance profile."
+}
+
 variable "additional_tags" {
   type        = map(string)
   description = "Additional tags to be attached to the resources created"
@@ -31,11 +36,6 @@ variable "aws_region_of_dynamodb_table" {
   type        = string
   description = "AWS region where the Dynamodb table for EMRFS metadata is located"
   default     = "us-east-1"
-}
-
-variable "aws_account_id" {
-  type        = string
-  description = "Account ID for the AWS account"
 }
 
 variable "emrfs_metadata_table_name" {
