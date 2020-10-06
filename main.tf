@@ -13,9 +13,9 @@ module "emr-hbase-sgs" {
 
 module "emr-hbase-iam" {
   source                                  = "./modules/aws-emr-iam"
-  aws_account_id                          = var.aws_account_id
   s3_bucket_name_for_hbase_logs           = var.bucket_name_for_logs
   s3_bucket_name_for_hbase_root_directory = var.bucket_name_for_hbase_root_dir
+  s3_policy_arns                          = var.s3_policy_arns
   emrfs_metadata_table_name               = var.emrfs_metadata_table_name
   aws_region_of_dynamodb_table            = var.aws_region_of_dynamodb_table
   emr_ec2_iam_policy_name                 = var.emr_ec2_iam_policy_name
@@ -68,6 +68,17 @@ resource "aws_s3_bucket_object" "upload_bootstrap_script" {
   server_side_encryption = "AES256"
 }
 
+resource "aws_emr_security_configuration" "security_configuration" {
+  name = "${var.cluster_name}_security_configuration"
+  configuration = templatefile(
+    "${path.module}/security_configuration.json",
+    {
+      logs_bucket_name           = var.bucket_name_for_logs,
+      root_directory_bucket_name = var.bucket_name_for_hbase_root_dir
+    }
+  )
+}
+
 resource "aws_emr_cluster" "emr-hbase" {
   depends_on     = [module.emrfs-dynamodb, aws_s3_bucket_object.upload_bootstrap_script]
   name           = var.cluster_name
@@ -111,6 +122,8 @@ resource "aws_emr_cluster" "emr-hbase" {
 
   log_uri      = "s3n://${var.bucket_name_for_logs}/"
   service_role = module.emr-hbase-iam.emr_service_role_arn
+
+  security_configuration = aws_emr_security_configuration.security_configuration.name
 
   # Upload HBase/Hadoop configuration to s3
   step {

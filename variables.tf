@@ -94,6 +94,11 @@ variable "emr_ec2_instance_profile_name" {
   default     = "tamr_emr_ec2_instance_profile"
 }
 
+variable "s3_policy_arns" {
+  type        = list(string)
+  description = "List of policy ARNs to attach to EMR EC2 instance profile."
+}
+
 variable "hbase_config_path" {
   type        = string
   description = "Path in data bucket to upload HBase config to"

@@ -1,0 +1,11 @@
+{
+    "EncryptionConfiguration": {
+        "AtRestEncryptionConfiguration": {
+          "S3EncryptionConfiguration": {
+            "EncryptionMode": "SSE-S3"
+          }
+        },
+        "EnableAtRestEncryption": true,
+        "EnableInTransitEncryption": false
+    }
+}
