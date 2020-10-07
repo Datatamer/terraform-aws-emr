@@ -22,6 +22,7 @@ variable "subnet_id" {
 variable "emr_config_file_path" {
   type        = string
   description = "Path to the EMR JSON configuration file. Please include the file name as well."
+  default     = "../../modules/aws-emr-emrfs/config.json"
 }
 
 variable "bucket_name_for_logs" {

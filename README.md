@@ -1,13 +1,18 @@
 # TAMR AWS EMR Terraform Module
-This module creates the entire AWS infrastructure required for Tamr to work with AWS EMR.
+This module creates the entire AWS infrastructure required for Tamr to work with AWS EMR. Currently, this module supports 3 patterns of use:
+1. Creation of infrastruction for static HBase cluster
+2. Creation of infrastructure for static Spark cluster
+3. Creation of infrastructure for ephemeral Spark cluster (the cluster itself is not created)
 
 # Examples
 ## Minimal
-Smallest complete fully working example. This example might require extra resources to run the example.
-- [Minimal](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/minimal)
+Fully working examples for each pattern of use. These examples might require extra resources to run the examples.
+- [Static HBase Cluster](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/static-hbase)
+- [Static Spark Cluster](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/static-spark)
+- [Ephemeral Spark Cluster](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/ephemeral-spark)
 
 # Resources Created
-This modules creates:
+This module creates:
 * 5 Security Groups
     * One security group for EMR Managed Master instance(s)
     * One security group for EMR Managed Core instance(s)
@@ -22,8 +27,10 @@ This modules creates:
     * Tamr EMR service IAM role
     * Tamr EMR EC2 IAM role
 * 1 IAM instance profile for EMR EC2 instances
+
+If you are creating a static HBase or Spark cluster, this module also creates:
 * 1 Dynamodb table for EMRFS
-* 1 EMR Cluster
+* 1 EMR Cluster and associated EMR Security Configuration
 
 Note: For creating the logs and root directory buckets and/or S3-related permissions, use the [terraform-aws-s3](https://github.com/Datatamer/terraform-aws-s3) module.
 
@@ -49,7 +56,6 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 | applications | List of applications to run on EMR | `list(string)` | n/a | yes |
 | bucket\_name\_for\_logs | S3 bucket name for cluster logs. | `string` | n/a | yes |
 | bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory | `string` | n/a | yes |
-| emr\_config\_file\_path | Path to the EMR JSON configuration file. Please include the file name as well. | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
@@ -66,6 +72,7 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
 | emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
 | emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
+| emr\_config\_file\_path | Path to the EMR JSON configuration file. Please include the file name as well. | `string` | `"../../modules/aws-emr-emrfs/config.json"` | no |
 | emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR service role | `string` | `"tamr-emr-ec2-policy"` | no |
 | emr\_ec2\_instance\_profile\_name | Name of the new instance profile for EMR EC2 instances | `string` | `"tamr_emr_ec2_instance_profile"` | no |
 | emr\_ec2\_role\_name | Name of the new IAM role for EMR EC2 instances | `string` | `"tamr_emr_ec2_role"` | no |
@@ -119,6 +126,7 @@ This repo is based on:
 * [Best Practices for EMR](https://aws.amazon.com/blogs/big-data/best-practices-for-securing-amazon-emr/)
 * [AWS EMR Security Groups](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-man-sec-groups.html)
 * [AWS EMR Additional Security Groups](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-sg-specify.html)
+* [AWS EMR Security Configuration](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-create-security-configuration.html)
 
 # Development
 ## Generating Docs
