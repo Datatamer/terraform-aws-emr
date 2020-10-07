@@ -36,7 +36,7 @@ variable "subnet_id" {
 
 variable "cluster_name" {
   type        = string
-  description = "Name for the EMR Hbase cluster to be created"
+  description = "Name for the EMR cluster to be created"
 }
 
 variable "emr_config_file_path" {
@@ -75,18 +75,18 @@ variable "aws_region_of_dynamodb_table" {
 
 variable "emr_service_role_name" {
   type        = string
-  description = "Name for the new iam service role for the EMR Hbase cluster"
+  description = "Name for the new iam service role for the EMR cluster"
   default     = "tamr_emr_service_role"
 }
 
 variable "emr_ec2_role_name" {
   type        = string
-  description = "Name for the new iam role for the EMR Hbase EC2 instances"
+  description = "Name for the new iam role for the EMR EC2 instances"
   default     = "tamr_emr_ec2_role"
 }
 
 variable "emr_ec2_instance_profile_name" {
   type        = string
-  description = "Name for the new instance profile for the EMR Hbase EC2 instances"
+  description = "Name for the new instance profile for the EMR EC2 instances"
   default     = "tamr_emr_ec2_instance_profile"
 }

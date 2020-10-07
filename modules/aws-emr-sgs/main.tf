@@ -38,7 +38,7 @@ resource "aws_security_group" "emr_additional_core" {
 //Security group mapped to reference 1: ElasticMapReduce-ServiceAccess
 resource "aws_security_group" "emr_service_access_sg" {
   name                   = var.emr_service_access_sg_name
-  description            = "Security group for Tamr to access Hbase service"
+  description            = "Security group for Tamr to access Hbase/Spark service"
   vpc_id                 = var.vpc_id
   revoke_rules_on_delete = true
   tags                   = var.additional_tags

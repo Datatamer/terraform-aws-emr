@@ -20,13 +20,13 @@ data "aws_iam_policy_document" "emr_assume_role" {
 }
 
 //The service role for EMR
-resource "aws_iam_role" "emr_hbase_service_role" {
+resource "aws_iam_role" "emr_service_role" {
   name               = var.emr_service_role_name
   assume_role_policy = data.aws_iam_policy_document.emr_assume_role.json
 }
 
 //The minimal policy document for the EMR service role
-data "aws_iam_policy_document" "emr_hbase_policy" {
+data "aws_iam_policy_document" "emr_service_policy" {
   version = "2012-10-17"
   statement {
     effect = "Allow"
@@ -91,15 +91,15 @@ data "aws_iam_policy_document" "emr_hbase_policy" {
 }
 
 //The policy that attaches the minimal policy document
-resource "aws_iam_policy" "emr_hbase_policy" {
+resource "aws_iam_policy" "emr_service_policy" {
   name   = var.emr_service_iam_policy_name
-  policy = data.aws_iam_policy_document.emr_hbase_policy.json
+  policy = data.aws_iam_policy_document.emr_service_policy.json
 }
 
 //The IAM role policy attachement that attaches the minimal policy to the role
-resource "aws_iam_role_policy_attachment" "emr_hbase_service_role" {
-  role       = aws_iam_role.emr_hbase_service_role.name
-  policy_arn = aws_iam_policy.emr_hbase_policy.arn
+resource "aws_iam_role_policy_attachment" "emr_service_role_policy" {
+  role       = aws_iam_role.emr_service_role.name
+  policy_arn = aws_iam_policy.emr_service_policy.arn
 }
 
 ###########################
@@ -121,7 +121,7 @@ data "aws_iam_policy_document" "ec2_assume_role" {
 }
 
 //The IAM policy document that contains the minimal permissions for EMR EC2 instances
-data "aws_iam_policy_document" "emr_hbase_ec2_policy" {
+data "aws_iam_policy_document" "emr_ec2_policy" {
   version = "2012-10-17"
   statement {
     effect = "Allow"
@@ -179,7 +179,7 @@ resource "aws_iam_role" "emr_ec2_instance_profile" {
 //The IAM policy that connects the minimal IAM policy document
 resource "aws_iam_policy" "emr_ec2_iam_policy" {
   name   = var.emr_ec2_iam_policy_name
-  policy = data.aws_iam_policy_document.emr_hbase_ec2_policy.json
+  policy = data.aws_iam_policy_document.emr_ec2_policy.json
 }
 
 //The IAM role policy attachment that attaches the minimal policy to the IAM role
@@ -188,6 +188,7 @@ resource "aws_iam_role_policy_attachment" "emr_ec2_instance_profile" {
   policy_arn = aws_iam_policy.emr_ec2_iam_policy.arn
 }
 
+// The IAM role policy attachment(s) that attach s3 policy ARNs to the EMR EC2 iam role
 resource "aws_iam_role_policy_attachment" "emr_ec2_s3_policies" {
   count      = length(var.s3_policy_arns)
   role       = aws_iam_role.emr_ec2_instance_profile.name

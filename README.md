@@ -95,13 +95,13 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 |------|-------------|
 | emr\_additional\_core\_sg\_id | Security group id of the EMR Additional Core Security Group |
 | emr\_additional\_master\_sg\_id | Security group id of the EMR Additional Master Security Group |
-| emr\_ec2\_instance\_profile\_arn | ARN of the EMR Hbase service role created |
-| emr\_ec2\_role\_arn | ARN of the EMR Hbase role created for EC2 instances |
+| emr\_ec2\_instance\_profile\_arn | ARN of the EMR EC2 instance profile created |
+| emr\_ec2\_role\_arn | ARN of the EMR EC2 role created for EC2 instances |
 | emr\_managed\_core\_sg\_id | Security group id of the EMR Managed Core Security Group |
 | emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group |
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
-| emr\_service\_role\_arn | ARN of the EMR Hbase service role created |
-| emr\_service\_role\_name | Name of the EMR HBase service role created |
+| emr\_service\_role\_arn | ARN of the EMR service role created |
+| emr\_service\_role\_name | Name of the EMR service role created |
 | emrfs\_dynamodb\_table\_id | ID for the emrfs dynamodb table |
 | emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
 | tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |

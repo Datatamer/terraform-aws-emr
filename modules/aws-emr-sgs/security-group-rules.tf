@@ -114,6 +114,30 @@ resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_tamr_sgs" {
   description              = "Yarn resource manager - EMR Dashboard"
 }
 
+//YARN Resource Manager rule - Additional SG for EMR Master Proxy with TAMR CIDRS
+resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_proxy_tamr_cidrs" {
+  count             = length(var.tamr_cidrs) > 0 && contains(var.applications, "spark") ? 1 : 0
+  from_port         = 20888
+  to_port           = 20888
+  protocol          = "tcp"
+  security_group_id = aws_security_group.emr_additional_master.id
+  type              = "ingress"
+  cidr_blocks       = var.tamr_cidrs
+  description       = "Yarn resource manager - EMR Dashboard - Proxy"
+}
+
+//YARN Resource Manager rule - Additional SG for EMR Master Proxy with TAMR SGs
+resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_proxy_tamr_sgs" {
+  count                    = length(var.tamr_sgs) > 0 && contains(var.applications, "spark") ? length(var.tamr_sgs) : 0
+  from_port                = 20888
+  to_port                  = 20888
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.emr_additional_master.id
+  type                     = "ingress"
+  source_security_group_id = var.tamr_sgs[count.index]
+  description              = "Yarn resource manager - EMR Dashboard - Proxy"
+}
+
 //Hadoop HDFS NameNode rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "hdfs_namenode_port_add_master_sg_tamr_cidrs" {
   count             = length(var.tamr_cidrs) > 0 ? 1 : 0
@@ -164,7 +188,7 @@ resource "aws_security_group_rule" "spark_historyserver_port_add_master_sg_tamr_
 
 //Hbase UI rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "hbase_ui_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = length(var.tamr_cidrs) > 0 && contains(var.applications, "hbase") ? 1 : 0
   from_port         = 16010
   to_port           = 16010
   protocol          = "tcp"
@@ -176,7 +200,7 @@ resource "aws_security_group_rule" "hbase_ui_port_add_master_sg_tamr_cidrs" {
 
 //Hbase UI rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "hbase_ui_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = length(var.tamr_sgs) > 0 && contains(var.applications, "hbase") ? length(var.tamr_sgs) : 0
   from_port                = 16010
   to_port                  = 16010
   protocol                 = "tcp"
@@ -188,7 +212,7 @@ resource "aws_security_group_rule" "hbase_ui_port_add_master_sg_tamr_sgs" {
 
 //Hbase Master rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "hbase_master_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = length(var.tamr_cidrs) > 0 && contains(var.applications, "hbase") ? 1 : 0
   from_port         = 16000
   to_port           = 16000
   protocol          = "tcp"
@@ -200,7 +224,7 @@ resource "aws_security_group_rule" "hbase_master_port_add_master_sg_tamr_cidrs" 
 
 //Hbase Master rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "hbase_master_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = length(var.tamr_sgs) > 0 && contains(var.applications, "hbase") ? length(var.tamr_sgs) : 0
   from_port                = 16000
   to_port                  = 16000
   protocol                 = "tcp"

@@ -1,5 +1,10 @@
-module "emr-hbase-sgs" {
+locals {
+  applications = [for app in var.applications : lower(app)]
+}
+
+module "emr-sgs" {
   source                        = "./modules/aws-emr-sgs"
+  applications                  = local.applications
   emr_managed_master_sg_name    = var.emr_managed_master_sg_name
   emr_managed_core_sg_name      = var.emr_managed_core_sg_name
   emr_additional_master_sg_name = var.emr_additional_master_sg_name
@@ -11,7 +16,7 @@ module "emr-hbase-sgs" {
   additional_tags               = var.additional_tags
 }
 
-module "emr-hbase-iam" {
+module "emr-iam" {
   source                            = "./modules/aws-emr-iam"
   s3_bucket_name_for_logs           = var.bucket_name_for_logs
   s3_bucket_name_for_root_directory = var.bucket_name_for_root_directory
@@ -75,22 +80,22 @@ resource "aws_emr_security_configuration" "security_configuration" {
   configuration = file("${path.module}/security_configuration.json")
 }
 
-resource "aws_emr_cluster" "emr-hbase" {
+resource "aws_emr_cluster" "emr-cluster" {
   count          = var.create_static_cluster ? 1 : 0
   depends_on     = [module.emrfs-dynamodb, aws_s3_bucket_object.upload_bootstrap_script]
   name           = var.cluster_name
   release_label  = var.release_label
-  applications   = var.applications
+  applications   = local.applications
   configurations = data.template_file.load_file_to_upload.rendered
 
   ec2_attributes {
     subnet_id                         = var.subnet_id
-    emr_managed_master_security_group = module.emr-hbase-sgs.emr_managed_master_sg_id
-    additional_master_security_groups = module.emr-hbase-sgs.emr_additional_master_sg_id
-    emr_managed_slave_security_group  = module.emr-hbase-sgs.emr_managed_core_sg_id
-    additional_slave_security_groups  = module.emr-hbase-sgs.emr_additional_core_sg_id
-    service_access_security_group     = module.emr-hbase-sgs.emr_service_access_sg_id
-    instance_profile                  = module.emr-hbase-iam.emr_ec2_instance_profile_arn
+    emr_managed_master_security_group = module.emr-sgs.emr_managed_master_sg_id
+    additional_master_security_groups = module.emr-sgs.emr_additional_master_sg_id
+    emr_managed_slave_security_group  = module.emr-sgs.emr_managed_core_sg_id
+    additional_slave_security_groups  = module.emr-sgs.emr_additional_core_sg_id
+    service_access_security_group     = module.emr-sgs.emr_service_access_sg_id
+    instance_profile                  = module.emr-iam.emr_ec2_instance_profile_arn
     key_name                          = var.key_pair_name
   }
 
@@ -118,7 +123,7 @@ resource "aws_emr_cluster" "emr-hbase" {
   }
 
   log_uri      = "s3n://${var.bucket_name_for_logs}/"
-  service_role = module.emr-hbase-iam.emr_service_role_arn
+  service_role = module.emr-iam.emr_service_role_arn
 
   security_configuration = aws_emr_security_configuration.security_configuration[0].name
 

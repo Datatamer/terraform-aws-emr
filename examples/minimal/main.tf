@@ -16,7 +16,7 @@ module "emr-rootdir-bucket" {
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
 }
 
-# EMR HBase cluster
+# EMR cluster
 module "emr-hbase" {
   # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.9.0"
   source                         = "../.."
