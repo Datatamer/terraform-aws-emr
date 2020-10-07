@@ -40,7 +40,8 @@ module "emrfs-dynamodb" {
   tags                          = var.additional_tags
 }
 
-data "template_file" "load_file_to_upload" {
+# Template JSON configuration (Found at https://github.com/Datatamer/terraform-aws-emr/blob/master/modules/aws-emr-emrfs/config.json)
+data "template_file" "json_configuration" {
   template = file(var.emr_config_file_path)
   vars = {
     emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
@@ -50,27 +51,30 @@ data "template_file" "load_file_to_upload" {
   }
 }
 
-resource "aws_s3_bucket_object" "upload_config" {
+resource "aws_s3_bucket_object" "upload_json_config" {
   bucket                 = var.bucket_name_for_root_directory
   key                    = "config.json"
-  content                = data.template_file.load_file_to_upload.rendered
+  content                = data.template_file.json_configuration.rendered
   content_type           = "application/json"
   server_side_encryption = "AES256"
 }
 
+# Template script for uploading HBase/Hadoop configuration from EC2 to S3
 data "template_file" "upload_hbase_config" {
+  count    = var.create_static_cluster ? 1 : 0
   template = file("${path.module}/upload_hbase_config.sh")
   vars = {
-    emr_hbase_s3_bucket_root_dir = var.bucket_name_for_root_directory
-    hbase_config_path            = var.hbase_config_path
-    hadoop_config_path           = var.hadoop_config_path
+    bucket_name_for_root_directory = var.bucket_name_for_root_directory
+    hbase_config_path              = var.hbase_config_path
+    hadoop_config_path             = var.hadoop_config_path
   }
 }
 
-resource "aws_s3_bucket_object" "upload_bootstrap_script" {
+resource "aws_s3_bucket_object" "upload_hbase_config_script" {
+  count                  = var.create_static_cluster ? 1 : 0
   bucket                 = var.bucket_name_for_root_directory
   key                    = "util/upload_hbase_config.sh"
-  content                = data.template_file.upload_hbase_config.rendered
+  content                = data.template_file.upload_hbase_config[0].rendered
   server_side_encryption = "AES256"
 }
 
@@ -82,11 +86,11 @@ resource "aws_emr_security_configuration" "security_configuration" {
 
 resource "aws_emr_cluster" "emr-cluster" {
   count          = var.create_static_cluster ? 1 : 0
-  depends_on     = [module.emrfs-dynamodb, aws_s3_bucket_object.upload_bootstrap_script]
+  depends_on     = [module.emrfs-dynamodb, aws_s3_bucket_object.upload_hbase_config_script]
   name           = var.cluster_name
   release_label  = var.release_label
   applications   = local.applications
-  configurations = data.template_file.load_file_to_upload.rendered
+  configurations = data.template_file.json_configuration.rendered
 
   ec2_attributes {
     subnet_id                         = var.subnet_id
@@ -137,7 +141,7 @@ resource "aws_emr_cluster" "emr-cluster" {
       args = [
         "bash",
         "-c",
-        " aws s3 cp s3://${var.bucket_name_for_root_directory}/util/upload_hbase_config.sh .; chmod +x upload_hbase_config.sh; ./upload_hbase_config.sh"
+        " aws s3 cp s3://${var.bucket_name_for_root_directory}/util/upload_hbase_config.sh .; chmod +x upload_hbase_config.sh; ./upload_hbase_config.sh${contains(local.applications, "hbase") ? " hbase" : ""}"
       ]
     }
   }
