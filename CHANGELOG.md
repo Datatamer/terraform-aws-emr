@@ -1,4 +1,11 @@
-# TAMR AWS EMR Hbase module
+# TAMR AWS EMR module
+
+## v0.10.0 - October 7th 2020
+* Refactor module to support common patterns of use
+  * Supports creation of infrastructure for static HBase cluster
+  * Supports creation of infrastruction for static Spark cluster
+  * Supports creation of infrastructure for ephemeral Spark cluster
+* Adds example for each pattern of use
 
 ## v0.9.0 - October 6th 2020
 * Removes logs and root directory S3 bucket creation in root module.
