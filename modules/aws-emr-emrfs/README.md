@@ -7,7 +7,6 @@ Inline example implementation of the module.  This is the most basic example of 
 ```
 module "emrfs-table" {
   source                    = "git::git@github.com:Datatamer/terraform-aws-emr.git/modules/aws-emr-emrfs?ref=0.10.0"
-  create_static_cluster     = true
   emrfs_metadata_table_name = "example-emrfs-table"
 }
 ```
