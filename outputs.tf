@@ -44,7 +44,7 @@ output "emr_ec2_instance_profile_arn" {
 }
 
 output "tamr_emr_cluster_id" {
-  value       = aws_emr_cluster.emr-hbase.id
+  value       = var.create_static_cluster ? aws_emr_cluster.emr-hbase[0].id : ""
   description = "Identifier for the AWS EMR cluster created"
 }
 

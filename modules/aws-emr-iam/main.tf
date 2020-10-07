@@ -74,8 +74,8 @@ data "aws_iam_policy_document" "emr_hbase_policy" {
       "s3:PutObjectTagging"
     ]
     resources = [
-      "arn:aws:s3:::${var.s3_bucket_name_for_hbase_logs}",
-      "arn:aws:s3:::${var.s3_bucket_name_for_hbase_logs}/*"
+      "arn:aws:s3:::${var.s3_bucket_name_for_logs}",
+      "arn:aws:s3:::${var.s3_bucket_name_for_logs}/*"
     ]
   }
   //The following permission passes the EC2 instance profile role to the EC2 instances created by the EMR cluster

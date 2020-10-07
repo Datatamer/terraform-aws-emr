@@ -12,22 +12,23 @@ module "emr-hbase-sgs" {
 }
 
 module "emr-hbase-iam" {
-  source                                  = "./modules/aws-emr-iam"
-  s3_bucket_name_for_hbase_logs           = var.bucket_name_for_logs
-  s3_bucket_name_for_hbase_root_directory = var.bucket_name_for_hbase_root_dir
-  s3_policy_arns                          = var.s3_policy_arns
-  emrfs_metadata_table_name               = var.emrfs_metadata_table_name
-  aws_region_of_dynamodb_table            = var.aws_region_of_dynamodb_table
-  emr_ec2_iam_policy_name                 = var.emr_ec2_iam_policy_name
-  emr_service_iam_policy_name             = var.emr_service_iam_policy_name
-  emr_service_role_name                   = var.emr_service_role_name
-  emr_ec2_instance_profile_name           = var.emr_ec2_instance_profile_name
-  emr_ec2_role_name                       = var.emr_ec2_role_name
-  additional_tags                         = var.additional_tags
+  source                            = "./modules/aws-emr-iam"
+  s3_bucket_name_for_logs           = var.bucket_name_for_logs
+  s3_bucket_name_for_root_directory = var.bucket_name_for_root_directory
+  s3_policy_arns                    = var.s3_policy_arns
+  emrfs_metadata_table_name         = var.emrfs_metadata_table_name
+  aws_region_of_dynamodb_table      = var.aws_region_of_dynamodb_table
+  emr_ec2_iam_policy_name           = var.emr_ec2_iam_policy_name
+  emr_service_iam_policy_name       = var.emr_service_iam_policy_name
+  emr_service_role_name             = var.emr_service_role_name
+  emr_ec2_instance_profile_name     = var.emr_ec2_instance_profile_name
+  emr_ec2_role_name                 = var.emr_ec2_role_name
+  additional_tags                   = var.additional_tags
 }
 
 module "emrfs-dynamodb" {
   source                        = "./modules/aws-emr-emrfs"
+  create_static_cluster         = var.create_static_cluster
   emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
   emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
   emrfs_metadata_table_name     = var.emrfs_metadata_table_name
@@ -35,17 +36,17 @@ module "emrfs-dynamodb" {
 }
 
 data "template_file" "load_file_to_upload" {
-  template = file(var.emr_hbase_config_file_path)
+  template = file(var.emr_config_file_path)
   vars = {
     emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
     emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
     emrfs_metadata_table_name     = var.emrfs_metadata_table_name
-    emr_hbase_s3_bucket_root_dir  = var.bucket_name_for_hbase_root_dir
+    emr_hbase_s3_bucket_root_dir  = var.bucket_name_for_root_directory
   }
 }
 
 resource "aws_s3_bucket_object" "upload_config" {
-  bucket                 = var.bucket_name_for_hbase_root_dir
+  bucket                 = var.bucket_name_for_root_directory
   key                    = "config.json"
   content                = data.template_file.load_file_to_upload.rendered
   content_type           = "application/json"
@@ -55,25 +56,27 @@ resource "aws_s3_bucket_object" "upload_config" {
 data "template_file" "upload_hbase_config" {
   template = file("${path.module}/upload_hbase_config.sh")
   vars = {
-    emr_hbase_s3_bucket_root_dir = var.bucket_name_for_hbase_root_dir
+    emr_hbase_s3_bucket_root_dir = var.bucket_name_for_root_directory
     hbase_config_path            = var.hbase_config_path
     hadoop_config_path           = var.hadoop_config_path
   }
 }
 
 resource "aws_s3_bucket_object" "upload_bootstrap_script" {
-  bucket                 = var.bucket_name_for_hbase_root_dir
+  bucket                 = var.bucket_name_for_root_directory
   key                    = "util/upload_hbase_config.sh"
   content                = data.template_file.upload_hbase_config.rendered
   server_side_encryption = "AES256"
 }
 
 resource "aws_emr_security_configuration" "security_configuration" {
-  name = "${var.cluster_name}_security_configuration"
+  count         = var.create_static_cluster ? 1 : 0
+  name          = "${var.cluster_name}_security_configuration"
   configuration = file("${path.module}/security_configuration.json")
 }
 
 resource "aws_emr_cluster" "emr-hbase" {
+  count          = var.create_static_cluster ? 1 : 0
   depends_on     = [module.emrfs-dynamodb, aws_s3_bucket_object.upload_bootstrap_script]
   name           = var.cluster_name
   release_label  = var.release_label
@@ -117,7 +120,7 @@ resource "aws_emr_cluster" "emr-hbase" {
   log_uri      = "s3n://${var.bucket_name_for_logs}/"
   service_role = module.emr-hbase-iam.emr_service_role_arn
 
-  security_configuration = aws_emr_security_configuration.security_configuration.name
+  security_configuration = aws_emr_security_configuration.security_configuration[0].name
 
   # Upload HBase/Hadoop configuration to s3
   step {
@@ -129,7 +132,7 @@ resource "aws_emr_cluster" "emr-hbase" {
       args = [
         "bash",
         "-c",
-        " aws s3 cp s3://${var.bucket_name_for_hbase_root_dir}/util/upload_hbase_config.sh .; chmod +x upload_hbase_config.sh; ./upload_hbase_config.sh"
+        " aws s3 cp s3://${var.bucket_name_for_root_directory}/util/upload_hbase_config.sh .; chmod +x upload_hbase_config.sh; ./upload_hbase_config.sh"
       ]
     }
   }

@@ -6,7 +6,8 @@ This terraform module creates a dynamodb table for EMRFS
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emrfs-table" {
-  source                    = "git::git@github.com:Datatamer/terraform-aws-emr.git/modules/aws-emr-emrfs?ref=0.8.1"
+  source                    = "git::git@github.com:Datatamer/terraform-aws-emr.git/modules/aws-emr-emrfs?ref=0.10.0"
+  create_static_cluster     = true
   emrfs_metadata_table_name = "example-emrfs-table"
 }
 ```
@@ -34,10 +35,11 @@ This terraform module creates:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| emrfs\_metadata\_read\_capacity | Read capacity units of the dynamodb table used for EMRFS metadata | `number` | `600` | no |
-| emrfs\_metadata\_table\_name | Table name of the dynamodb table for EMRFS metadata | `string` | `"EmrFSMetadata"` | no |
-| emrfs\_metadata\_write\_capacity | Write capacity units of the dynamodb table used for EMRFS metadata | `number` | `300` | no |
-| tags | Map of tags | `map(string)` | `{}` | no |
+| create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
+| emrfs\_metadata\_read\_capacity | Read capacity units of the DynamoDB table used for EMRFS metadata | `number` | `600` | no |
+| emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | `"EmrFSMetadata"` | no |
+| emrfs\_metadata\_write\_capacity | Write capacity units of the DynamoDB table used for EMRFS metadata | `number` | `300` | no |
+| tags | Additional tags to be attached to the DynamoDB table | `map(string)` | `{}` | no |
 
 ## Outputs
 

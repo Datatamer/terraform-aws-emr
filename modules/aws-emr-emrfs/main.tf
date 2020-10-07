@@ -3,6 +3,7 @@
 #
 
 resource "aws_dynamodb_table" "emrfs_dynamodb_table" {
+  count          = var.create_static_cluster ? 1 : 0
   name           = var.emrfs_metadata_table_name
   read_capacity  = var.emrfs_metadata_read_capacity
   write_capacity = var.emrfs_metadata_write_capacity
@@ -25,9 +26,10 @@ resource "aws_dynamodb_table" "emrfs_dynamodb_table" {
 resource "time_static" "current_time" {}
 
 resource "aws_dynamodb_table_item" "test_item" {
-  table_name = aws_dynamodb_table.emrfs_dynamodb_table.name
-  hash_key   = aws_dynamodb_table.emrfs_dynamodb_table.hash_key
-  range_key  = aws_dynamodb_table.emrfs_dynamodb_table.range_key
+  count      = var.create_static_cluster ? 1 : 0
+  table_name = aws_dynamodb_table.emrfs_dynamodb_table[0].name
+  hash_key   = aws_dynamodb_table.emrfs_dynamodb_table[0].hash_key
+  range_key  = aws_dynamodb_table.emrfs_dynamodb_table[0].range_key
   item       = <<ITEM
 {
   "hashKey": {"S": "MultiKeyStoreTag"},

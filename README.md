@@ -23,7 +23,7 @@ This modules creates:
     * Tamr EMR EC2 IAM role
 * 1 IAM instance profile for EMR EC2 instances
 * 1 Dynamodb table for EMRFS
-* 1 EMR HBase Cluster
+* 1 EMR Cluster
 
 Note: For creating the logs and root directory buckets and/or S3-related permissions, use the [terraform-aws-s3](https://github.com/Datatamer/terraform-aws-s3) module.
 
@@ -46,45 +46,46 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| bucket\_name\_for\_hbase\_root\_dir | S3 bucket name for EMR Hbase root directory | `string` | n/a | yes |
-| bucket\_name\_for\_logs | S3 bucket name for EMR Hbase logs | `string` | n/a | yes |
-| emr\_hbase\_config\_file\_path | Path to the EMR Hbase config file. Please include the file name as well. | `string` | n/a | yes |
+| applications | List of applications to run on EMR | `list(string)` | n/a | yes |
+| bucket\_name\_for\_logs | S3 bucket name for cluster logs. | `string` | n/a | yes |
+| bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory | `string` | n/a | yes |
+| emr\_config\_file\_path | Path to the EMR JSON configuration file. Please include the file name as well. | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
-| subnet\_id | ID of the subnet where the emr cluster will be created | `string` | n/a | yes |
-| vpc\_id | VPC id of the network | `string` | n/a | yes |
+| subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
+| vpc\_id | VPC ID of the network | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
-| applications | List of applications to run on EMR | `list(string)` | <pre>[<br>  "Hbase"<br>]</pre> | no |
-| aws\_region\_of\_dynamodb\_table | AWS region where the Dynamodb table for EMRFS metadata is located | `string` | `"us-east-1"` | no |
-| cluster\_name | Name for the EMR Hbase cluster to be created | `string` | `"TAMR-EMR-Hbase-Cluster"` | no |
+| aws\_region\_of\_dynamodb\_table | AWS region where the DynamoDB table for EMRFS metadata is located | `string` | `"us-east-1"` | no |
+| cluster\_name | Name for the EMR cluster to be created | `string` | `"TAMR-EMR-Cluster"` | no |
 | core\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"500"` | no |
 | core\_ebs\_type | Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | core\_ebs\_volumes\_count | Number of volumes to attach to the core nodes | `number` | `1` | no |
 | core\_group\_instance\_count | Number of Amazon EC2 instances used to execute the job flow | `number` | `1` | no |
 | core\_instance\_group\_name | Name for the core instance group | `string` | `"CoreInstanceGroup"` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
+| create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
 | emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
 | emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
-| emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR Service role | `string` | `"tamr-emr-ec2-policy"` | no |
-| emr\_ec2\_instance\_profile\_name | Name for the new instance profile for the EMR Hbase EC2 instances | `string` | `"tamr_emr_ec2_instance_profile"` | no |
-| emr\_ec2\_role\_name | Name for the new iam role for the EMR Hbase EC2 instances | `string` | `"tamr_emr_ec2_role"` | no |
+| emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR service role | `string` | `"tamr-emr-ec2-policy"` | no |
+| emr\_ec2\_instance\_profile\_name | Name of the new instance profile for EMR EC2 instances | `string` | `"tamr_emr_ec2_instance_profile"` | no |
+| emr\_ec2\_role\_name | Name of the new IAM role for EMR EC2 instances | `string` | `"tamr_emr_ec2_role"` | no |
 | emr\_managed\_core\_sg\_name | Name for the EMR managed core security group | `string` | `"TAMR-EMR-Core"` | no |
 | emr\_managed\_master\_sg\_name | Name for the EMR managed master security group | `string` | `"TAMR-EMR-Master"` | no |
 | emr\_service\_access\_sg\_name | Name for the EMR service access security group | `string` | `"TAMR-EMR-Service-Access"` | no |
-| emr\_service\_iam\_policy\_name | Name for the IAM policy attached to the EMR Service role | `string` | `"tamr-emr-hbase-policy"` | no |
-| emr\_service\_role\_name | Name for the new iam service role for the EMR Hbase cluster | `string` | `"tamr_emr_service_role"` | no |
-| emrfs\_metadata\_read\_capacity | Read capacity units of the dynamodb table used for EMRFS metadata | `number` | `600` | no |
-| emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in Dynamodb | `string` | `"EmrFSMetadata"` | no |
-| emrfs\_metadata\_write\_capacity | Write capacity units of the dynamodb table used for EMRFS metadata | `number` | `300` | no |
-| hadoop\_config\_path | Path in data bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
-| hbase\_config\_path | Path in data bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
+| emr\_service\_iam\_policy\_name | Name for the IAM policy attached to the EMR Service role | `string` | `"tamr-emr-service-policy"` | no |
+| emr\_service\_role\_name | Name of the new IAM service role for the EMR cluster | `string` | `"tamr_emr_service_role"` | no |
+| emrfs\_metadata\_read\_capacity | Read capacity units of the DynamoDB table used for EMRFS metadata | `number` | `600` | no |
+| emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | `"EmrFSMetadata"` | no |
+| emrfs\_metadata\_write\_capacity | Write capacity units of the DynamoDB table used for EMRFS metadata | `number` | `300` | no |
+| hadoop\_config\_path | Path in root directory bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
+| hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |
 | master\_group\_instance\_count | Number of instances for the master instance group. Must be 1 or 3. | `number` | `1` | no |
 | master\_instance\_group\_name | Name for the master instance group | `string` | `"MasterInstanceGroup"` | no |
 | master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |
-| release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.11.2"` | no |
+| release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
 | tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
 | tamr\_sgs | Security Groups for the Tamr Instance | `list(string)` | `[]` | no |
 

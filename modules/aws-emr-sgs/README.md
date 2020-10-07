@@ -40,7 +40,7 @@ This terraform module creates:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| vpc\_id | VPC ID | `string` | n/a | yes |
+| vpc\_id | VPC ID of the network | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
 | emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
 | emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |

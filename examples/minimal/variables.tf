@@ -1,16 +1,27 @@
-variable "bucket_name_for_logs" {
-  type        = string
-  description = "S3 bucket name for EMR Hbase logs"
+variable "create_static_cluster" {
+  type        = bool
+  description = "True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself."
+  default     = true
 }
 
-variable "bucket_name_for_hbase_root_dir" {
+variable "applications" {
+  type        = list(string)
+  description = "List of applications to run on EMR"
+}
+
+variable "bucket_name_for_logs" {
   type        = string
-  description = "S3 bucket name for EMR Hbase root directory"
+  description = "S3 bucket name for cluster logs."
+}
+
+variable "bucket_name_for_root_directory" {
+  type        = string
+  description = "S3 bucket name for storing root directory."
 }
 
 variable "vpc_id" {
   type        = string
-  description = "VPC id of the network"
+  description = "VPC ID of the network"
 }
 
 variable "key_pair_name" {
@@ -20,7 +31,7 @@ variable "key_pair_name" {
 
 variable "subnet_id" {
   type        = string
-  description = "ID of the subnet where the emr cluster will be created"
+  description = "ID of the subnet where the EMR cluster will be created"
 }
 
 variable "cluster_name" {
@@ -28,9 +39,9 @@ variable "cluster_name" {
   description = "Name for the EMR Hbase cluster to be created"
 }
 
-variable "emr_hbase_config_file_path" {
+variable "emr_config_file_path" {
   type        = string
-  description = "Path to the EMR Hbase config file. Please include the file name as well."
+  description = "Path to the EMR JSON configuration file. Please include the file name as well."
 }
 
 variable "tamr_cidrs" {

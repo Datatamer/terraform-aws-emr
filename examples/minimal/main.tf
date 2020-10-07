@@ -12,7 +12,7 @@ module "emr-logs-bucket" {
 # Set up root directory bucket
 module "emr-rootdir-bucket" {
   source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=0.1.0"
-  bucket_name      = var.bucket_name_for_hbase_root_dir
+  bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
 }
 
@@ -20,14 +20,16 @@ module "emr-rootdir-bucket" {
 module "emr-hbase" {
   # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.9.0"
   source                         = "../.."
-  bucket_name_for_hbase_root_dir = module.emr-rootdir-bucket.bucket_name
+  create_static_cluster          = var.create_static_cluster
+  applications                   = var.applications
+  bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
   key_pair_name                  = var.key_pair_name
   subnet_id                      = var.subnet_id
   vpc_id                         = var.vpc_id
   cluster_name                   = var.cluster_name
-  emr_hbase_config_file_path     = "../../modules/aws-emr-emrfs/config.json"
+  emr_config_file_path           = "../../modules/aws-emr-emrfs/config.json"
   tamr_sgs                       = var.tamr_sgs
   tamr_cidrs                     = var.tamr_cidrs
   emrfs_metadata_table_name      = var.emrfs_metadata_table_name

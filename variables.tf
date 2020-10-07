@@ -1,6 +1,12 @@
+variable "create_static_cluster" {
+  type        = bool
+  description = "True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself."
+  default     = true
+}
+
 variable "vpc_id" {
   type        = string
-  description = "VPC id of the network"
+  description = "VPC ID of the network"
 }
 
 variable "key_pair_name" {
@@ -10,28 +16,28 @@ variable "key_pair_name" {
 
 variable "subnet_id" {
   type        = string
-  description = "ID of the subnet where the emr cluster will be created"
+  description = "ID of the subnet where the EMR cluster will be created"
 }
 
-variable "emr_hbase_config_file_path" {
+variable "emr_config_file_path" {
   type        = string
-  description = "Path to the EMR Hbase config file. Please include the file name as well."
+  description = "Path to the EMR JSON configuration file. Please include the file name as well."
 }
 
 variable "bucket_name_for_logs" {
   type        = string
-  description = "S3 bucket name for EMR Hbase logs"
+  description = "S3 bucket name for cluster logs."
 }
 
-variable "bucket_name_for_hbase_root_dir" {
+variable "bucket_name_for_root_directory" {
   type        = string
-  description = "S3 bucket name for EMR Hbase root directory"
+  description = "S3 bucket name for storing root directory"
 }
 
 variable "cluster_name" {
   type        = string
-  description = "Name for the EMR Hbase cluster to be created"
-  default     = "TAMR-EMR-Hbase-Cluster"
+  description = "Name for the EMR cluster to be created"
+  default     = "TAMR-EMR-Cluster"
 }
 
 variable "tamr_cidrs" {
@@ -48,19 +54,19 @@ variable "tamr_sgs" {
 
 variable "emrfs_metadata_table_name" {
   type        = string
-  description = "Table name of EMRFS metadata table in Dynamodb"
+  description = "Table name of EMRFS metadata table in DynamoDB"
   default     = "EmrFSMetadata"
 }
 
 variable "emrfs_metadata_read_capacity" {
   type        = number
-  description = "Read capacity units of the dynamodb table used for EMRFS metadata"
+  description = "Read capacity units of the DynamoDB table used for EMRFS metadata"
   default     = 600
 }
 
 variable "emrfs_metadata_write_capacity" {
   type        = number
-  description = "Write capacity units of the dynamodb table used for EMRFS metadata"
+  description = "Write capacity units of the DynamoDB table used for EMRFS metadata"
   default     = 300
 }
 
@@ -72,25 +78,25 @@ variable "additional_tags" {
 
 variable "aws_region_of_dynamodb_table" {
   type        = string
-  description = "AWS region where the Dynamodb table for EMRFS metadata is located"
+  description = "AWS region where the DynamoDB table for EMRFS metadata is located"
   default     = "us-east-1"
 }
 
 variable "emr_service_role_name" {
   type        = string
-  description = "Name for the new iam service role for the EMR Hbase cluster"
+  description = "Name of the new IAM service role for the EMR cluster"
   default     = "tamr_emr_service_role"
 }
 
 variable "emr_ec2_role_name" {
   type        = string
-  description = "Name for the new iam role for the EMR Hbase EC2 instances"
+  description = "Name of the new IAM role for EMR EC2 instances"
   default     = "tamr_emr_ec2_role"
 }
 
 variable "emr_ec2_instance_profile_name" {
   type        = string
-  description = "Name for the new instance profile for the EMR Hbase EC2 instances"
+  description = "Name of the new instance profile for EMR EC2 instances"
   default     = "tamr_emr_ec2_instance_profile"
 }
 
@@ -101,13 +107,13 @@ variable "s3_policy_arns" {
 
 variable "hbase_config_path" {
   type        = string
-  description = "Path in data bucket to upload HBase config to"
+  description = "Path in root directory bucket to upload HBase config to"
   default     = "config/hbase/conf.dist/"
 }
 
 variable "hadoop_config_path" {
   type        = string
-  description = "Path in data bucket to upload Hadoop config to"
+  description = "Path in root directory bucket to upload Hadoop config to"
   default     = "config/hadoop/conf/"
 }
 
@@ -126,7 +132,7 @@ variable "core_instance_group_name" {
 variable "release_label" {
   type        = string
   description = "The release label for the Amazon EMR release."
-  default     = "emr-5.11.2"
+  default     = "emr-5.29.0"
 }
 
 variable "master_instance_type" {
@@ -186,19 +192,18 @@ variable "emr_service_access_sg_name" {
 variable "emr_service_iam_policy_name" {
   type        = string
   description = "Name for the IAM policy attached to the EMR Service role"
-  default     = "tamr-emr-hbase-policy"
+  default     = "tamr-emr-service-policy"
 }
 
 variable "emr_ec2_iam_policy_name" {
   type        = string
-  description = "Name for the IAM policy attached to the EMR Service role"
+  description = "Name for the IAM policy attached to the EMR service role"
   default     = "tamr-emr-ec2-policy"
 }
 
 variable "applications" {
   type        = list(string)
   description = "List of applications to run on EMR"
-  default     = ["Hbase"]
 }
 
 variable "core_ebs_volumes_count" {
