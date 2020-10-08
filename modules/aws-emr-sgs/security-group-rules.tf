@@ -1,6 +1,13 @@
+locals {
+  tamr_sgs_provided   = length(var.tamr_sgs) > 0
+  tamr_cidrs_provided = length(var.tamr_cidrs) > 0
+  running_hbase       = contains(var.applications, "hbase")
+  running_spark       = contains(var.applications, "spark")
+}
+
 //EMR Cluster Manager SG rule for TAMR CIDRs for EMR Managed Master SG
 resource "aws_security_group_rule" "ecm_port_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided > 0 ? 1 : 0
   from_port         = 8443
   to_port           = 8443
   protocol          = "tcp"
@@ -12,7 +19,7 @@ resource "aws_security_group_rule" "ecm_port_tamr_cidrs" {
 
 //EMR Cluster Manager SG rule for TAMR SGs for EMR Managed Master SG
 resource "aws_security_group_rule" "ecm_port_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 8443
   to_port                  = 8443
   protocol                 = "tcp"
@@ -92,7 +99,7 @@ resource "aws_security_group_rule" "egress_for_core_sg" {
 
 //YARN Resource Manager rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 8088
   to_port           = 8088
   protocol          = "tcp"
@@ -104,7 +111,7 @@ resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_tamr_cidrs" {
 
 //YARN Resource Manager rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 8088
   to_port                  = 8088
   protocol                 = "tcp"
@@ -116,7 +123,7 @@ resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_tamr_sgs" {
 
 //YARN Resource Manager rule - Additional SG for EMR Master Proxy with TAMR CIDRS
 resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_proxy_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 && contains(var.applications, "spark") ? 1 : 0
+  count             = local.tamr_cidrs_provided && local.running_spark ? 1 : 0
   from_port         = 20888
   to_port           = 20888
   protocol          = "tcp"
@@ -128,7 +135,7 @@ resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_proxy_tamr_cidrs"
 
 //YARN Resource Manager rule - Additional SG for EMR Master Proxy with TAMR SGs
 resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_proxy_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 && contains(var.applications, "spark") ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided && local.running_spark ? length(var.tamr_sgs) : 0
   from_port                = 20888
   to_port                  = 20888
   protocol                 = "tcp"
@@ -140,7 +147,7 @@ resource "aws_security_group_rule" "yarn_rm_port_add_master_sg_proxy_tamr_sgs" {
 
 //Hadoop HDFS NameNode rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "hdfs_namenode_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 50070
   to_port           = 50070
   protocol          = "tcp"
@@ -152,7 +159,7 @@ resource "aws_security_group_rule" "hdfs_namenode_port_add_master_sg_tamr_cidrs"
 
 //Hadoop HDFS NameNode rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "hdfs_namenode_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 50070
   to_port                  = 50070
   protocol                 = "tcp"
@@ -164,7 +171,7 @@ resource "aws_security_group_rule" "hdfs_namenode_port_add_master_sg_tamr_sgs" {
 
 //Spark HistoryServer rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "spark_historyserver_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 18080
   to_port           = 18080
   protocol          = "tcp"
@@ -176,7 +183,7 @@ resource "aws_security_group_rule" "spark_historyserver_port_add_master_sg_tamr_
 
 //Spark HistoryServer rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "spark_historyserver_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 18080
   to_port                  = 18080
   protocol                 = "tcp"
@@ -188,7 +195,7 @@ resource "aws_security_group_rule" "spark_historyserver_port_add_master_sg_tamr_
 
 //Hbase UI rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "hbase_ui_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 && contains(var.applications, "hbase") ? 1 : 0
+  count             = local.tamr_cidrs_provided && local.running_hbase ? 1 : 0
   from_port         = 16010
   to_port           = 16010
   protocol          = "tcp"
@@ -200,7 +207,7 @@ resource "aws_security_group_rule" "hbase_ui_port_add_master_sg_tamr_cidrs" {
 
 //Hbase UI rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "hbase_ui_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 && contains(var.applications, "hbase") ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided && local.running_hbase ? length(var.tamr_sgs) : 0
   from_port                = 16010
   to_port                  = 16010
   protocol                 = "tcp"
@@ -212,7 +219,7 @@ resource "aws_security_group_rule" "hbase_ui_port_add_master_sg_tamr_sgs" {
 
 //Hbase Master rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "hbase_master_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 && contains(var.applications, "hbase") ? 1 : 0
+  count             = local.tamr_cidrs_provided && local.running_hbase ? 1 : 0
   from_port         = 16000
   to_port           = 16000
   protocol          = "tcp"
@@ -224,7 +231,7 @@ resource "aws_security_group_rule" "hbase_master_port_add_master_sg_tamr_cidrs" 
 
 //Hbase Master rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "hbase_master_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 && contains(var.applications, "hbase") ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided && local.running_hbase ? length(var.tamr_sgs) : 0
   from_port                = 16000
   to_port                  = 16000
   protocol                 = "tcp"
@@ -236,7 +243,7 @@ resource "aws_security_group_rule" "hbase_master_port_add_master_sg_tamr_sgs" {
 
 //Region Server rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "region_server_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 16020
   to_port           = 16020
   protocol          = "tcp"
@@ -248,7 +255,7 @@ resource "aws_security_group_rule" "region_server_port_add_master_sg_tamr_cidrs"
 
 //Region Server rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "region_server_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 16020
   to_port                  = 16020
   protocol                 = "tcp"
@@ -260,7 +267,7 @@ resource "aws_security_group_rule" "region_server_port_add_master_sg_tamr_sgs" {
 
 //Region Server User rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "region_server_user_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 16030
   to_port           = 16030
   protocol          = "tcp"
@@ -272,7 +279,7 @@ resource "aws_security_group_rule" "region_server_user_port_add_master_sg_tamr_c
 
 //Region Server User rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "region_server_user_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 16030
   to_port                  = 16030
   protocol                 = "tcp"
@@ -284,7 +291,7 @@ resource "aws_security_group_rule" "region_server_user_port_add_master_sg_tamr_s
 
 //Zookeeper client rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "zookeeper_client_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 2181
   to_port           = 2181
   protocol          = "tcp"
@@ -296,7 +303,7 @@ resource "aws_security_group_rule" "zookeeper_client_port_add_master_sg_tamr_cid
 
 //Zookeeper client rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "zookeeper_client_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 2181
   to_port                  = 2181
   protocol                 = "tcp"
@@ -308,7 +315,7 @@ resource "aws_security_group_rule" "zookeeper_client_port_add_master_sg_tamr_sgs
 
 //REST Server rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "rest_server_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 8070
   to_port           = 8070
   protocol          = "tcp"
@@ -320,7 +327,7 @@ resource "aws_security_group_rule" "rest_server_port_add_master_sg_tamr_cidrs" {
 
 //REST Server rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "rest_server_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 8070
   to_port                  = 8070
   protocol                 = "tcp"
@@ -332,7 +339,7 @@ resource "aws_security_group_rule" "rest_server_port_add_master_sg_tamr_sgs" {
 
 //REST UI rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "rest_ui_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 8085
   to_port           = 8085
   protocol          = "tcp"
@@ -356,7 +363,7 @@ resource "aws_security_group_rule" "rest_ui_port_add_master_sg_tamr_sgs" {
 
 //Thrift Server rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "thrift_server_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 9090
   to_port           = 9090
   protocol          = "tcp"
@@ -368,7 +375,7 @@ resource "aws_security_group_rule" "thrift_server_port_add_master_sg_tamr_cidrs"
 
 //Thrift Server rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "thrift_server_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 9090
   to_port                  = 9090
   protocol                 = "tcp"
@@ -380,7 +387,7 @@ resource "aws_security_group_rule" "thrift_server_port_add_master_sg_tamr_sgs" {
 
 //Thrift UI rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "thrift_ui_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 9095
   to_port           = 9095
   protocol          = "tcp"
@@ -392,7 +399,7 @@ resource "aws_security_group_rule" "thrift_ui_port_add_master_sg_tamr_cidrs" {
 
 //Thrift UI rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "thrift_ui_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 9095
   to_port                  = 9095
   protocol                 = "tcp"
@@ -404,7 +411,7 @@ resource "aws_security_group_rule" "thrift_ui_port_add_master_sg_tamr_sgs" {
 
 //HDFS RPC rule - Additional SG for EMR Master with TAMR CIDRS
 resource "aws_security_group_rule" "hdfs_rpc_port_add_master_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 8020
   to_port           = 8020
   protocol          = "tcp"
@@ -416,7 +423,7 @@ resource "aws_security_group_rule" "hdfs_rpc_port_add_master_sg_tamr_cidrs" {
 
 //HDFS RPC rule - Additional SG for EMR Master with TAMR SGs
 resource "aws_security_group_rule" "hdfs_rpc_port_add_master_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 8020
   to_port                  = 8020
   protocol                 = "tcp"
@@ -441,7 +448,7 @@ resource "aws_security_group_rule" "egress_for_add_master_sg" {
 
 //YARN NodeManager rule - Additional SG for EMR Core with TAMR CIDRS
 resource "aws_security_group_rule" "yarn_nodemanager_port_add_core_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 8042
   to_port           = 8042
   protocol          = "tcp"
@@ -453,7 +460,7 @@ resource "aws_security_group_rule" "yarn_nodemanager_port_add_core_sg_tamr_cidrs
 
 //YARN NodeManager rule - Additional SG for EMR Core with TAMR SGs
 resource "aws_security_group_rule" "yarn_nodemanager_port_add_core_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 8042
   to_port                  = 8042
   protocol                 = "tcp"
@@ -465,7 +472,7 @@ resource "aws_security_group_rule" "yarn_nodemanager_port_add_core_sg_tamr_sgs" 
 
 //Hadoop HDFS DataNode 1 rule - Additional SG for EMR Core with TAMR CIDRS
 resource "aws_security_group_rule" "hdfs_datanode_1_port_add_core_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 50075
   to_port           = 50075
   protocol          = "tcp"
@@ -477,7 +484,7 @@ resource "aws_security_group_rule" "hdfs_datanode_1_port_add_core_sg_tamr_cidrs"
 
 //Hadoop HDFS DataNode 1 rule - Additional SG for EMR Core with TAMR SGs
 resource "aws_security_group_rule" "hdfs_datanode_1_port_add_coreg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 50075
   to_port                  = 50075
   protocol                 = "tcp"
@@ -489,7 +496,7 @@ resource "aws_security_group_rule" "hdfs_datanode_1_port_add_coreg_tamr_sgs" {
 
 //Hadoop HDFS DataNode 2 rule - Additional SG for EMR Core with TAMR CIDRS
 resource "aws_security_group_rule" "hdfs_datanode_2_port_add_core_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 50010
   to_port           = 50010
   protocol          = "tcp"
@@ -501,7 +508,7 @@ resource "aws_security_group_rule" "hdfs_datanode_2_port_add_core_sg_tamr_cidrs"
 
 //Hadoop HDFS DataNode 2 rule - Additional SG for EMR Core with TAMR SGs
 resource "aws_security_group_rule" "hdfs_datanode_2_port_add_core_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 50010
   to_port                  = 50010
   protocol                 = "tcp"
@@ -513,7 +520,7 @@ resource "aws_security_group_rule" "hdfs_datanode_2_port_add_core_sg_tamr_sgs" {
 
 //Region Server rule - Additional SG for EMR Core with TAMR CIDRS
 resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 16020
   to_port           = 16020
   protocol          = "tcp"
@@ -525,7 +532,7 @@ resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_cidrs" {
 
 //Region Server rule - Additional SG for EMR Core with TAMR SGs
 resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 16020
   to_port                  = 16020
   protocol                 = "tcp"
@@ -550,7 +557,7 @@ resource "aws_security_group_rule" "egress_for_add_core_sg" {
 
 //SSH Access - Service Access SG TAMR CIDRS
 resource "aws_security_group_rule" "ssh_service_access_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cid ? 1 : 0
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
@@ -562,7 +569,7 @@ resource "aws_security_group_rule" "ssh_service_access_sg_tamr_cidrs" {
 
 //SSH Access - Service Access SG TAMR SGs
 resource "aws_security_group_rule" "ssh_service_access_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 22
   to_port                  = 22
   protocol                 = "tcp"
@@ -574,7 +581,7 @@ resource "aws_security_group_rule" "ssh_service_access_sg_tamr_sgs" {
 
 //ICMP Access - Service Access SG TAMR CIDRS
 resource "aws_security_group_rule" "icmp_service_access_sg_tamr_cidrs" {
-  count             = length(var.tamr_cidrs) > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = -1
   to_port           = -1
   protocol          = "icmp"
@@ -586,7 +593,7 @@ resource "aws_security_group_rule" "icmp_service_access_sg_tamr_cidrs" {
 
 //ICMP Access - Service Access SG TAMR SGs
 resource "aws_security_group_rule" "icmp_service_access_sg_tamr_sgs" {
-  count                    = length(var.tamr_sgs) > 0 ? length(var.tamr_sgs) : 0
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = -1
   to_port                  = -1
   protocol                 = "icmp"
