@@ -7,7 +7,7 @@ locals {
 
 //EMR Cluster Manager SG rule for TAMR CIDRs for EMR Managed Master SG
 resource "aws_security_group_rule" "ecm_port_tamr_cidrs" {
-  count             = local.tamr_cidrs_provided > 0 ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 8443
   to_port           = 8443
   protocol          = "tcp"
@@ -557,7 +557,7 @@ resource "aws_security_group_rule" "egress_for_add_core_sg" {
 
 //SSH Access - Service Access SG TAMR CIDRS
 resource "aws_security_group_rule" "ssh_service_access_sg_tamr_cidrs" {
-  count             = local.tamr_cid ? 1 : 0
+  count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"

@@ -16,6 +16,18 @@ module "emr-rootdir-bucket" {
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
 }
 
+# Create new EC2 key pair
+resource "tls_private_key" "emr_private_key" {
+  algorithm = "RSA"
+}
+
+module "emr_key_pair" {
+  source = "terraform-aws-modules/key-pair/aws"
+
+  key_name   = var.key_pair_name
+  public_key = tls_private_key.emr_private_key.public_key_openssh
+}
+
 # EMR Static HBase cluster
 module "emr-hbase" {
   # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.10.0"
@@ -29,30 +41,32 @@ module "emr-hbase" {
   additional_tags       = var.additional_tags
 
   # Networking
-  subnet_id     = var.subnet_id
-  vpc_id        = var.vpc_id
-  key_pair_name = var.key_pair_name
-  tamr_cidrs    = var.tamr_cidrs
-  tamr_sgs      = var.tamr_sgs
+  subnet_id  = var.subnet_id
+  vpc_id     = var.vpc_id
+  tamr_cidrs = var.tamr_cidrs
+  tamr_sgs   = var.tamr_sgs
 
-  # Names
-  cluster_name                   = var.cluster_name
+  # External resource references
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
-  emrfs_metadata_table_name      = var.emrfs_metadata_table_name
-  emr_service_role_name          = var.emr_service_role_name
-  emr_ec2_role_name              = var.emr_ec2_role_name
-  emr_ec2_instance_profile_name  = var.emr_ec2_instance_profile_name
-  emr_service_iam_policy_name    = var.emr_service_iam_policy_name
-  emr_ec2_iam_policy_name        = var.emr_ec2_iam_policy_name
-  master_instance_group_name     = var.master_instance_group_name
-  core_instance_group_name       = var.core_instance_group_name
-  emr_managed_master_sg_name     = var.emr_managed_master_sg_name
-  emr_managed_core_sg_name       = var.emr_managed_core_sg_name
-  emr_additional_master_sg_name  = var.emr_additional_master_sg_name
-  emr_additional_core_sg_name    = var.emr_additional_core_sg_name
-  emr_service_access_sg_name     = var.emr_service_access_sg_name
+  key_pair_name                  = module.emr_key_pair.this_key_pair_key_name
+
+  # Names
+  cluster_name                  = var.cluster_name
+  emrfs_metadata_table_name     = var.emrfs_metadata_table_name
+  emr_service_role_name         = var.emr_service_role_name
+  emr_ec2_role_name             = var.emr_ec2_role_name
+  emr_ec2_instance_profile_name = var.emr_ec2_instance_profile_name
+  emr_service_iam_policy_name   = var.emr_service_iam_policy_name
+  emr_ec2_iam_policy_name       = var.emr_ec2_iam_policy_name
+  master_instance_group_name    = var.master_instance_group_name
+  core_instance_group_name      = var.core_instance_group_name
+  emr_managed_master_sg_name    = var.emr_managed_master_sg_name
+  emr_managed_core_sg_name      = var.emr_managed_core_sg_name
+  emr_additional_master_sg_name = var.emr_additional_master_sg_name
+  emr_additional_core_sg_name   = var.emr_additional_core_sg_name
+  emr_service_access_sg_name    = var.emr_service_access_sg_name
 
   # Scale
   master_group_instance_count = 1

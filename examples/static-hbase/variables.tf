@@ -29,6 +29,7 @@ variable "vpc_id" {
 variable "key_pair_name" {
   type        = string
   description = "Name of the Key Pair that will be attached to the EC2 instances"
+  default     = "tamr-emr-test"
 }
 
 variable "tamr_cidrs" {

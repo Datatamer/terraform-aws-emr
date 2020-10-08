@@ -5,7 +5,9 @@ No requirements.
 
 ## Providers
 
-No provider.
+| Name | Version |
+|------|---------|
+| tls | n/a |
 
 ## Inputs
 
@@ -14,7 +16,6 @@ No provider.
 | bucket\_name\_for\_logs | S3 bucket name for cluster logs. | `string` | n/a | yes |
 | bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory. | `string` | n/a | yes |
 | cluster\_name | Name for the EMR cluster to be created | `string` | n/a | yes |
-| key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
@@ -31,6 +32,7 @@ No provider.
 | emr\_service\_iam\_policy\_name | Name for the IAM policy attached to the EMR Service role | `string` | `"test-hbase-service-policy"` | no |
 | emr\_service\_role\_name | Name for the new iam service role for the EMR cluster | `string` | `"tamr-emr-hbase-service-role-test"` | no |
 | emrfs\_metadata\_table\_name | Name of the Dynamodb table (already created or to be used for EMR consistent view) | `string` | `"EmrFSMetadata-Hbase-Test"` | no |
+| key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | `"tamr-emr-test"` | no |
 | master\_instance\_group\_name | Name for the master instance group | `string` | `"MasterInstanceGroup-Hbase-Test"` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
 | tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
