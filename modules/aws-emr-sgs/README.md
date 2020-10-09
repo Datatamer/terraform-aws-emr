@@ -6,9 +6,10 @@ This terraform module creates all the security groups and opens ports required f
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr_security_groups" {
-  source   = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.8.1"
-  tamr_ips = ["1.2.3.4/32"]
-  vpc_id   = "vpc-examplevpcid"
+  source       = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.10.0"
+  applications = ["HBase"]
+  tamr_ips     = ["1.2.3.4/32"]
+  vpc_id       = "vpc-examplevpcid"
 }
 ```
 
@@ -40,7 +41,8 @@ This terraform module creates:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| vpc\_id | VPC ID | `string` | n/a | yes |
+| applications | List of applications to run on EMR | `list(string)` | n/a | yes |
+| vpc\_id | VPC ID of the network | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
 | emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
 | emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |

@@ -1,6 +1,11 @@
+variable "applications" {
+  type        = list(string)
+  description = "List of applications to run on EMR"
+}
+
 variable "vpc_id" {
   type        = string
-  description = "VPC ID"
+  description = "VPC ID of the network"
 }
 
 variable "emr_managed_master_sg_name" {
