@@ -24,7 +24,7 @@ resource "tls_private_key" "emr_private_key" {
 module "emr_key_pair" {
   source = "terraform-aws-modules/key-pair/aws"
 
-  key_name   = var.key_pair_name
+  key_name   = "spark-test-emr-key"
   public_key = tls_private_key.emr_private_key.public_key_openssh
 }
 
@@ -35,16 +35,16 @@ module "emr-spark" {
 
   # Configurations
   create_static_cluster = true
-  release_label         = var.release_label
+  release_label         = "emr-5.29.0" # spark 2.4.4
   applications          = ["Spark"]
-  emr_config_file_path  = var.emr_config_file_path
-  additional_tags       = var.additional_tags
+  emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
+  additional_tags       = {}
 
   # Networking
   subnet_id  = var.subnet_id
   vpc_id     = var.vpc_id
-  tamr_cidrs = var.tamr_cidrs
-  tamr_sgs   = var.tamr_sgs
+  tamr_cidrs = []
+  tamr_sgs   = []
 
   # External resource references
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
@@ -53,20 +53,20 @@ module "emr-spark" {
   key_pair_name                  = module.emr_key_pair.this_key_pair_key_name
 
   # Names
-  cluster_name                  = var.cluster_name
-  emrfs_metadata_table_name     = var.emrfs_metadata_table_name
-  emr_service_role_name         = var.emr_service_role_name
-  emr_ec2_role_name             = var.emr_ec2_role_name
-  emr_ec2_instance_profile_name = var.emr_ec2_instance_profile_name
-  emr_service_iam_policy_name   = var.emr_service_iam_policy_name
-  emr_ec2_iam_policy_name       = var.emr_ec2_iam_policy_name
-  master_instance_group_name    = var.master_instance_group_name
-  core_instance_group_name      = var.core_instance_group_name
-  emr_managed_master_sg_name    = var.emr_managed_master_sg_name
-  emr_managed_core_sg_name      = var.emr_managed_core_sg_name
-  emr_additional_master_sg_name = var.emr_additional_master_sg_name
-  emr_additional_core_sg_name   = var.emr_additional_core_sg_name
-  emr_service_access_sg_name    = var.emr_service_access_sg_name
+  cluster_name                  = "Spark-Test-EMR-Cluster"
+  emrfs_metadata_table_name     = "Spark-Test-EmrFSMetadata"
+  emr_service_role_name         = "spark-test-service-role"
+  emr_ec2_role_name             = "spark-test-ec2-role"
+  emr_ec2_instance_profile_name = "spark-test-instance-profile"
+  emr_service_iam_policy_name   = "spark-test-service-policy"
+  emr_ec2_iam_policy_name       = "spark-test-ec2-policy"
+  master_instance_group_name    = "Spark-Test-MasterInstanceGroup"
+  core_instance_group_name      = "Spark-Test-CoreInstanceGroup"
+  emr_managed_master_sg_name    = "Spark-Test-EMR-Spark-Master"
+  emr_managed_core_sg_name      = "Spark-Test-EMR-Spark-Core"
+  emr_additional_master_sg_name = "Spark-Test-EMR-Spark-Additional-Master"
+  emr_additional_core_sg_name   = "Spark-Test-EMR-Spark-Additional-Core"
+  emr_service_access_sg_name    = "Spark-Test-EMR-Spark-Service-Access"
 
   # Scale
   master_group_instance_count = 1

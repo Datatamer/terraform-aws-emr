@@ -16,53 +16,43 @@ module "emr-rootdir-bucket" {
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
 }
 
-# Create new EC2 key pair
-resource "tls_private_key" "emr_private_key" {
-  algorithm = "RSA"
-}
-
-module "emr_key_pair" {
-  source = "terraform-aws-modules/key-pair/aws"
-
-  key_name   = var.key_pair_name
-  public_key = tls_private_key.emr_private_key.public_key_openssh
-}
-
-# Ephemeral Spark cluster
+# Set up infrastructure for ephemeral Spark cluster
 module "emr-ephemeral-spark" {
   # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.10.0"
   source = "../.."
 
   # Configurations
   create_static_cluster = false
-  release_label         = var.release_label
+  release_label         = "emr-5.29.0" # spark 2.4.4
   applications          = ["Spark"]
-  emr_config_file_path  = var.emr_config_file_path
-  additional_tags       = var.additional_tags
+  emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
+  additional_tags       = {}
 
   # Networking
   vpc_id     = var.vpc_id
-  subnet_id  = var.subnet_id
-  tamr_cidrs = var.tamr_cidrs
+  subnet_id  = "" # unused
+  tamr_cidrs = []
+  tamr_sgs   = []
 
   # External resource references
-  key_pair_name                  = module.emr_key_pair.this_key_pair_key_name
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
+  key_pair_name                  = ""
 
   # Names
-  emrfs_metadata_table_name     = var.emrfs_metadata_table_name
-  emr_service_role_name         = var.emr_service_role_name
-  emr_ec2_role_name             = var.emr_ec2_role_name
-  emr_ec2_instance_profile_name = var.emr_ec2_instance_profile_name
-  emr_service_iam_policy_name   = var.emr_service_iam_policy_name
-  emr_ec2_iam_policy_name       = var.emr_ec2_iam_policy_name
-  master_instance_group_name    = var.master_instance_group_name
-  core_instance_group_name      = var.core_instance_group_name
-  emr_managed_master_sg_name    = var.emr_managed_master_sg_name
-  emr_managed_core_sg_name      = var.emr_managed_core_sg_name
-  emr_additional_master_sg_name = var.emr_additional_master_sg_name
-  emr_additional_core_sg_name   = var.emr_additional_core_sg_name
-  emr_service_access_sg_name    = var.emr_service_access_sg_name
+  cluster_name                  = "" # unused
+  emrfs_metadata_table_name     = "Ephem-Spark-Test-EmrFSMetadata"
+  emr_service_role_name         = "ephem-spark-test-service-role"
+  emr_ec2_role_name             = "ephem-spark-test-ec2-role"
+  emr_ec2_instance_profile_name = "ephem-spark-test-instance-profile"
+  emr_service_iam_policy_name   = "ephem-spark-test-service-policy"
+  emr_ec2_iam_policy_name       = "ephem-spark-test-ec2-policy"
+  master_instance_group_name    = "" # unused
+  core_instance_group_name      = "" # unused
+  emr_managed_master_sg_name    = "Ephem-Spark-Test-EMR-Spark-Master"
+  emr_managed_core_sg_name      = "Ephem-Spark-Test-EMR-Spark-Core"
+  emr_additional_master_sg_name = "Ephem-Spark-Test-EMR-Spark-Additional-Master"
+  emr_additional_core_sg_name   = "Ephem-Spark-Test-EMR-Spark-Additional-Core"
+  emr_service_access_sg_name    = "Ephem-Spark-Test-EMR-Spark-Service-Access"
 }

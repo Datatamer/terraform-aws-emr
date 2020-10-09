@@ -1,4 +1,3 @@
-bucket_name_for_logs           = "tamr-ephem-spark-logs-bucket"
-bucket_name_for_root_directory = "tamr-ephem-spark-rootdir-bucket"
-vpc_id                         = "example-vpc"
-subnet_id                      = "example-subnet"
+bucket_name_for_root_directory = "ephem-spark-test-root-directory-bucket"
+bucket_name_for_logs           = "ephem-spark-test-logs-bucket"
+# vpc_id                         = "example-vpc" # Replace me
