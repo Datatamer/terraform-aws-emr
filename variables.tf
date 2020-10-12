@@ -237,3 +237,9 @@ variable "master_ebs_size" {
   description = "The volume size, in gibibytes (GiB)."
   default     = "100"
 }
+
+variable "enable_http_port" {
+  type        = bool
+  description = "EMR services like Ganglia run on the http port"
+  default     = false
+}

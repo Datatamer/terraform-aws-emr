@@ -84,6 +84,7 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 | emrfs\_metadata\_read\_capacity | Read capacity units of the DynamoDB table used for EMRFS metadata | `number` | `600` | no |
 | emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | `"EmrFSMetadata"` | no |
 | emrfs\_metadata\_write\_capacity | Write capacity units of the DynamoDB table used for EMRFS metadata | `number` | `300` | no |
+| enable\_http\_port | EMR services like Ganglia run on the http port | `bool` | `false` | no |
 | hadoop\_config\_path | Path in root directory bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
 | hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |

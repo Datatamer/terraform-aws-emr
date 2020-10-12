@@ -13,6 +13,7 @@ module "emr-sgs" {
   vpc_id                        = var.vpc_id
   tamr_cidrs                    = var.tamr_cidrs
   tamr_sgs                      = var.tamr_sgs
+  enable_http_port              = var.enable_http_port
   additional_tags               = var.additional_tags
 }
 
