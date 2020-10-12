@@ -58,7 +58,7 @@ resource "aws_security_group_rule" "egress_for_master_sg" {
   protocol          = "-1"
   security_group_id = aws_security_group.emr_managed_master.id
   type              = "egress"
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = ["0.0.0.0/0"] #tfsec:ignore:AWS007
   description       = "Egress rule for EMR Managed Master SG"
 }
 
@@ -91,10 +91,8 @@ resource "aws_security_group_rule" "egress_for_core_sg" {
   protocol          = "-1"
   security_group_id = aws_security_group.emr_managed_core.id
   type              = "egress"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
-  description = "Egress rule for EMR Managed Core SG"
+  cidr_blocks       = ["0.0.0.0/0"] #tfsec:ignore:AWS007
+  description       = "Egress rule for EMR Managed Core SG"
 }
 
 //YARN Resource Manager rule - Additional SG for EMR Master with TAMR CIDRS
@@ -440,10 +438,8 @@ resource "aws_security_group_rule" "egress_for_add_master_sg" {
   protocol          = "-1"
   security_group_id = aws_security_group.emr_additional_master.id
   type              = "egress"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
-  description = "Egress rule for EMR Master Additional SG"
+  cidr_blocks       = ["0.0.0.0/0"] #tfsec:ignore:AWS007
+  description       = "Egress rule for EMR Master Additional SG"
 }
 
 //YARN NodeManager rule - Additional SG for EMR Core with TAMR CIDRS
@@ -549,10 +545,8 @@ resource "aws_security_group_rule" "egress_for_add_core_sg" {
   protocol          = "-1"
   security_group_id = aws_security_group.emr_additional_core.id
   type              = "egress"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
-  description = "Egress rule for EMR Core Additional SG"
+  cidr_blocks       = ["0.0.0.0/0"] #tfsec:ignore:AWS007
+  description       = "Egress rule for EMR Core Additional SG"
 }
 
 //SSH Access - Service Access SG TAMR CIDRS
@@ -621,8 +615,6 @@ resource "aws_security_group_rule" "egress_for_service_access_sg" {
   protocol          = "-1"
   security_group_id = aws_security_group.emr_service_access_sg.id
   type              = "egress"
-  cidr_blocks = [
-    "0.0.0.0/0"
-  ]
-  description = "Egress rule for Service Access SG"
+  cidr_blocks       = ["0.0.0.0/0"] #tfsec:ignore:AWS007
+  description       = "Egress rule for Service Access SG"
 }
