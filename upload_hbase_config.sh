@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-app=${1}
+app=$1
 
 if [[ $app == 'hbase' ]]; then
     # Sync contents of /etc/hbase/conf.dist directory to s3

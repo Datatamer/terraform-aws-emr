@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v0.10.3 - October 13th 2020
+* Fixes a bug where hbase configuration did not upload to s3
+
 ## v0.10.2 - October 13th 2020
 * Adds the MapReduce JobHistory server webapp port to the security group rules
 
