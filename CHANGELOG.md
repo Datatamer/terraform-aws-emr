@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v0.10.2 - October 13th 2020
+* Adds the MapReduce JobHistory server webapp port to the security group rules
+
 ## v0.10.1 - October 12th 2020
 * Adds http port to the security group for the master and config enable_http_port to toggle
 
