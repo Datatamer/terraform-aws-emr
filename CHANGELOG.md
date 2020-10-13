@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v0.10.1 - October 12th 2020
+* Adds http port to the security group for the master and config enable_http_port to toggle
+
 ## v0.10.0 - October 7th 2020
 * Refactor module to support common patterns of use
   * Supports creation of infrastructure for static HBase cluster

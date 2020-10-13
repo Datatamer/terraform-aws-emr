@@ -618,3 +618,27 @@ resource "aws_security_group_rule" "egress_for_service_access_sg" {
   cidr_blocks       = ["0.0.0.0/0"] #tfsec:ignore:AWS007
   description       = "Egress rule for Service Access SG"
 }
+
+// HTTP port required by Ganglia for TAMR CIDRs for EMR Master SG
+resource "aws_security_group_rule" "emr_http_port_cidrs" {
+  count             = var.enable_http_port && local.tamr_cidrs_provided ? 1 : 0
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  security_group_id = aws_security_group.emr_additional_master.id
+  type              = "ingress"
+  cidr_blocks       = var.tamr_cidrs
+  description       = "HTTP port Tamr CIDRs"
+}
+
+// HTTP port required by Ganglia for TAMR SGs for EMR Master SG
+resource "aws_security_group_rule" "emr_http_port_sgs" {
+  count                    = var.enable_http_port && local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.emr_additional_master.id
+  type                     = "ingress"
+  source_security_group_id = var.tamr_sgs[count.index]
+  description              = "HTTP port for Tamr SGs"
+}

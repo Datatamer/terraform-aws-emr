@@ -18,7 +18,7 @@ module "emr-rootdir-bucket" {
 
 # Set up infrastructure for ephemeral Spark cluster
 module "emr-ephemeral-spark" {
-  # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.10.0"
+  # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.10.1"
   source = "../.."
 
   # Configurations

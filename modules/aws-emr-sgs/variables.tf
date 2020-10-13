@@ -55,3 +55,9 @@ variable "additional_tags" {
   description = "Additional tags to be attached to the resources created"
   default     = {}
 }
+
+variable "enable_http_port" {
+  type        = bool
+  description = "EMR services like Ganglia run on the http port"
+  default     = false
+}

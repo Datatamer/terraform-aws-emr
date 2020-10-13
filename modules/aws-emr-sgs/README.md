@@ -6,7 +6,7 @@ This terraform module creates all the security groups and opens ports required f
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr_security_groups" {
-  source       = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.10.0"
+  source       = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.10.1"
   applications = ["HBase"]
   tamr_ips     = ["1.2.3.4/32"]
   vpc_id       = "vpc-examplevpcid"
@@ -49,6 +49,7 @@ This terraform module creates:
 | emr\_managed\_core\_sg\_name | Name for the EMR managed core security group | `string` | `"TAMR-EMR-Core"` | no |
 | emr\_managed\_master\_sg\_name | Name for the EMR managed master security group | `string` | `"TAMR-EMR-Master"` | no |
 | emr\_service\_access\_sg\_name | Name for the EMR service access security group | `string` | `"TAMR-EMR-Service-Access"` | no |
+| enable\_http\_port | EMR services like Ganglia run on the http port | `bool` | `false` | no |
 | tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
 | tamr\_sgs | Security Group for the Tamr Instance | `list(string)` | `[]` | no |
 
