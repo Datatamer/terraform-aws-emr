@@ -642,3 +642,27 @@ resource "aws_security_group_rule" "emr_http_port_sgs" {
   source_security_group_id = var.tamr_sgs[count.index]
   description              = "HTTP port for Tamr SGs"
 }
+
+// MapReduce JobHistory server webapp port for TAMR CIDRs for EMR Master SG
+resource "aws_security_group_rule" "mr_jobhistory__port_cidrs" {
+  count             = var.enable_http_port && local.tamr_cidrs_provided ? 1 : 0
+  from_port         = 19888
+  to_port           = 19888
+  protocol          = "tcp"
+  security_group_id = aws_security_group.emr_managed_master.id
+  type              = "ingress"
+  cidr_blocks       = var.tamr_cidrs
+  description       = "MapReduce JobHistory server webapp port for Tamr CIDRs"
+}
+
+// MapReduce JobHistory server webapp port TAMR SGs for EMR Master SG
+resource "aws_security_group_rule" "mr_jobhistory_port_sgs" {
+  count                    = var.enable_http_port && local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
+  from_port                = 19888
+  to_port                  = 19888
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.emr_managed_master.id
+  type                     = "ingress"
+  source_security_group_id = var.tamr_sgs[count.index]
+  description              = "MapReduce JobHistory server webapp port for Tamr SGs"
+}
