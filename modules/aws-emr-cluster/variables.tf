@@ -10,32 +10,14 @@ variable "create_static_cluster" {
   default     = true
 }
 
-variable "emr_config_file_path" {
-  type        = string
-  description = "Path to the EMR JSON configuration file. Please include the file name as well."
-}
-
 variable "security_configuration_name" {
   type        = string
   description = "Name of EMR cluster's security configuration"
 }
 
-variable "emrfs_metadata_read_capacity" {
-  type        = number
-  description = "Read capacity units of the DynamoDB table used for EMRFS metadata"
-  default     = 600
-}
-
-variable "emrfs_metadata_write_capacity" {
-  type        = number
-  description = "Write capacity units of the DynamoDB table used for EMRFS metadata"
-  default     = 300
-}
-
 variable "emrfs_metadata_table_name" {
   type        = string
   description = "Table name of EMRFS metadata table in DynamoDB"
-  default     = "EmrFSMetadata"
 }
 
 variable "bucket_name_for_root_directory" {

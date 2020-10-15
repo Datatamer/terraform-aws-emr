@@ -61,7 +61,6 @@ module "emr-cluster" {
   create_static_cluster          = var.create_static_cluster
   cluster_name                   = var.cluster_name
   release_label                  = var.release_label
-  emr_config_file_path           = module.emr-cluster-config.emr_config_file_path
   security_configuration_name    = module.emr-cluster-config.security_configuration_name
   applications                   = local.applications
   bucket_name_for_root_directory = var.bucket_name_for_root_directory
@@ -83,11 +82,6 @@ module "emr-cluster" {
   core_ebs_type               = var.core_ebs_type
   core_ebs_size               = var.core_ebs_size
 
-  # DynamoDB
-  emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
-  emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
-  emrfs_metadata_table_name     = module.emrfs-dynamodb.emrfs_dynamodb_table_name
-
   # Security groups
   emr_managed_master_sg_id    = module.emr-sgs.emr_managed_master_sg_id
   emr_additional_master_sg_id = module.emr-sgs.emr_additional_master_sg_id
@@ -98,6 +92,9 @@ module "emr-cluster" {
   # IAM
   emr_service_role_arn         = module.emr-iam.emr_service_role_arn
   emr_ec2_instance_profile_arn = module.emr-iam.emr_ec2_instance_profile_arn
+
+  # Note: Value not used in module, but need this to establish dependency on aws-emr-emrfs submodule
+  emrfs_metadata_table_name = module.emrfs-dynamodb.emrfs_dynamodb_table_name
 
   additional_tags = var.additional_tags
 }

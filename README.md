@@ -112,8 +112,11 @@ No provider.
 | emr\_service\_role\_name | Name of the EMR service role created |
 | emrfs\_dynamodb\_table\_id | ID for the emrfs dynamodb table |
 | emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
-| tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
+| json\_config\_s3\_key | The name of the json configuration object in the bucket. |
+| security\_configuration\_name | Name of the EMR cluster's security configuration |
+| tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created. Empty string if set up infrastructure for ephemeral cluster. |
 | tamr\_emr\_cluster\_name | Name of the AWS EMR cluster created |
+| upload\_config\_script\_s3\_key | The name of the upload config script object in the bucket. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

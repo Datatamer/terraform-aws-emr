@@ -11,7 +11,6 @@ module "emr-cluster" {
   # Cluster configuration
   cluster_name                   = "example-cluster"
   applications                   = ["Spark", "HBase"]
-  emr_config_file_path           = "../aws-emr-emrfs/config.json"
   security_configuration_name    = module.emr-cluster-config.security_configuration_name
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
@@ -65,12 +64,12 @@ This module creates:
 | bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory | `string` | n/a | yes |
 | emr\_additional\_core\_sg\_id | Security group id of the EMR Additional Core Security Group | `string` | n/a | yes |
 | emr\_additional\_master\_sg\_id | Security group id of the EMR Additional Master Security Group | `string` | n/a | yes |
-| emr\_config\_file\_path | Path to the EMR JSON configuration file. Please include the file name as well. | `string` | n/a | yes |
 | emr\_ec2\_instance\_profile\_arn | ARN of the EMR EC2 instance profile | `string` | n/a | yes |
 | emr\_managed\_core\_sg\_id | Security group id of the EMR Managed Core Security Group | `string` | n/a | yes |
 | emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group | `string` | n/a | yes |
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group | `string` | n/a | yes |
 | emr\_service\_role\_arn | ARN of the IAM service role for the EMR cluster | `string` | n/a | yes |
+| emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | security\_configuration\_name | Name of EMR cluster's security configuration | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
@@ -83,9 +82,6 @@ This module creates:
 | core\_instance\_group\_name | Name for the core instance group | `string` | `"CoreInstanceGroup"` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
-| emrfs\_metadata\_read\_capacity | Read capacity units of the DynamoDB table used for EMRFS metadata | `number` | `600` | no |
-| emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | `"EmrFSMetadata"` | no |
-| emrfs\_metadata\_write\_capacity | Write capacity units of the DynamoDB table used for EMRFS metadata | `number` | `300` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |

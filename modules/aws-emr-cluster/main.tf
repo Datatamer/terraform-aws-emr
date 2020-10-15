@@ -1,15 +1,10 @@
 locals {
   applications = [for app in var.applications : lower(app)]
+}
 
-  json_config = templatefile(
-    var.emr_config_file_path,
-    {
-      emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
-      emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
-      emrfs_metadata_table_name     = var.emrfs_metadata_table_name
-      emr_hbase_s3_bucket_root_dir  = var.bucket_name_for_root_directory
-    }
-  )
+data "aws_s3_bucket_object" "json_config" {
+  bucket = var.bucket_name_for_root_directory
+  key    = "config.json"
 }
 
 resource "aws_emr_cluster" "emr-cluster" {
@@ -17,7 +12,7 @@ resource "aws_emr_cluster" "emr-cluster" {
   name                = var.cluster_name
   release_label       = var.release_label
   applications        = local.applications
-  configurations_json = local.json_config
+  configurations_json = data.aws_s3_bucket_object.json_config.body
 
   ec2_attributes {
     subnet_id                         = var.subnet_id
