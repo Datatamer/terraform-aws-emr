@@ -1,5 +1,10 @@
 # TAMR AWS EMR module
 
+## v0.10.5 - October 20th 2020
+* Adds submodule for EMR cluster creation
+* Adds submodule for cluster configuration resources
+  * Updates ephemeral-spark example to directly invoke submodules
+
 ## v0.10.4 - October 19th 2020
 * Adds `tamr_emr_cluster_name` output
 

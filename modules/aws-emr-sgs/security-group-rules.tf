@@ -1,8 +1,9 @@
 locals {
+  applications        = [for app in var.applications : lower(app)]
   tamr_sgs_provided   = length(var.tamr_sgs) > 0
   tamr_cidrs_provided = length(var.tamr_cidrs) > 0
-  running_hbase       = contains(var.applications, "hbase")
-  running_spark       = contains(var.applications, "spark")
+  running_hbase       = contains(local.applications, "hbase")
+  running_spark       = contains(local.applications, "spark")
 }
 
 //EMR Cluster Manager SG rule for TAMR CIDRs for EMR Managed Master SG
