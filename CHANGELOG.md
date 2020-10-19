@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v0.10.4 - October 19th 2020
+* Adds `tamr_emr_cluster_name` output
+
 ## v0.10.3 - October 13th 2020
 * Fixes a bug where hbase configuration did not upload to s3
 
