@@ -48,6 +48,11 @@ output "tamr_emr_cluster_id" {
   description = "Identifier for the AWS EMR cluster created"
 }
 
+output "tamr_emr_cluster_name" {
+  value       = var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].name : ""
+  description = "Name of the AWS EMR cluster created"
+}
+
 output "emrfs_dynamodb_table_id" {
   value       = module.emrfs-dynamodb.emrfs_dynamodb_table_id
   description = "ID for the emrfs dynamodb table"

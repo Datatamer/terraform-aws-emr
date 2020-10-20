@@ -113,6 +113,7 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 | emrfs\_dynamodb\_table\_id | ID for the emrfs dynamodb table |
 | emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
 | tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
+| tamr\_emr\_cluster\_name | Name of the AWS EMR cluster created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
