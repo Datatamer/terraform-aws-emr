@@ -44,8 +44,8 @@ output "emr_ec2_instance_profile_arn" {
 }
 
 output "tamr_emr_cluster_id" {
-  value       = var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].id : ""
-  description = "Identifier for the AWS EMR cluster created"
+  value       = module.emr-cluster.tamr_emr_cluster_id
+  description = "Identifier for the AWS EMR cluster created. Empty string if set up infrastructure for ephemeral cluster."
 }
 
 output "tamr_emr_cluster_name" {
@@ -61,4 +61,19 @@ output "emrfs_dynamodb_table_id" {
 output "emrfs_dynamodb_table_name" {
   value       = module.emrfs-dynamodb.emrfs_dynamodb_table_name
   description = "Name for the emrfs dynamodb table"
+}
+
+output "json_config_s3_key" {
+  value       = module.emr-cluster-config.json_config_s3_key
+  description = "The name of the json configuration object in the bucket."
+}
+
+output "upload_config_script_s3_key" {
+  value       = module.emr-cluster-config.upload_config_script_s3_key
+  description = "The name of the upload config script object in the bucket."
+}
+
+output "security_configuration_name" {
+  value       = module.emr-cluster-config.security_configuration_name
+  description = "Name of the EMR cluster's security configuration"
 }

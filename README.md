@@ -7,8 +7,10 @@ This module creates the entire AWS infrastructure required for Tamr to work with
 # Examples
 ## Minimal
 Fully working examples for each pattern of use. These examples might require extra resources to run the examples.
+### Invokes the root module:
 - [Static HBase Cluster](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/static-hbase)
 - [Static Spark Cluster](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/static-spark)
+### Invokes submodules:
 - [Ephemeral Spark Cluster](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/ephemeral-spark)
 
 # Resources Created
@@ -27,6 +29,7 @@ This module creates:
     * Tamr EMR service IAM role
     * Tamr EMR EC2 IAM role
 * 1 IAM instance profile for EMR EC2 instances
+* 1 bucket object with the cluster's JSON configuration in the root directory S3 bucket
 
 If you are creating a static HBase or Spark cluster, this module also creates:
 * 1 Dynamodb table for EMRFS
@@ -44,10 +47,7 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| aws | >= 2.45.0 |
-| template | n/a |
+No provider.
 
 ## Inputs
 
@@ -56,6 +56,7 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 | applications | List of applications to run on EMR | `list(string)` | n/a | yes |
 | bucket\_name\_for\_logs | S3 bucket name for cluster logs. | `string` | n/a | yes |
 | bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory | `string` | n/a | yes |
+| emr\_config\_file\_path | Path to the EMR JSON configuration file. Please include the file name as well. | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
@@ -72,7 +73,6 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
 | emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
 | emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
-| emr\_config\_file\_path | Path to the EMR JSON configuration file. Please include the file name as well. | `string` | `"../../modules/aws-emr-emrfs/config.json"` | no |
 | emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR service role | `string` | `"tamr-emr-ec2-policy"` | no |
 | emr\_ec2\_instance\_profile\_name | Name of the new instance profile for EMR EC2 instances | `string` | `"tamr_emr_ec2_instance_profile"` | no |
 | emr\_ec2\_role\_name | Name of the new IAM role for EMR EC2 instances | `string` | `"tamr_emr_ec2_role"` | no |
@@ -112,8 +112,11 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 | emr\_service\_role\_name | Name of the EMR service role created |
 | emrfs\_dynamodb\_table\_id | ID for the emrfs dynamodb table |
 | emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
-| tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
+| json\_config\_s3\_key | The name of the json configuration object in the bucket. |
+| security\_configuration\_name | Name of the EMR cluster's security configuration |
+| tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created. Empty string if set up infrastructure for ephemeral cluster. |
 | tamr\_emr\_cluster\_name | Name of the AWS EMR cluster created |
+| upload\_config\_script\_s3\_key | The name of the upload config script object in the bucket. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

@@ -6,12 +6,16 @@ This terraform module creates the required IAM roles and instance profile to run
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr_iam" {
-  source                                  = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=0.10.1"
+  source                                  = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=0.10.4"
   s3_bucket_name_for_logs                 = "example-emr-logs"
   s3_bucket_name_for_root_directory       = "example-emr-rootdir"
   s3_policy_arns                          = ["arn:aws:iam::123456789101:policy/example-rootdir-read-write", "arn:aws:iam::123456789101:policy/example-logs-read-write"]
 }
 ```
+## Minimal
+This example directly invokes this submodule.
+- [Ephemeral Spark Example](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/ephemeral-spark)
+
 For creating the S3 buckets and/or S3-related permissions, use the [terraform-aws-s3](https://github.com/Datatamer/terraform-aws-s3) module.
 
 # Resources created

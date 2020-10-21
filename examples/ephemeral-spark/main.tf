@@ -16,43 +16,38 @@ module "emr-rootdir-bucket" {
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
 }
 
-# Set up infrastructure for ephemeral Spark cluster
-module "emr-ephemeral-spark" {
-  # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.10.1"
-  source = "../.."
-
-  # Configurations
-  create_static_cluster = false
-  release_label         = "emr-5.29.0" # spark 2.4.4
-  applications          = ["Spark"]
-  emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
-  additional_tags       = {}
-
-  # Networking
-  vpc_id     = var.vpc_id
-  subnet_id  = "" # unused
-  tamr_cidrs = []
-  tamr_sgs   = []
-
-  # External resource references
-  bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
-  bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
-  s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
-  key_pair_name                  = ""
-
-  # Names
-  cluster_name                  = "" # unused
-  emrfs_metadata_table_name     = "Ephem-Spark-Test-EmrFSMetadata"
-  emr_service_role_name         = "ephem-spark-test-service-role"
-  emr_ec2_role_name             = "ephem-spark-test-ec2-role"
-  emr_ec2_instance_profile_name = "ephem-spark-test-instance-profile"
-  emr_service_iam_policy_name   = "ephem-spark-test-service-policy"
-  emr_ec2_iam_policy_name       = "ephem-spark-test-ec2-policy"
-  master_instance_group_name    = "" # unused
-  core_instance_group_name      = "" # unused
+module "ephemeral-spark-sgs" {
+  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.10.4"
+  source                        = "../../modules/aws-emr-sgs"
+  applications                  = ["Spark"]
+  vpc_id                        = var.vpc_id
   emr_managed_master_sg_name    = "Ephem-Spark-Test-EMR-Spark-Master"
   emr_managed_core_sg_name      = "Ephem-Spark-Test-EMR-Spark-Core"
   emr_additional_master_sg_name = "Ephem-Spark-Test-EMR-Spark-Additional-Master"
   emr_additional_core_sg_name   = "Ephem-Spark-Test-EMR-Spark-Additional-Core"
   emr_service_access_sg_name    = "Ephem-Spark-Test-EMR-Spark-Service-Access"
+}
+
+module "ephemeral-spark-iam" {
+  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=0.10.4"
+  source                            = "../../modules/aws-emr-iam"
+  s3_bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
+  s3_bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
+  s3_policy_arns                    = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
+  emrfs_metadata_table_name         = "Ephem-Spark-Test-EmrFSMetadata"
+  emr_ec2_iam_policy_name           = "ephem-spark-test-ec2-policy"
+  emr_service_iam_policy_name       = "ephem-spark-test-service-policy"
+  emr_service_role_name             = "ephem-spark-test-service-role"
+  emr_ec2_instance_profile_name     = "ephem-spark-test-instance-profile"
+  emr_ec2_role_name                 = "ephem-spark-test-ec2-role"
+}
+
+module "ephemeral-spark-config" {
+  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-config?ref=0.10.4"
+  source                         = "../../modules/aws-emr-config"
+  create_static_cluster          = false
+  cluster_name                   = "" # unused
+  emr_config_file_path           = "../../modules/aws-emr-emrfs/config.json"
+  emrfs_metadata_table_name      = "Ephem-Spark-Test-EmrFSMetadata"
+  bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
 }
