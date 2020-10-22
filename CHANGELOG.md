@@ -1,5 +1,9 @@
 # TAMR AWS EMR module
 
+## v0.10.6 - October 22nd 2020
+* Adds `hbase_config_path` output
+* Fixes bug that causes EMR cluster creation to occur prematurely before cluster configuration module has posted to S3
+
 ## v0.10.5 - October 20th 2020
 * Adds submodule for EMR cluster creation
 * Adds submodule for cluster configuration resources
