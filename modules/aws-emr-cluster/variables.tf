@@ -20,6 +20,11 @@ variable "security_configuration_name" {
   description = "Name of EMR cluster's security configuration"
 }
 
+variable "json_configuration_bucket_key" {
+  type        = string
+  description = "Key of JSON configuration bucket object"
+}
+
 variable "emrfs_metadata_table_name" {
   type        = string
   description = "Table name of EMRFS metadata table in DynamoDB"

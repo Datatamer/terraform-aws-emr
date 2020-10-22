@@ -37,10 +37,8 @@ module "emrfs-dynamodb" {
   create_static_cluster         = var.create_static_cluster
   emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
   emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
-
-  emrfs_metadata_table_name = "${var.name_prefix}_emrfs_metadata_table"
-
-  tags = var.additional_tags
+  emrfs_metadata_table_name     = "${var.name_prefix}_emrfs_metadata_table"
+  tags                          = var.additional_tags
 }
 
 module "emr-cluster-config" {
@@ -61,7 +59,7 @@ module "emr-cluster" {
 
   # Cluster configuration
   create_static_cluster          = var.create_static_cluster
-  cluster_name                   = var.cluster_name
+  cluster_name                   = "${var.name_prefix}_emr_cluster"
   release_label                  = var.release_label
   security_configuration_name    = module.emr-cluster-config.security_configuration_name
   json_configuration_bucket_key  = module.emr-cluster-config.json_config_s3_key

@@ -30,7 +30,7 @@ module "emr_key_pair" {
 
 # EMR Static Spark cluster
 module "emr-spark" {
-  # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.10.4"
+  # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.11.0"
   source = "../.."
 
   # Configurations
@@ -39,6 +39,7 @@ module "emr-spark" {
   applications          = ["Spark"]
   emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
   additional_tags       = {}
+  name_prefix           = "spark_test"
 
   # Networking
   subnet_id  = var.subnet_id
@@ -52,22 +53,6 @@ module "emr-spark" {
   s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
   bucket_path_to_logs            = "logs/spark-test-cluster"
   key_pair_name                  = module.emr_key_pair.this_key_pair_key_name
-
-  # Names
-  cluster_name                  = "Spark-Test-EMR-Cluster"
-  emrfs_metadata_table_name     = "Spark-Test-EmrFSMetadata"
-  emr_service_role_name         = "spark-test-service-role"
-  emr_ec2_role_name             = "spark-test-ec2-role"
-  emr_ec2_instance_profile_name = "spark-test-instance-profile"
-  emr_service_iam_policy_name   = "spark-test-service-policy"
-  emr_ec2_iam_policy_name       = "spark-test-ec2-policy"
-  master_instance_group_name    = "Spark-Test-MasterInstanceGroup"
-  core_instance_group_name      = "Spark-Test-CoreInstanceGroup"
-  emr_managed_master_sg_name    = "Spark-Test-EMR-Spark-Master"
-  emr_managed_core_sg_name      = "Spark-Test-EMR-Spark-Core"
-  emr_additional_master_sg_name = "Spark-Test-EMR-Spark-Additional-Master"
-  emr_additional_core_sg_name   = "Spark-Test-EMR-Spark-Additional-Core"
-  emr_service_access_sg_name    = "Spark-Test-EMR-Spark-Service-Access"
 
   # Scale
   master_group_instance_count = 1

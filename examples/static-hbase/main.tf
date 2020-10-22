@@ -30,7 +30,7 @@ module "emr_key_pair" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.10.4"
+  # source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.11.0"
   source = "../.."
 
   # Configurations
@@ -40,6 +40,7 @@ module "emr-hbase" {
   emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
   bucket_path_to_logs   = "logs/hbase-test-cluster"
   additional_tags       = {}
+  name_prefix           = "hbase_test"
 
   # Networking
   subnet_id  = var.subnet_id
@@ -52,22 +53,6 @@ module "emr-hbase" {
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
   key_pair_name                  = module.emr_key_pair.this_key_pair_key_name
-
-  # Names
-  cluster_name                  = "HBase-Test-EMR-Cluster"
-  emrfs_metadata_table_name     = "HBase-Test-EmrFSMetadata"
-  emr_service_role_name         = "hbase-test-service-role"
-  emr_ec2_role_name             = "hbase-test-ec2-role"
-  emr_ec2_instance_profile_name = "hbase-test-instance-profile"
-  emr_service_iam_policy_name   = "hbase-test-service-policy"
-  emr_ec2_iam_policy_name       = "hbase-test-ec2-policy"
-  master_instance_group_name    = "HBase-Test-MasterInstanceGroup"
-  core_instance_group_name      = "Hbase-Test-CoreInstanceGroup"
-  emr_managed_master_sg_name    = "HBase-Test-EMR-Hbase-Master"
-  emr_managed_core_sg_name      = "HBase-Test-EMR-Hbase-Core"
-  emr_additional_master_sg_name = "HBase-Test-EMR-Hbase-Additional-Master"
-  emr_additional_core_sg_name   = "HBase-Test-EMR-Hbase-Additional-Core"
-  emr_service_access_sg_name    = "HBase-Test-EMR-Hbase-Service-Access"
 
   # Scale
   master_group_instance_count = 1

@@ -9,6 +9,11 @@ variable "name_prefix" {
   description = "A prefix to add to the names of all created resources"
 }
 
+variable "key_pair_name" {
+  type        = string
+  description = "Name of the Key Pair that will be attached to the EC2 instances"
+}
+
 variable "vpc_id" {
   type        = string
   description = "VPC ID of the network"
@@ -38,12 +43,6 @@ variable "bucket_path_to_logs" {
 variable "bucket_name_for_root_directory" {
   type        = string
   description = "S3 bucket name for storing root directory"
-}
-
-variable "cluster_name" {
-  type        = string
-  description = "Name for the EMR cluster to be created"
-  default     = "TAMR-EMR-Cluster"
 }
 
 variable "tamr_cidrs" {
