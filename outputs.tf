@@ -49,7 +49,7 @@ output "tamr_emr_cluster_id" {
 }
 
 output "tamr_emr_cluster_name" {
-  value       = var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].name : ""
+  value       = module.emr-cluster.tamr_emr_cluster_name
   description = "Name of the AWS EMR cluster created"
 }
 
@@ -71,6 +71,11 @@ output "json_config_s3_key" {
 output "upload_config_script_s3_key" {
   value       = module.emr-cluster-config.upload_config_script_s3_key
   description = "The name of the upload config script object in the bucket."
+}
+
+output "hbase_config_path" {
+  value       = module.emr-cluster-config.hbase_config_path
+  description = "Path in the root directory bucket that HBase config was uploaded to."
 }
 
 output "security_configuration_name" {
