@@ -62,6 +62,7 @@ module "emr-cluster" {
   cluster_name                   = var.cluster_name
   release_label                  = var.release_label
   security_configuration_name    = module.emr-cluster-config.security_configuration_name
+  json_configuration_bucket_key  = module.emr-cluster-config.json_config_s3_key
   applications                   = local.applications
   bucket_name_for_root_directory = var.bucket_name_for_root_directory
   bucket_name_for_logs           = var.bucket_name_for_logs

@@ -4,7 +4,7 @@ locals {
 
 data "aws_s3_bucket_object" "json_config" {
   bucket = var.bucket_name_for_root_directory
-  key    = "config.json"
+  key    = var.json_configuration_bucket_key
 }
 
 resource "aws_emr_cluster" "emr-cluster" {

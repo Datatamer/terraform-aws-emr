@@ -70,6 +70,7 @@ This module creates:
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group | `string` | n/a | yes |
 | emr\_service\_role\_arn | ARN of the IAM service role for the EMR cluster | `string` | n/a | yes |
 | emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | n/a | yes |
+| json\_configuration\_bucket\_key | Key of JSON configuration bucket object | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | security\_configuration\_name | Name of EMR cluster's security configuration | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
@@ -95,6 +96,7 @@ This module creates:
 | Name | Description |
 |------|-------------|
 | tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
+| tamr\_emr\_cluster\_name | Name of the AWS EMR cluster created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

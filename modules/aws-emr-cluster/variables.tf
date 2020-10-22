@@ -10,6 +10,11 @@ variable "create_static_cluster" {
   default     = true
 }
 
+variable "json_configuration_bucket_key" {
+  type        = string
+  description = "Key of JSON configuration bucket object"
+}
+
 variable "security_configuration_name" {
   type        = string
   description = "Name of EMR cluster's security configuration"
