@@ -1,5 +1,9 @@
 # TAMR AWS EMR module
 
+## v0.11.0 - October 21st 2020
+* Adds `name_prefix` to standardize names of resources created as well as avoid resource naming conflicts
+* In favor of prefixing names, this version removes the following input variables: `emr_managed_master_sg_name`, `emr_managed_core_sg_name`, `emr_additional_master_sg_name`, `emr_additional_core_sg_name`, `emr_service_access_sg_name`, `emrfs_metadata_table_name`, `emr_ec2_iam_policy_name`, `emr_service_iam_policy_name`, `emr_service_role_name`, `emr_ec2_instance_profile_name`, `emr_ec2_role_name`, `cluster_name`, `master_instance_group_name`, `core_instance_group_name`
+
 ## v0.10.6 - October 22nd 2020
 * Adds the following module outputs - `hbase_config_path`, `release_label`, `core_group_instance_count`, `core_ebs_size`, `core_ebs_type`, `core_instance_type`, `master_instance_type`, `master_ebs_volumes_count`, `master_ebs_size`, `master_ebs_type`, `log_uri`, `subnet_id`
 * Adds input `bucket_path_to_logs`
