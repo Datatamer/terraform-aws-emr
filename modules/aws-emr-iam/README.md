@@ -63,6 +63,7 @@ This module creates:
 | Name | Description |
 |------|-------------|
 | emr\_ec2\_instance\_profile\_arn | ARN of the EMR EC2 instance profile created |
+| emr\_ec2\_instance\_profile\_name | Name of the EMR EC2 instance profile created |
 | emr\_ec2\_role\_arn | ARN of the EMR role created for EC2 instances |
 | emr\_service\_role\_arn | ARN of the EMR service role created |
 | emr\_service\_role\_name | Name of the EMR service role created |
