@@ -35,6 +35,12 @@ variable "bucket_name_for_logs" {
   description = "S3 bucket name for cluster logs."
 }
 
+variable "bucket_path_to_logs" {
+  type        = string
+  description = "Path in logs bucket to store cluster logs e.g. mycluster/logs"
+  default     = ""
+}
+
 variable "release_label" {
   type        = string
   description = "The release label for the Amazon EMR release."

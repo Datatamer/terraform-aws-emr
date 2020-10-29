@@ -19,6 +19,12 @@ No provider.
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| config | n/a |
+| iam | n/a |
+| logs-bucket | n/a |
+| rootdir-bucket | n/a |
+| sgs | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

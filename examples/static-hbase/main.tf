@@ -6,7 +6,7 @@ module "emr-logs-bucket" {
     "s3:HeadBucket",
     "s3:PutObject",
   ]
-  read_write_paths = [""] # r/w policy permitting specified rw actions on entire bucket
+  read_write_paths = ["logs/hbase-test-cluster"] # r/w policy permitting specified rw actions on entire bucket
 }
 
 # Set up root directory bucket
@@ -38,6 +38,7 @@ module "emr-hbase" {
   release_label         = "emr-5.29.0" # hbase 1.4.10
   applications          = ["Hbase"]
   emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
+  bucket_path_to_logs   = "logs/hbase-test-cluster"
   additional_tags       = {}
 
   # Networking
