@@ -22,6 +22,10 @@ No requirements.
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| cluster | n/a |
+| logs-bucket | n/a |
+| rootdir-bucket | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

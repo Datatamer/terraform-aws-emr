@@ -70,10 +70,12 @@ This module creates:
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group | `string` | n/a | yes |
 | emr\_service\_role\_arn | ARN of the IAM service role for the EMR cluster | `string` | n/a | yes |
 | emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | n/a | yes |
+| json\_configuration\_bucket\_key | Key of JSON configuration bucket object | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | security\_configuration\_name | Name of EMR cluster's security configuration | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
+| bucket\_path\_to\_logs | Path in logs bucket to store cluster logs e.g. mycluster/logs | `string` | `""` | no |
 | cluster\_name | Name for the EMR cluster to be created | `string` | `"TAMR-EMR-Cluster"` | no |
 | core\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"500"` | no |
 | core\_ebs\_type | Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
@@ -94,7 +96,20 @@ This module creates:
 
 | Name | Description |
 |------|-------------|
+| core\_ebs\_size | The core EBS volume size, in gibibytes (GiB). |
+| core\_ebs\_type | The core EBS volume size, in gibibytes (GiB). |
+| core\_ebs\_volumes\_count | Number of volumes to attach to the core nodes |
+| core\_group\_instance\_count | Number of cores configured to execute the job flow |
+| core\_instance\_type | The EC2 instance type of the core nodes |
+| log\_uri | The path to the S3 location where logs for this cluster are stored. |
+| master\_ebs\_size | The master EBS volume size, in gibibytes (GiB). |
+| master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 |
+| master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes |
+| master\_instance\_type | The EC2 instance type of the master nodes |
+| release\_label | The release label for the Amazon EMR release. |
+| subnet\_id | ID of the subnet where EMR cluster was created |
 | tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created |
+| tamr\_emr\_cluster\_name | Name of the AWS EMR cluster created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

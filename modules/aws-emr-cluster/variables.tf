@@ -10,6 +10,11 @@ variable "create_static_cluster" {
   default     = true
 }
 
+variable "json_configuration_bucket_key" {
+  type        = string
+  description = "Key of JSON configuration bucket object"
+}
+
 variable "security_configuration_name" {
   type        = string
   description = "Name of EMR cluster's security configuration"
@@ -28,6 +33,12 @@ variable "bucket_name_for_root_directory" {
 variable "bucket_name_for_logs" {
   type        = string
   description = "S3 bucket name for cluster logs."
+}
+
+variable "bucket_path_to_logs" {
+  type        = string
+  description = "Path in logs bucket to store cluster logs e.g. mycluster/logs"
+  default     = ""
 }
 
 variable "release_label" {

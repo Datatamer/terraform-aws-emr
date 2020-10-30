@@ -8,6 +8,16 @@ output "json_config_s3_key" {
   description = "The name of the json configuration object in the bucket."
 }
 
+output "hbase_config_path" {
+  value       = var.hbase_config_path
+  description = "Path in the root directory bucket that HBase config was uploaded to"
+}
+
+output "emrfs_dynamodb_table_name" {
+  value       = var.emrfs_metadata_table_name
+  description = "Name for the emrfs dynamodb table"
+}
+
 output "upload_config_script_s3_key" {
   value       = var.create_static_cluster ? aws_s3_bucket_object.upload_hbase_config_script[0].key : ""
   description = "The name of the upload config script object in the bucket."

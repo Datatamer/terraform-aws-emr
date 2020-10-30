@@ -29,6 +29,12 @@ variable "bucket_name_for_logs" {
   description = "S3 bucket name for cluster logs."
 }
 
+variable "bucket_path_to_logs" {
+  type        = string
+  description = "Path in logs bucket to store cluster logs e.g. mycluster/logs"
+  default     = ""
+}
+
 variable "bucket_name_for_root_directory" {
   type        = string
   description = "S3 bucket name for storing root directory"
@@ -211,26 +217,31 @@ variable "core_ebs_volumes_count" {
   description = "Number of volumes to attach to the core nodes"
   default     = 1
 }
+
 variable "core_ebs_type" {
   type        = string
   description = "Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1"
   default     = "gp2"
 }
+
 variable "core_ebs_size" {
   type        = string
   description = "The volume size, in gibibytes (GiB)."
   default     = "500"
 }
+
 variable "master_ebs_volumes_count" {
   type        = number
   description = "Number of volumes to attach to the master nodes"
   default     = 1
 }
+
 variable "master_ebs_type" {
   type        = string
   description = "Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1"
   default     = "gp2"
 }
+
 variable "master_ebs_size" {
   type        = string
   description = "The volume size, in gibibytes (GiB)."

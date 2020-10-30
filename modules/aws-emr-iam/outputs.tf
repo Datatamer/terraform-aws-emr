@@ -17,3 +17,8 @@ output "emr_ec2_instance_profile_arn" {
   value       = aws_iam_instance_profile.emr_ec2_instance_profile.arn
   description = "ARN of the EMR EC2 instance profile created"
 }
+
+output "emr_ec2_instance_profile_name" {
+  value       = aws_iam_instance_profile.emr_ec2_instance_profile.name
+  description = "Name of the EMR EC2 instance profile created"
+}

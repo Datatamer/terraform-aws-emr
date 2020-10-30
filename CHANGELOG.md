@@ -1,5 +1,10 @@
 # TAMR AWS EMR module
 
+## v0.10.6 - October 22nd 2020
+* Adds the following module outputs - `hbase_config_path`, `release_label`, `core_group_instance_count`, `core_ebs_size`, `core_ebs_type`, `core_instance_type`, `master_instance_type`, `master_ebs_volumes_count`, `master_ebs_size`, `master_ebs_type`, `log_uri`, `subnet_id`
+* Adds input `bucket_path_to_logs`
+* Fixes bug that causes EMR cluster creation to occur prematurely before cluster configuration module has posted to S3
+
 ## v0.10.5 - October 20th 2020
 * Adds submodule for EMR cluster creation
 * Adds submodule for cluster configuration resources

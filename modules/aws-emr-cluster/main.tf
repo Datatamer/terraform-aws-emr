@@ -4,7 +4,7 @@ locals {
 
 data "aws_s3_bucket_object" "json_config" {
   bucket = var.bucket_name_for_root_directory
-  key    = "config.json"
+  key    = var.json_configuration_bucket_key
 }
 
 resource "aws_emr_cluster" "emr-cluster" {
@@ -48,7 +48,7 @@ resource "aws_emr_cluster" "emr-cluster" {
     }
   }
 
-  log_uri      = "s3n://${var.bucket_name_for_logs}/"
+  log_uri      = "s3n://${var.bucket_name_for_logs}/${var.bucket_path_to_logs}"
   service_role = var.emr_service_role_arn
 
   security_configuration = var.security_configuration_name

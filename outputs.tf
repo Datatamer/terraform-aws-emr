@@ -43,14 +43,79 @@ output "emr_ec2_instance_profile_arn" {
   description = "ARN of the EMR EC2 instance profile created"
 }
 
+output "emr_ec2_instance_profile_name" {
+  value       = module.emr-iam.emr_ec2_instance_profile_name
+  description = "Name of the EMR EC2 instance profile created"
+}
+
 output "tamr_emr_cluster_id" {
   value       = module.emr-cluster.tamr_emr_cluster_id
   description = "Identifier for the AWS EMR cluster created. Empty string if set up infrastructure for ephemeral cluster."
 }
 
 output "tamr_emr_cluster_name" {
-  value       = var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].name : ""
+  value       = module.emr-cluster.tamr_emr_cluster_name
   description = "Name of the AWS EMR cluster created"
+}
+
+output "master_instance_type" {
+  value       = module.emr-cluster.master_instance_type
+  description = "The EC2 instance type of the master nodes"
+}
+
+output "master_ebs_volumes_count" {
+  value       = module.emr-cluster.master_ebs_volumes_count
+  description = "Number of volumes to attach to the master nodes"
+}
+
+output "master_ebs_size" {
+  value       = module.emr-cluster.master_ebs_size
+  description = "The master EBS volume size, in gibibytes (GiB)."
+}
+
+output "master_ebs_type" {
+  value       = module.emr-cluster.master_ebs_type
+  description = "Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1"
+}
+
+output "core_group_instance_count" {
+  value       = module.emr-cluster.core_group_instance_count
+  description = "Number of cores configured to execute the job flow"
+}
+
+output "core_instance_type" {
+  value       = module.emr-cluster.core_instance_type
+  description = "The EC2 instance type of the core nodes"
+}
+
+output "core_ebs_size" {
+  value       = module.emr-cluster.core_ebs_size
+  description = "The core EBS volume size, in gibibytes (GiB)."
+}
+
+output "core_ebs_type" {
+  value       = module.emr-cluster.core_ebs_type
+  description = "The core EBS volume size, in gibibytes (GiB)."
+}
+
+output "core_ebs_volumes_count" {
+  value       = module.emr-cluster.core_ebs_volumes_count
+  description = "Number of volumes to attach to the core nodes"
+}
+
+output "release_label" {
+  value       = module.emr-cluster.release_label
+  description = "The release label for the Amazon EMR release."
+}
+
+output "log_uri" {
+  value       = module.emr-cluster.log_uri
+  description = "The path to the S3 location where logs for this cluster are stored."
+}
+
+output "subnet_id" {
+  value       = module.emr-cluster.subnet_id
+  description = "ID of the subnet where EMR cluster was created"
 }
 
 output "emrfs_dynamodb_table_id" {
@@ -71,6 +136,11 @@ output "json_config_s3_key" {
 output "upload_config_script_s3_key" {
   value       = module.emr-cluster-config.upload_config_script_s3_key
   description = "The name of the upload config script object in the bucket."
+}
+
+output "hbase_config_path" {
+  value       = module.emr-cluster-config.hbase_config_path
+  description = "Path in the root directory bucket that HBase config was uploaded to."
 }
 
 output "security_configuration_name" {
