@@ -1,6 +1,6 @@
 # Set up logs bucket with read/write permissions
 module "emr-logs-bucket" {
-  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=0.1.0"
+  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=0.1.3"
   bucket_name = var.bucket_name_for_logs
   read_write_actions = [
     "s3:HeadBucket",
@@ -11,13 +11,13 @@ module "emr-logs-bucket" {
 
 # Set up root directory bucket
 module "emr-rootdir-bucket" {
-  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=0.1.0"
+  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=0.1.3"
   bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
 }
 
 module "ephemeral-spark-sgs" {
-  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.10.4"
+  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.10.7"
   source                        = "../../modules/aws-emr-sgs"
   applications                  = ["Spark"]
   vpc_id                        = var.vpc_id
@@ -29,7 +29,7 @@ module "ephemeral-spark-sgs" {
 }
 
 module "ephemeral-spark-iam" {
-  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=0.10.4"
+  # source                            = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=0.10.7"
   source                            = "../../modules/aws-emr-iam"
   s3_bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
@@ -43,7 +43,7 @@ module "ephemeral-spark-iam" {
 }
 
 module "ephemeral-spark-config" {
-  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-config?ref=0.10.4"
+  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-config?ref=0.10.7"
   source                         = "../../modules/aws-emr-config"
   create_static_cluster          = false
   cluster_name                   = "" # unused

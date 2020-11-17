@@ -1,10 +1,14 @@
+locals {
+  static_cluster = var.create_static_cluster && length(aws_emr_cluster.emr-cluster) > 0
+}
+
 output "tamr_emr_cluster_id" {
-  value       = var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].id : ""
+  value       = local.static_cluster ? aws_emr_cluster.emr-cluster[0].id : ""
   description = "Identifier for the AWS EMR cluster created"
 }
 
 output "tamr_emr_cluster_name" {
-  value       = var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].name : ""
+  value       = local.static_cluster ? aws_emr_cluster.emr-cluster[0].name : ""
   description = "Name of the AWS EMR cluster created"
 }
 
@@ -59,7 +63,7 @@ output "master_ebs_type" {
 }
 
 output "log_uri" {
-  value       = var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].log_uri : "s3n://${var.bucket_name_for_logs}/${var.bucket_path_to_logs}"
+  value       = local.static_cluster ? aws_emr_cluster.emr-cluster[0].log_uri : "s3n://${var.bucket_name_for_logs}/${var.bucket_path_to_logs}"
   description = "The path to the S3 location where logs for this cluster are stored."
 }
 
