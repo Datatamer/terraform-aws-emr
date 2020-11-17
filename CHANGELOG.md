@@ -2,6 +2,7 @@
 
 ## v0.10.7 - November 17th 2020
 * Fixes for issues with the outputs.tf when a resource does not exist
+* Upgrades the s3 module in the examples
 
 ## v0.10.6 - October 22nd 2020
 * Adds the following module outputs - `hbase_config_path`, `release_label`, `core_group_instance_count`, `core_ebs_size`, `core_ebs_type`, `core_instance_type`, `master_instance_type`, `master_ebs_volumes_count`, `master_ebs_size`, `master_ebs_type`, `log_uri`, `subnet_id`
