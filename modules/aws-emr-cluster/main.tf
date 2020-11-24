@@ -51,8 +51,6 @@ resource "aws_emr_cluster" "emr-cluster" {
   log_uri      = "s3n://${var.bucket_name_for_logs}/${var.bucket_path_to_logs}"
   service_role = var.emr_service_role_arn
 
-  security_configuration = var.security_configuration_name
-
   # Upload HBase/Hadoop configuration to s3
   step {
     action_on_failure = "TERMINATE_CLUSTER"

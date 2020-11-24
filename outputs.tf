@@ -142,8 +142,3 @@ output "hbase_config_path" {
   value       = module.emr-cluster-config.hbase_config_path
   description = "Path in the root directory bucket that HBase config was uploaded to."
 }
-
-output "security_configuration_name" {
-  value       = module.emr-cluster-config.security_configuration_name
-  description = "Name of the EMR cluster's security configuration"
-}

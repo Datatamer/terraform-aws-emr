@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v0.11.0 - November 24th 2020
+* Removes support for EMR security configuration due to issues with resource deletion
+
 ## v0.10.7 - November 17th 2020
 * Fixes for issues with the outputs.tf when a resource does not exist
 * Upgrades the s3 module in the examples

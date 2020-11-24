@@ -127,7 +127,6 @@ No provider.
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes |
 | master\_instance\_type | The EC2 instance type of the master nodes |
 | release\_label | The release label for the Amazon EMR release. |
-| security\_configuration\_name | Name of the EMR cluster's security configuration |
 | subnet\_id | ID of the subnet where EMR cluster was created |
 | tamr\_emr\_cluster\_id | Identifier for the AWS EMR cluster created. Empty string if set up infrastructure for ephemeral cluster. |
 | tamr\_emr\_cluster\_name | Name of the AWS EMR cluster created |
