@@ -34,10 +34,3 @@ resource "aws_s3_bucket_object" "upload_hbase_config_script" {
   )
   server_side_encryption = "AES256"
 }
-
-# Security configuration for EMR cluster
-resource "aws_emr_security_configuration" "security_configuration" {
-  count         = var.create_static_cluster ? 1 : 0
-  name          = "${var.cluster_name}_security_configuration"
-  configuration = file("${path.module}/security_configuration.json")
-}

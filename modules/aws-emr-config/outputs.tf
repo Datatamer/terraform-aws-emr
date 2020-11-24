@@ -1,6 +1,5 @@
 locals {
-  security_config = var.create_static_cluster && length(aws_emr_security_configuration.security_configuration) > 0
-  emr_config      = var.create_static_cluster && length(aws_s3_bucket_object.upload_hbase_config_script) > 0
+  emr_config = var.create_static_cluster && length(aws_s3_bucket_object.upload_hbase_config_script) > 0
 }
 
 output "emr_config_file_path" {
@@ -26,9 +25,4 @@ output "emrfs_dynamodb_table_name" {
 output "upload_config_script_s3_key" {
   value       = local.emr_config ? aws_s3_bucket_object.upload_hbase_config_script[0].key : ""
   description = "The name of the upload config script object in the bucket."
-}
-
-output "security_configuration_name" {
-  value       = local.security_config ? aws_emr_security_configuration.security_configuration[0].name : ""
-  description = "Name of the EMR cluster's security configuration"
 }

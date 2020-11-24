@@ -6,12 +6,11 @@ This terraform module creates a EMR cluster.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr-cluster" {
-  source                                  = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=0.10.7"
+  source                                  = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=0.11.0"
 
   # Cluster configuration
   cluster_name                   = "example-cluster"
   applications                   = ["Spark", "HBase"]
-  security_configuration_name    = module.emr-cluster-config.security_configuration_name
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
 
@@ -72,7 +71,6 @@ This module creates:
 | emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | n/a | yes |
 | json\_configuration\_bucket\_key | Key of JSON configuration bucket object | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
-| security\_configuration\_name | Name of EMR cluster's security configuration | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
 | bucket\_path\_to\_logs | Path in logs bucket to store cluster logs e.g. mycluster/logs | `string` | `""` | no |
