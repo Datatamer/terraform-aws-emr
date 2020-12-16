@@ -1,5 +1,9 @@
 # TAMR AWS EMR module
 
+## v0.11.1 - December 15th 2020
+* Updates the config.json to match state in AWS
+* Logs path in examples updated to match state in AWS
+
 ## v0.11.0 - November 24th 2020
 * Removes support for EMR security configuration due to issues with resource deletion
 
