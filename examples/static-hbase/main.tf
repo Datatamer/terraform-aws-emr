@@ -38,7 +38,7 @@ module "emr-hbase" {
   release_label         = "emr-5.29.0" # hbase 1.4.10
   applications          = ["Hbase"]
   emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
-  bucket_path_to_logs   = "logs/hbase-test-cluster"
+  bucket_path_to_logs   = "logs/hbase-test-cluster/"
   additional_tags       = {}
 
   # Networking
