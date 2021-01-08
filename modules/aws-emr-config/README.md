@@ -41,6 +41,8 @@ If you are creating a static cluster, this module also creates:
 | emrfs\_metadata\_write\_capacity | Write capacity units of the DynamoDB table used for EMRFS metadata | `number` | `300` | no |
 | hadoop\_config\_path | Path in root directory bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
 | hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
+| json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
+| utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
 
 ## Outputs
 

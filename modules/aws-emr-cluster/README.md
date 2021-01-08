@@ -6,7 +6,7 @@ This terraform module creates a EMR cluster.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr-cluster" {
-  source                                  = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=0.11.1"
+  source                                  = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=0.12.0"
 
   # Cluster configuration
   cluster_name                   = "example-cluster"
@@ -69,7 +69,6 @@ This module creates:
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group | `string` | n/a | yes |
 | emr\_service\_role\_arn | ARN of the IAM service role for the EMR cluster | `string` | n/a | yes |
 | emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | n/a | yes |
-| json\_configuration\_bucket\_key | Key of JSON configuration bucket object | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
@@ -82,6 +81,7 @@ This module creates:
 | core\_instance\_group\_name | Name for the core instance group | `string` | `"CoreInstanceGroup"` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
+| json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |
@@ -89,6 +89,7 @@ This module creates:
 | master\_instance\_group\_name | Name for the master instance group | `string` | `"MasterInstanceGroup"` | no |
 | master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
+| utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
 
 ## Outputs
 

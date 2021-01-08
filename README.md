@@ -88,6 +88,7 @@ No provider.
 | enable\_http\_port | EMR services like Ganglia run on the http port | `bool` | `false` | no |
 | hadoop\_config\_path | Path in root directory bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
 | hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
+| json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |
@@ -97,6 +98,7 @@ No provider.
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
 | tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
 | tamr\_sgs | Security Groups for the Tamr Instance | `list(string)` | `[]` | no |
+| utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
 
 ## Outputs
 

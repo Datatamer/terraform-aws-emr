@@ -30,16 +30,18 @@ module "emr_key_pair" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.11.1"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.12.0"
   source = "../.."
 
   # Configurations
-  create_static_cluster = true
-  release_label         = "emr-5.29.0" # hbase 1.4.10
-  applications          = ["Hbase"]
-  emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
-  bucket_path_to_logs   = "logs/hbase-test-cluster/"
-  additional_tags       = {}
+  create_static_cluster         = true
+  release_label                 = "emr-5.29.0" # hbase 1.4.10
+  applications                  = ["Hbase"]
+  emr_config_file_path          = "../../modules/aws-emr-emrfs/config.json"
+  bucket_path_to_logs           = "logs/hbase-test-cluster/"
+  json_configuration_bucket_key = "tamr/emr/emr.json"
+  utility_script_bucket_key     = "tamr/emr/upload_config.sh"
+  additional_tags               = {}
 
   # Networking
   subnet_id  = var.subnet_id

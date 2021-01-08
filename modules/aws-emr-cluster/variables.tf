@@ -12,7 +12,8 @@ variable "create_static_cluster" {
 
 variable "json_configuration_bucket_key" {
   type        = string
-  description = "Key of JSON configuration bucket object"
+  description = "Key (i.e. path) of JSON configuration bucket object in the root directory bucket"
+  default     = "config.json"
 }
 
 variable "emrfs_metadata_table_name" {
@@ -168,4 +169,10 @@ variable "additional_tags" {
   type        = map(string)
   description = "Additional tags to be attached to the resources created"
   default     = {}
+}
+
+variable "utility_script_bucket_key" {
+  type        = string
+  description = "Key (i.e. path) to upload the utility script to"
+  default     = "util/upload_hbase_config.sh"
 }

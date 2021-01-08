@@ -1,5 +1,11 @@
 # TAMR AWS EMR module
 
+## v0.12.0 - January 8th 2021
+* Exposes variable json_configuration_bucket_key to make the path to the EMR configuration file
+ settable.
+* Adds new variable utility_script_bucket_key to make path of the utility script that uploads
+ emr configuration files to s3 settable.
+
 ## v0.11.1 - December 15th 2020
 * Updates the config.json to match state in AWS
 * Logs path in examples updated to match state in AWS
