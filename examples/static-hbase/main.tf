@@ -40,6 +40,7 @@ module "emr-hbase" {
   emr_config_file_path          = "../../modules/aws-emr-emrfs/config.json"
   bucket_path_to_logs           = "logs/hbase-test-cluster/"
   json_configuration_bucket_key = "tamr/emr/emr.json"
+  utility_script_bucket_key     = "tamr/emr/upload_config.sh"
   additional_tags               = {}
 
   # Networking

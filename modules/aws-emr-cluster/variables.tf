@@ -170,3 +170,9 @@ variable "additional_tags" {
   description = "Additional tags to be attached to the resources created"
   default     = {}
 }
+
+variable "utility_script_bucket_key" {
+  type        = string
+  description = "Key (i.e. path) to upload the utility script to"
+  default     = "util/upload_hbase_config.sh"
+}

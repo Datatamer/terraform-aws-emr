@@ -23,7 +23,7 @@ resource "aws_s3_bucket_object" "upload_json_config" {
 resource "aws_s3_bucket_object" "upload_hbase_config_script" {
   count  = var.create_static_cluster ? 1 : 0
   bucket = var.bucket_name_for_root_directory
-  key    = "util/upload_hbase_config.sh"
+  key    = var.utility_script_bucket_key
   content = templatefile(
     "${path.module}/upload_hbase_config.sh",
     {
