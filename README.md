@@ -88,6 +88,7 @@ No provider.
 | enable\_http\_port | EMR services like Ganglia run on the http port | `bool` | `false` | no |
 | hadoop\_config\_path | Path in root directory bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
 | hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
+| json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"tamr/emr/config.json"` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |

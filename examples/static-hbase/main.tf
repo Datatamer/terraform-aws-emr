@@ -34,12 +34,13 @@ module "emr-hbase" {
   source = "../.."
 
   # Configurations
-  create_static_cluster = true
-  release_label         = "emr-5.29.0" # hbase 1.4.10
-  applications          = ["Hbase"]
-  emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
-  bucket_path_to_logs   = "logs/hbase-test-cluster/"
-  additional_tags       = {}
+  create_static_cluster         = true
+  release_label                 = "emr-5.29.0" # hbase 1.4.10
+  applications                  = ["Hbase"]
+  emr_config_file_path          = "../../modules/aws-emr-emrfs/config.json"
+  bucket_path_to_logs           = "logs/hbase-test-cluster/"
+  json_configuration_bucket_key = "tamr/emr/emr.json"
+  additional_tags               = {}
 
   # Networking
   subnet_id  = var.subnet_id

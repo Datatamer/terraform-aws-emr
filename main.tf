@@ -52,6 +52,7 @@ module "emr-cluster-config" {
   bucket_name_for_root_directory = var.bucket_name_for_root_directory
   hbase_config_path              = var.hbase_config_path
   hadoop_config_path             = var.hadoop_config_path
+  json_configuration_bucket_key  = var.json_configuration_bucket_key
 }
 
 module "emr-cluster" {

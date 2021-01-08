@@ -13,7 +13,7 @@ locals {
 # JSON configuration to S3
 resource "aws_s3_bucket_object" "upload_json_config" {
   bucket                 = var.bucket_name_for_root_directory
-  key                    = "config.json"
+  key                    = var.json_configuration_bucket_key
   content                = local.json_config
   content_type           = "application/json"
   server_side_encryption = "AES256"

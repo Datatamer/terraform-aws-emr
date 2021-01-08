@@ -49,3 +49,9 @@ variable "cluster_name" {
   description = "Name for the EMR cluster to be created"
   default     = "TAMR-EMR-Cluster"
 }
+
+variable "json_configuration_bucket_key" {
+  type        = string
+  description = "Key (i.e. path) of JSON configuration bucket object in the root directory bucket"
+  default     = "config.json"
+}
