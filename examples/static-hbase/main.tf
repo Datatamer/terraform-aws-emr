@@ -28,9 +28,23 @@ module "emr_key_pair" {
   public_key = tls_private_key.emr_private_key.public_key_openssh
 }
 
+resource "aws_s3_bucket_object" "sample_bootstrap_script" {
+  bucket                 = module.emr-rootdir-bucket.bucket_name
+  key                    = "bootstrap-actions/downloadarchive.sh"
+  source                 = "./downloadarchive.sh"
+  server_side_encryption = "AES256"
+}
+
+resource "aws_s3_bucket_object" "sample_bootstrap_script_2" {
+  bucket                 = module.emr-rootdir-bucket.bucket_name
+  key                    = "bootstrap-actions/catS3file.sh"
+  source                 = "./catS3file.sh"
+  server_side_encryption = "AES256"
+}
+
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.12.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.12.1"
   source = "../.."
 
   # Configurations
@@ -42,6 +56,18 @@ module "emr-hbase" {
   json_configuration_bucket_key = "tamr/emr/emr.json"
   utility_script_bucket_key     = "tamr/emr/upload_config.sh"
   additional_tags               = {}
+  bootstrap_actions = [
+    {
+      name = "sample_bootstrap_action",
+      path = "s3://${module.emr-rootdir-bucket.bucket_name}/${aws_s3_bucket_object.sample_bootstrap_script.id}"
+      args = []
+    },
+    {
+      name = "sample_bootstrap_action_2",
+      path = "s3://${module.emr-rootdir-bucket.bucket_name}/${aws_s3_bucket_object.sample_bootstrap_script_2.id}"
+      args = ["README"]
+    }
+  ]
 
   # Networking
   subnet_id  = var.subnet_id
