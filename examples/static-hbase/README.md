@@ -9,6 +9,7 @@ No requirements.
 
 | Name | Version |
 |------|---------|
+| aws | n/a |
 | tls | n/a |
 
 ## Inputs
@@ -25,7 +26,9 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | cluster | n/a |
+| ec2-key | n/a |
 | logs-bucket | n/a |
+| private-key | n/a |
 | rootdir-bucket | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
