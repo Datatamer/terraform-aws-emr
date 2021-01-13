@@ -1,6 +1,6 @@
 # TAMR AWS EMR module
 
-## v0.12.1 - January 12th 2021
+## v0.13.0 - January 12th 2021
 * Adds optional input `bootstrap_actions` to run ordered list of actions on cluster nodes before Hadoop starts.
 * Adds example usage of `bootstrap_actions` in examples/static-hbase
 

@@ -6,7 +6,7 @@ This terraform module creates a EMR cluster.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr-cluster" {
-  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=0.12.1"
+  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=0.13.0"
 
   # Cluster configuration
   cluster_name                   = "example-cluster"
