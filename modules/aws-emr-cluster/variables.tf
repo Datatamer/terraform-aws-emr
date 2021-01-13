@@ -165,6 +165,16 @@ variable "emr_ec2_instance_profile_arn" {
   description = "ARN of the EMR EC2 instance profile"
 }
 
+variable "bootstrap_actions" {
+  type = list(object({
+    name = string
+    path = string
+    args = list(string)
+  }))
+  description = "Ordered list of bootstrap actions that will be run before Hadoop is started on the cluster nodes."
+  default     = []
+}
+
 variable "additional_tags" {
   type        = map(string)
   description = "Additional tags to be attached to the resources created"
