@@ -32,18 +32,6 @@ variable "s3_bucket_name_for_root_directory" {
   description = "S3 bucket name for storing root directory"
 }
 
-variable "aws_region_of_dynamodb_table" {
-  type        = string
-  description = "AWS region where the DynamoDB table for EMRFS metadata is located"
-  default     = "us-east-1"
-}
-
-variable "emrfs_metadata_table_name" {
-  type        = string
-  description = "Table name of EMRFS metadata table in DynamoDB"
-  default     = "EmrFSMetadata"
-}
-
 variable "s3_bucket_name_for_logs" {
   type        = string
   description = "S3 bucket name/directory for cluster logs."

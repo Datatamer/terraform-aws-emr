@@ -140,28 +140,7 @@ data "aws_iam_policy_document" "emr_ec2_policy" {
   statement {
     effect = "Allow"
     actions = [
-      "dynamodb:BatchGetItem",
-      "dynamodb:BatchWriteItem",
-      "dynamodb:PutItem",
-      "dynamodb:DescribeTable",
-      "dynamodb:DeleteItem",
-      "dynamodb:GetItem",
-      "dynamodb:Scan",
-      "dynamodb:Query",
-      "dynamodb:UpdateItem",
-      "dynamodb:UpdateTable",
-      "dynamodb:CreateTable",
-    ]
-    resources = [
-      "arn:aws:dynamodb:${var.aws_region_of_dynamodb_table}:${data.aws_caller_identity.current.account_id}:table/${var.emrfs_metadata_table_name}"
-    ]
-  }
-
-  statement {
-    effect = "Allow"
-    actions = [
       "cloudwatch:PutMetricData",
-      "dynamodb:ListTables",
       "s3:HeadBucket",
     ]
     resources = [

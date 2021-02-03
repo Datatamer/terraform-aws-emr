@@ -22,8 +22,6 @@ module "emr-iam" {
   s3_bucket_name_for_logs           = var.bucket_name_for_logs
   s3_bucket_name_for_root_directory = var.bucket_name_for_root_directory
   s3_policy_arns                    = var.s3_policy_arns
-  emrfs_metadata_table_name         = var.emrfs_metadata_table_name
-  aws_region_of_dynamodb_table      = var.aws_region_of_dynamodb_table
   emr_ec2_iam_policy_name           = var.emr_ec2_iam_policy_name
   emr_service_iam_policy_name       = var.emr_service_iam_policy_name
   emr_service_role_name             = var.emr_service_role_name
@@ -32,23 +30,11 @@ module "emr-iam" {
   additional_tags                   = var.additional_tags
 }
 
-module "emrfs-dynamodb" {
-  source                        = "./modules/aws-emr-emrfs"
-  create_static_cluster         = var.create_static_cluster
-  emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
-  emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
-  emrfs_metadata_table_name     = var.emrfs_metadata_table_name
-  tags                          = var.additional_tags
-}
-
 module "emr-cluster-config" {
   source                         = "./modules/aws-emr-config"
   create_static_cluster          = var.create_static_cluster
   cluster_name                   = var.cluster_name
   emr_config_file_path           = var.emr_config_file_path
-  emrfs_metadata_read_capacity   = var.emrfs_metadata_read_capacity
-  emrfs_metadata_write_capacity  = var.emrfs_metadata_write_capacity
-  emrfs_metadata_table_name      = var.emrfs_metadata_table_name
   bucket_name_for_root_directory = var.bucket_name_for_root_directory
   hbase_config_path              = var.hbase_config_path
   hadoop_config_path             = var.hadoop_config_path
@@ -97,9 +83,6 @@ module "emr-cluster" {
   # IAM
   emr_service_role_arn         = module.emr-iam.emr_service_role_arn
   emr_ec2_instance_profile_arn = module.emr-iam.emr_ec2_instance_profile_arn
-
-  # Note: Value not used in module, but need this to establish dependency on aws-emr-emrfs submodule
-  emrfs_metadata_table_name = module.emrfs-dynamodb.emrfs_dynamodb_table_name
 
   additional_tags = var.additional_tags
 }
