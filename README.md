@@ -32,7 +32,6 @@ This module creates:
 * 1 bucket object with the cluster's JSON configuration in the root directory S3 bucket
 
 If you are creating a static HBase or Spark cluster, this module also creates:
-* 1 Dynamodb table for EMRFS
 * 1 EMR Cluster and associated EMR Security Configuration
 
 Note: For creating the logs and root directory buckets and/or S3-related permissions, use the [terraform-aws-s3](https://github.com/Datatamer/terraform-aws-s3) module.
@@ -82,8 +81,6 @@ No provider.
 | emr\_service\_access\_sg\_name | Name for the EMR service access security group | `string` | `"TAMR-EMR-Service-Access"` | no |
 | emr\_service\_iam\_policy\_name | Name for the IAM policy attached to the EMR Service role | `string` | `"tamr-emr-service-policy"` | no |
 | emr\_service\_role\_name | Name of the new IAM service role for the EMR cluster | `string` | `"tamr_emr_service_role"` | no |
-| emrfs\_metadata\_read\_capacity | Read capacity units of the DynamoDB table used for EMRFS metadata | `number` | `600` | no |
-| emrfs\_metadata\_write\_capacity | Write capacity units of the DynamoDB table used for EMRFS metadata | `number` | `300` | no |
 | enable\_http\_port | EMR services like Ganglia run on the http port | `bool` | `false` | no |
 | hadoop\_config\_path | Path in root directory bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
 | hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
@@ -118,8 +115,6 @@ No provider.
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
 | emr\_service\_role\_arn | ARN of the EMR service role created |
 | emr\_service\_role\_name | Name of the EMR service role created |
-| emrfs\_dynamodb\_table\_id | ID for the emrfs dynamodb table |
-| emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
 | hbase\_config\_path | Path in the root directory bucket that HBase config was uploaded to. |
 | json\_config\_s3\_key | The name of the json configuration object in the bucket. |
 | log\_uri | The path to the S3 location where logs for this cluster are stored. |

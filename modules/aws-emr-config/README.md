@@ -46,7 +46,6 @@ If you are creating a static cluster, this module also creates:
 | Name | Description |
 |------|-------------|
 | emr\_config\_file\_path | Path to the EMR JSON configuration file that was uploaded to S3. |
-| emrfs\_dynamodb\_table\_name | Name for the emrfs dynamodb table |
 | hbase\_config\_path | Path in the root directory bucket that HBase config was uploaded to |
 | json\_config\_s3\_key | The name of the json configuration object in the bucket. |
 | upload\_config\_script\_s3\_key | The name of the upload config script object in the bucket. |
