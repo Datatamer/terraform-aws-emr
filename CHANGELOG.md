@@ -4,10 +4,10 @@
 * Removes support for consistent view, which is no longer necessary since Amazon S3 supports 
   strong read-after-write consistency.
 * Removes variables:
-* `emrfs_metadata_table_name`
-* `emrfs_metadata_read_capacity`
-* `emrfs_metadata_write_capacity`
-* `aws_region_of_dynamodb_table`
+  * `emrfs_metadata_table_name`
+  * `emrfs_metadata_read_capacity`
+  * `emrfs_metadata_write_capacity`
+  * `aws_region_of_dynamodb_table`
 * To upgrade, remove those variables and run `terraform apply` _twice_. The first apply will 
   update the configuration, and the second apply will recreate the cluster.
 
