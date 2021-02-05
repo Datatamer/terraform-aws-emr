@@ -1,5 +1,6 @@
 # TAMR AWS EMR module
 ## v1.0.0 - February 3rd 2021
+* Allows `utility_script_bucket_key` to have any name
 * Removes support for consistent view, which is no longer necessary since Amazon S3 supports 
   strong read-after-write consistency.
 * Removes variables:
