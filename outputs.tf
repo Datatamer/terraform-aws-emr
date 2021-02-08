@@ -118,16 +118,6 @@ output "subnet_id" {
   description = "ID of the subnet where EMR cluster was created"
 }
 
-output "emrfs_dynamodb_table_id" {
-  value       = module.emrfs-dynamodb.emrfs_dynamodb_table_id
-  description = "ID for the emrfs dynamodb table"
-}
-
-output "emrfs_dynamodb_table_name" {
-  value       = module.emrfs-dynamodb.emrfs_dynamodb_table_name
-  description = "Name for the emrfs dynamodb table"
-}
-
 output "json_config_s3_key" {
   value       = module.emr-cluster-config.json_config_s3_key
   description = "The name of the json configuration object in the bucket."

@@ -16,11 +16,6 @@ variable "json_configuration_bucket_key" {
   default     = "config.json"
 }
 
-variable "emrfs_metadata_table_name" {
-  type        = string
-  description = "Table name of EMRFS metadata table in DynamoDB"
-}
-
 variable "bucket_name_for_root_directory" {
   type        = string
   description = "S3 bucket name for storing root directory"

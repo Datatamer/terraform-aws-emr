@@ -70,7 +70,7 @@ resource "aws_emr_cluster" "emr-cluster" {
       args = [
         "bash",
         "-c",
-        " aws s3 cp s3://${var.bucket_name_for_root_directory}/${var.utility_script_bucket_key} .; chmod +x upload_hbase_config.sh; ./upload_hbase_config.sh${contains(local.applications, "hbase") ? " hbase" : ""}"
+        " aws s3 cp s3://${var.bucket_name_for_root_directory}/${var.utility_script_bucket_key} ./upload_hbase_config.sh; chmod +x upload_hbase_config.sh; ./upload_hbase_config.sh${contains(local.applications, "hbase") ? " hbase" : ""}"
       ]
     }
   }

@@ -44,14 +44,14 @@ resource "aws_s3_bucket_object" "sample_bootstrap_script_2" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.13.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=1.0.0"
   source = "../.."
 
   # Configurations
   create_static_cluster         = true
   release_label                 = "emr-5.29.0" # hbase 1.4.10
   applications                  = ["Hbase"]
-  emr_config_file_path          = "../../modules/aws-emr-emrfs/config.json"
+  emr_config_file_path          = "../emr-config-template.json"
   bucket_path_to_logs           = "logs/hbase-test-cluster/"
   json_configuration_bucket_key = "tamr/emr/emr.json"
   utility_script_bucket_key     = "tamr/emr/upload_config.sh"
@@ -83,7 +83,6 @@ module "emr-hbase" {
 
   # Names
   cluster_name                  = "HBase-Test-EMR-Cluster"
-  emrfs_metadata_table_name     = "HBase-Test-EmrFSMetadata"
   emr_service_role_name         = "hbase-test-service-role"
   emr_ec2_role_name             = "hbase-test-ec2-role"
   emr_ec2_instance_profile_name = "hbase-test-instance-profile"

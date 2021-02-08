@@ -6,7 +6,7 @@ This terraform module creates a EMR cluster.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr-cluster" {
-  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=0.13.0"
+  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=1.0.0"
 
   # Cluster configuration
   cluster_name                   = "example-cluster"
@@ -19,9 +19,6 @@ module "emr-cluster" {
   key_pair_name               = module.emr_key_pair.this_key_pair_key_name
   master_instance_group_name  = "Example-MasterInstanceGroup"
   core_instance_group_name    = "Example-CoreInstanceGroup"
-
-  # DynamoDB
-  emrfs_metadata_table_name     = module.emrfs-dynamodb.emrfs_dynamodb_table_name
 
   # Security groups
   emr_managed_master_sg_id    = module.emr-sgs.emr_managed_master_sg_id
@@ -68,7 +65,6 @@ This module creates:
 | emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group | `string` | n/a | yes |
 | emr\_service\_access\_sg\_id | Security group id of Service Access Security Group | `string` | n/a | yes |
 | emr\_service\_role\_arn | ARN of the IAM service role for the EMR cluster | `string` | n/a | yes |
-| emrfs\_metadata\_table\_name | Table name of EMRFS metadata table in DynamoDB | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |

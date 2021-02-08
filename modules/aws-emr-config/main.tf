@@ -2,9 +2,6 @@ locals {
   json_config = templatefile(
     var.emr_config_file_path,
     {
-      emrfs_metadata_read_capacity  = var.emrfs_metadata_read_capacity
-      emrfs_metadata_write_capacity = var.emrfs_metadata_write_capacity
-      emrfs_metadata_table_name     = var.emrfs_metadata_table_name
       emr_hbase_s3_bucket_root_dir  = var.bucket_name_for_root_directory
     }
   )

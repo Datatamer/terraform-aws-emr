@@ -30,14 +30,14 @@ module "emr_key_pair" {
 
 # EMR Static Spark cluster
 module "emr-spark" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=0.13.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=1.0.0"
   source = "../.."
 
   # Configurations
   create_static_cluster = true
   release_label         = "emr-5.29.0" # spark 2.4.4
   applications          = ["Spark"]
-  emr_config_file_path  = "../../modules/aws-emr-emrfs/config.json"
+  emr_config_file_path  = "../emr-config-template.json"
   additional_tags       = {}
 
   # Networking
@@ -55,7 +55,6 @@ module "emr-spark" {
 
   # Names
   cluster_name                  = "Spark-Test-EMR-Cluster"
-  emrfs_metadata_table_name     = "Spark-Test-EmrFSMetadata"
   emr_service_role_name         = "spark-test-service-role"
   emr_ec2_role_name             = "spark-test-ec2-role"
   emr_ec2_instance_profile_name = "spark-test-instance-profile"

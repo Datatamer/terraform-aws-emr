@@ -17,7 +17,7 @@ module "emr-rootdir-bucket" {
 }
 
 module "ephemeral-spark-sgs" {
-  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=0.13.0"
+  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=1.0.0"
   source                        = "../../modules/aws-emr-sgs"
   applications                  = ["Spark"]
   vpc_id                        = var.vpc_id
@@ -29,12 +29,11 @@ module "ephemeral-spark-sgs" {
 }
 
 module "ephemeral-spark-iam" {
-  # source                            = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=0.13.0"
+  # source                            = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=1.0.0"
   source                            = "../../modules/aws-emr-iam"
   s3_bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   s3_policy_arns                    = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
-  emrfs_metadata_table_name         = "Ephem-Spark-Test-EmrFSMetadata"
   emr_ec2_iam_policy_name           = "ephem-spark-test-ec2-policy"
   emr_service_iam_policy_name       = "ephem-spark-test-service-policy"
   emr_service_role_name             = "ephem-spark-test-service-role"
@@ -43,11 +42,10 @@ module "ephemeral-spark-iam" {
 }
 
 module "ephemeral-spark-config" {
-  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-config?ref=0.13.0"
+  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-config?ref=1.0.0"
   source                         = "../../modules/aws-emr-config"
   create_static_cluster          = false
   cluster_name                   = "" # unused
-  emr_config_file_path           = "../../modules/aws-emr-emrfs/config.json"
-  emrfs_metadata_table_name      = "Ephem-Spark-Test-EmrFSMetadata"
+  emr_config_file_path           = "../emr-config-template.json"
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
 }

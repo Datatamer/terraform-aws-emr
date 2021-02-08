@@ -58,34 +58,10 @@ variable "tamr_sgs" {
   default     = []
 }
 
-variable "emrfs_metadata_table_name" {
-  type        = string
-  description = "Table name of EMRFS metadata table in DynamoDB"
-  default     = "EmrFSMetadata"
-}
-
-variable "emrfs_metadata_read_capacity" {
-  type        = number
-  description = "Read capacity units of the DynamoDB table used for EMRFS metadata"
-  default     = 600
-}
-
-variable "emrfs_metadata_write_capacity" {
-  type        = number
-  description = "Write capacity units of the DynamoDB table used for EMRFS metadata"
-  default     = 300
-}
-
 variable "additional_tags" {
   type        = map(string)
   description = "Additional tags to be attached to the resources created"
   default     = {}
-}
-
-variable "aws_region_of_dynamodb_table" {
-  type        = string
-  description = "AWS region where the DynamoDB table for EMRFS metadata is located"
-  default     = "us-east-1"
 }
 
 variable "emr_service_role_name" {
