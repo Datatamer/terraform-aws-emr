@@ -41,7 +41,7 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.12 |
+| terraform | >= 0.13 |
 | aws | >= 2.45.0 |
 
 ## Providers

@@ -46,6 +46,8 @@ module "emr-cluster-config" {
 module "emr-cluster" {
   source = "./modules/aws-emr-cluster"
 
+  depends_on = [module.emr-cluster-config]
+
   # Cluster configuration
   create_static_cluster          = var.create_static_cluster
   cluster_name                   = var.cluster_name
