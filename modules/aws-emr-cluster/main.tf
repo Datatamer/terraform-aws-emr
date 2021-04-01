@@ -60,6 +60,9 @@ resource "aws_emr_cluster" "emr-cluster" {
     }
   }
 
+  custom_ami_id      = var.emr_custom_ami_id
+  custom_ami_version = var.emr_custom_ami_version
+
   # Upload HBase/Hadoop configuration to s3
   step {
     action_on_failure = "TERMINATE_CLUSTER"
