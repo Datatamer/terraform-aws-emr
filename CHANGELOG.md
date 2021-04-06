@@ -1,5 +1,9 @@
 # TAMR AWS EMR module
 
+## v2.1.0 - April 9th 2021
+* Adds new variables `core_bid_price` and `master_bid_price` for setting bid price for spot
+  instances
+
 ## v2.0.0 - April 8th 2021
 * Upgrades module to require terraform 13.x
 * Fixes a bug that sometimes required running apply twice when making configuration changes

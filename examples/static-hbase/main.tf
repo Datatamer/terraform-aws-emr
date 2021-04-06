@@ -103,4 +103,11 @@ module "emr-hbase" {
   core_instance_type          = "r5.xlarge"
   master_ebs_size             = 50
   core_ebs_size               = 50
+
+  # Spot Instance definition
+  # on-demand r5.xlarge EC2 + EMR --> $0.252 + $0.063 = $0.315 per Hour
+  core_bid_price = ".100"
+
+  # Don't use spot instances for the master nodes
+  master_bid_price = ""
 }
