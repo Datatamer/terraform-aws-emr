@@ -257,3 +257,16 @@ variable "custom_ami_id" {
   description = "The ID of a custom Amazon EBS-backed Linux AMI"
   default     = ""
 }
+
+variable "arn_partition" {
+  type        = string
+  description = <<EOF
+  The partition in which the resource is located. A partition is a group of AWS Regions.
+  Each AWS account is scoped to one partition.
+  The following are the supported partitions:
+    aws -AWS Regions
+    aws-cn - China Regions
+    aws-us-gov - AWS GovCloud (US) Regions
+  EOF
+  default     = "aws"
+}

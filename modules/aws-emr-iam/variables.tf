@@ -48,3 +48,16 @@ variable "emr_ec2_iam_policy_name" {
   description = "Name for the IAM policy attached to the EMR service role"
   default     = "tamr-emr-ec2-policy"
 }
+
+variable "arn_partition" {
+  type        = string
+  description = <<EOF
+  The partition in which the resource is located. A partition is a group of AWS Regions.
+  Each AWS account is scoped to one partition.
+  The following are the supported partitions:
+    aws -AWS Regions
+    aws-cn - China Regions
+    aws-us-gov - AWS GovCloud (US) Regions
+  EOF
+  default     = "aws"
+}
