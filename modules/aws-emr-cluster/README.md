@@ -6,7 +6,7 @@ This terraform module creates a EMR cluster.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr-cluster" {
-  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=1.0.0"
+  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=1.1.0"
 
   # Cluster configuration
   cluster_name                   = "example-cluster"
@@ -87,6 +87,7 @@ This module creates:
 | master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
 | utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
+| custom\_ami\_id | ID of a custom Amazon EBS-backed Linux AMI | `string` | `""` | no |
 
 ## Outputs
 

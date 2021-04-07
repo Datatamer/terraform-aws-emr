@@ -72,6 +72,7 @@ module "emr-cluster" {
   core_ebs_volumes_count      = var.core_ebs_volumes_count
   core_ebs_type               = var.core_ebs_type
   core_ebs_size               = var.core_ebs_size
+  custom_ami_id               = var.custom_ami_id
 
   # Security groups
   emr_managed_master_sg_id    = module.emr-sgs.emr_managed_master_sg_id

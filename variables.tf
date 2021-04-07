@@ -251,3 +251,9 @@ variable "bootstrap_actions" {
   description = "Ordered list of bootstrap actions that will be run before Hadoop is started on the cluster nodes."
   default     = []
 }
+
+variable "custom_ami_id" {
+  type        = string
+  description = "The ID of a custom Amazon EBS-backed Linux AMI"
+  default     = ""
+}

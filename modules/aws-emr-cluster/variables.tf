@@ -181,3 +181,9 @@ variable "utility_script_bucket_key" {
   description = "Key (i.e. path) to upload the utility script to"
   default     = "util/upload_hbase_config.sh"
 }
+
+variable "custom_ami_id" {
+  type        = string
+  description = "The ID of a custom Amazon EBS-backed Linux AMI"
+  default     = ""
+}
