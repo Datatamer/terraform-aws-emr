@@ -6,7 +6,7 @@ This terraform module creates a EMR cluster.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr-cluster" {
-  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=1.1.0"
+  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=1.2.0"
 
   # Cluster configuration
   cluster_name                   = "example-cluster"
@@ -78,6 +78,7 @@ This module creates:
 | core\_instance\_group\_name | Name for the core instance group | `string` | `"CoreInstanceGroup"` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
+| custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `""` | no |
 | json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
@@ -87,7 +88,6 @@ This module creates:
 | master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
 | utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
-| custom\_ami\_id | ID of a custom Amazon EBS-backed Linux AMI | `string` | `""` | no |
 
 ## Outputs
 
