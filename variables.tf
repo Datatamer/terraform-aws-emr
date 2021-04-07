@@ -252,14 +252,8 @@ variable "bootstrap_actions" {
   default     = []
 }
 
-variable "emr_custom_ami_id" {
+variable "custom_ami_id" {
   type        = string
   description = "The ID of a custom Amazon EBS-backed Linux AMI"
-  default     = "tamr-emr-custom-ami-id"
-}
-
-variable "emr_custom_ami_version" {
-  type        = string
-  description = "Version of custom AMI"
-  default     = "tamr-emr-custom-ami-version"
+  default     = ""
 }

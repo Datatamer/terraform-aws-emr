@@ -95,6 +95,7 @@ No provider.
 | tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
 | tamr\_sgs | Security Groups for the Tamr Instance | `list(string)` | `[]` | no |
 | utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
+| custom\_ami\_id | ID of a custom Amazon EBS-backed Linux AMI | `string` | `""` | no |
 
 ## Outputs
 

@@ -182,18 +182,8 @@ variable "utility_script_bucket_key" {
   default     = "util/upload_hbase_config.sh"
 }
 
-variable "bootstrap_actions" {
-  type = list(object({
-    name = string
-    path = string
-    args = list(string)
-  }))
-  description = "Ordered list of bootstrap actions that will be run before Hadoop is started on the cluster nodes."
-  default     = []
-}
-
-variable "emr_custom_ami_id" {
+variable "custom_ami_id" {
   type        = string
   description = "The ID of a custom Amazon EBS-backed Linux AMI"
-  default     = "tamr-emr-custom-ami-id"
+  default     = ""
 }

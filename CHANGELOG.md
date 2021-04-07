@@ -1,14 +1,17 @@
 # TAMR AWS EMR module
+## v2.0.0 - April 7th 2021
+*  Adds new variable `custom_ami_id` to set the ID of a custom Amazon EBS-backed Linux AMI
+
 ## v1.0.0 - February 3rd 2021
 * Allows `utility_script_bucket_key` to have any name
-* Removes support for consistent view, which is no longer necessary since Amazon S3 supports 
+* Removes support for consistent view, which is no longer necessary since Amazon S3 supports
   strong read-after-write consistency.
 * Removes variables:
   * `emrfs_metadata_table_name`
   * `emrfs_metadata_read_capacity`
   * `emrfs_metadata_write_capacity`
   * `aws_region_of_dynamodb_table`
-* To upgrade, remove those variables and run `terraform apply` _twice_. The first apply will 
+* To upgrade, remove those variables and run `terraform apply` _twice_. The first apply will
   update the configuration, and the second apply will recreate the cluster.
 
 ## v0.13.0 - January 12th 2021

@@ -30,7 +30,7 @@ module "emr_key_pair" {
 
 # EMR Static Spark cluster
 module "emr-spark" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=1.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=2.0.0"
   source = "../.."
 
   # Configurations
