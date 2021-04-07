@@ -1,5 +1,5 @@
 # TAMR AWS EMR module
-## v2.0.0 - April 7th 2021
+## v1.1.0 - April 7th 2021
 *  Adds new variable `custom_ami_id` to set the ID of a custom Amazon EBS-backed Linux AMI
 
 ## v1.0.0 - February 3rd 2021
