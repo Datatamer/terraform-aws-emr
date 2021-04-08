@@ -1,4 +1,8 @@
 # TAMR AWS EMR module
+
+## v1.2.0 - April 7th 2021
+*  Adds new variable `arn_partition` to set the partition of any ARNs referenced in this module
+
 ## v1.1.0 - April 7th 2021
 *  Adds new variable `custom_ami_id` to set the ID of a custom Amazon EBS-backed Linux AMI
 

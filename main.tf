@@ -28,6 +28,7 @@ module "emr-iam" {
   emr_ec2_instance_profile_name     = var.emr_ec2_instance_profile_name
   emr_ec2_role_name                 = var.emr_ec2_role_name
   additional_tags                   = var.additional_tags
+  arn_partition                     = var.arn_partition
 }
 
 module "emr-cluster-config" {

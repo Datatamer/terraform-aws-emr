@@ -2,7 +2,7 @@ locals {
   json_config = templatefile(
     var.emr_config_file_path,
     {
-      emr_hbase_s3_bucket_root_dir  = var.bucket_name_for_root_directory
+      emr_hbase_s3_bucket_root_dir = var.bucket_name_for_root_directory
     }
   )
 }
