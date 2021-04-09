@@ -1,5 +1,9 @@
 # TAMR AWS EMR module
 
+## v2.0.0 - April 8th 2021
+* Upgrades module to require terraform 13.x
+* Fixes a bug that sometimes required running apply twice when making configuration changes
+
 ## v1.2.0 - April 7th 2021
 *  Adds new variable `arn_partition` to set the partition of any ARNs referenced in this module
 
