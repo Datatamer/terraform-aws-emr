@@ -255,7 +255,7 @@ variable "bootstrap_actions" {
 variable "custom_ami_id" {
   type        = string
   description = "The ID of a custom Amazon EBS-backed Linux AMI"
-  default     = ""
+  default     = null
 }
 
 variable "arn_partition" {

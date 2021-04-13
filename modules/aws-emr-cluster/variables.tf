@@ -185,7 +185,7 @@ variable "utility_script_bucket_key" {
 variable "custom_ami_id" {
   type        = string
   description = "The ID of a custom Amazon EBS-backed Linux AMI"
-  default     = ""
+  default     = null
 }
 
 variable "core_bid_price" {

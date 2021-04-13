@@ -3,16 +3,13 @@ This example depends on an existing VPC and subnet with configurations that meet
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| aws | 3.27.0 |
-| template | ~> 2.1.2 |
+No requirements.
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | 3.27.0 |
+| aws | n/a |
 | tls | n/a |
 
 ## Inputs

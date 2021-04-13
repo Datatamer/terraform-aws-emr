@@ -42,7 +42,7 @@ Note: For creating the logs and root directory buckets and/or S3-related permiss
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13 |
-| aws | >= 2.45.0 |
+| aws | >= 3.36.0 |
 
 ## Providers
 
@@ -73,7 +73,7 @@ No provider.
 | core\_instance\_group\_name | Name for the core instance group | `string` | `"CoreInstanceGroup"` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
-| custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `""` | no |
+| custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `null` | no |
 | emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
 | emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
 | emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR service role | `string` | `"tamr-emr-ec2-policy"` | no |
