@@ -31,6 +31,8 @@ resource "aws_emr_cluster" "emr-cluster" {
     instance_type = var.master_instance_type
     # NOTE: value must be 1 or 3
     instance_count = var.master_group_instance_count
+    # Spot Instance definition
+    bid_price = var.master_bid_price
     ebs_config {
       size                 = var.master_ebs_size
       type                 = var.master_ebs_type
@@ -41,6 +43,8 @@ resource "aws_emr_cluster" "emr-cluster" {
     name           = var.core_instance_group_name
     instance_type  = var.core_instance_type
     instance_count = var.core_group_instance_count
+    # Spot Instance definition
+    bid_price = var.core_bid_price
     ebs_config {
       size                 = var.core_ebs_size
       type                 = var.core_ebs_type

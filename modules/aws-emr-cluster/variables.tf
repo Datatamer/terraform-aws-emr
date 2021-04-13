@@ -187,3 +187,23 @@ variable "custom_ami_id" {
   description = "The ID of a custom Amazon EBS-backed Linux AMI"
   default     = ""
 }
+
+variable "core_bid_price" {
+  type        = string
+  description = <<EOF
+  Bid price for each EC2 instance in the core instance group, expressed in USD. By setting this attribute,
+  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.
+  Leave this blank to use On-Demand Instances
+  EOF
+  default     = ""
+}
+
+variable "master_bid_price" {
+  type        = string
+  description = <<EOF
+  Bid price for each EC2 instance in the master instance group, expressed in USD. By setting this attribute,
+  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.
+  Leave this blank to use On-Demand Instances
+  EOF
+  default     = ""
+}

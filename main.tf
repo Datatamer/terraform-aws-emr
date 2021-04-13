@@ -76,6 +76,8 @@ module "emr-cluster" {
   core_ebs_type               = var.core_ebs_type
   core_ebs_size               = var.core_ebs_size
   custom_ami_id               = var.custom_ami_id
+  core_bid_price              = var.core_bid_price
+  master_bid_price            = var.master_bid_price
 
   # Security groups
   emr_managed_master_sg_id    = module.emr-sgs.emr_managed_master_sg_id

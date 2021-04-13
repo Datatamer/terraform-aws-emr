@@ -44,7 +44,7 @@ resource "aws_s3_bucket_object" "sample_bootstrap_script_2" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=2.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=2.1.0"
   source = "../.."
 
   # Configurations
@@ -103,4 +103,11 @@ module "emr-hbase" {
   core_instance_type          = "r5.xlarge"
   master_ebs_size             = 50
   core_ebs_size               = 50
+
+  # Spot Instance definition
+  # on-demand r5.xlarge EC2 + EMR --> $0.252 + $0.063 = $0.315 per Hour
+  core_bid_price = ".100"
+
+  # Don't use spot instances for the master nodes
+  master_bid_price = ""
 }
