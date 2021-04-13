@@ -6,7 +6,7 @@ This terraform module creates a EMR cluster.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "emr-cluster" {
-  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=2.1.0"
+  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=3.0.0"
 
   # Cluster configuration
   cluster_name                   = "example-cluster"
@@ -79,7 +79,7 @@ This module creates:
 | core\_instance\_group\_name | Name for the core instance group | `string` | `"CoreInstanceGroup"` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
-| custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `""` | no |
+| custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `null` | no |
 | json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
 | master\_bid\_price | Bid price for each EC2 instance in the master instance group, expressed in USD. By setting this attribute,<br>  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.<br>  Leave this blank to use On-Demand Instances | `string` | `""` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |

@@ -1,5 +1,10 @@
 # TAMR AWS EMR module
 
+## v3.0.0 - April 13th 2021
+* Updates minimum AWS provider version to 3.36.0
+* Sets default value for `custom_ami_id` to `null` to achieve the intended behavior
+* Updates the versions of other modules in the examples
+
 ## v2.1.0 - April 9th 2021
 * Adds new variables `core_bid_price` and `master_bid_price` for setting bid price for spot
   instances
