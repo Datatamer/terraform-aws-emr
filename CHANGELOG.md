@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v3.0.0 - April 13th 2021
+* Updates minimum AWS provider version to 3.36.0
+
 ## v2.1.0 - April 9th 2021
 * Adds new variables `core_bid_price` and `master_bid_price` for setting bid price for spot
   instances
