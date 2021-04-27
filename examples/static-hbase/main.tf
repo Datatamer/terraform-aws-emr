@@ -22,8 +22,8 @@ resource "tls_private_key" "emr_private_key" {
 }
 
 module "emr_key_pair" {
-  source = "terraform-aws-modules/key-pair/aws"
-
+  source     = "terraform-aws-modules/key-pair/aws"
+  version    = "1.0.0"
   key_name   = "hbase-test-emr-key"
   public_key = tls_private_key.emr_private_key.public_key_openssh
 }
@@ -44,7 +44,7 @@ resource "aws_s3_bucket_object" "sample_bootstrap_script_2" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=3.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=3.0.1"
   source = "../.."
 
   # Configurations
@@ -79,7 +79,7 @@ module "emr-hbase" {
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
-  key_pair_name                  = module.emr_key_pair.this_key_pair_key_name
+  key_pair_name                  = module.emr_key_pair.key_pair_key_name
 
   # Names
   cluster_name                  = "HBase-Test-EMR-Cluster"
