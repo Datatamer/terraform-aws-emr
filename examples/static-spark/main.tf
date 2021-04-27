@@ -22,15 +22,15 @@ resource "tls_private_key" "emr_private_key" {
 }
 
 module "emr_key_pair" {
-  source = "terraform-aws-modules/key-pair/aws"
-
+  source     = "terraform-aws-modules/key-pair/aws"
+  version    = "1.0.0"
   key_name   = "spark-test-emr-key"
   public_key = tls_private_key.emr_private_key.public_key_openssh
 }
 
 # EMR Static Spark cluster
 module "emr-spark" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=3.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=3.0.1"
   source = "../.."
 
   # Configurations
@@ -51,7 +51,7 @@ module "emr-spark" {
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
   bucket_path_to_logs            = "logs/spark-test-cluster/"
-  key_pair_name                  = module.emr_key_pair.this_key_pair_key_name
+  key_pair_name                  = module.emr_key_pair.key_pair_key_name
 
   # Names
   cluster_name                  = "Spark-Test-EMR-Cluster"

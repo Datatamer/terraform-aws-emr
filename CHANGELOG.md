@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v3.0.1 - April 27th 2021
+* Upgrades and pins `terraform-aws-modules/key-pair/aws` to version 1.0.0
+
 ## v3.0.0 - April 13th 2021
 * Updates minimum AWS provider version to 3.36.0
 * Sets default value for `custom_ami_id` to `null` to achieve the intended behavior
