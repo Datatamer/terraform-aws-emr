@@ -61,23 +61,33 @@ module "emr-cluster" {
   bootstrap_actions              = var.bootstrap_actions
 
   # Cluster instances
-  subnet_id                   = var.subnet_id
-  key_pair_name               = var.key_pair_name
-  master_instance_group_name  = var.master_instance_group_name
-  master_instance_type        = var.master_instance_type
-  master_group_instance_count = var.master_group_instance_count
-  master_ebs_volumes_count    = var.master_ebs_volumes_count
-  master_ebs_type             = var.master_ebs_type
-  master_ebs_size             = var.master_ebs_size
-  core_instance_group_name    = var.core_instance_group_name
-  core_instance_type          = var.core_instance_type
-  core_group_instance_count   = var.core_group_instance_count
-  core_ebs_volumes_count      = var.core_ebs_volumes_count
-  core_ebs_type               = var.core_ebs_type
-  core_ebs_size               = var.core_ebs_size
-  custom_ami_id               = var.custom_ami_id
-  core_bid_price              = var.core_bid_price
-  master_bid_price            = var.master_bid_price
+  subnet_id                                         = var.subnet_id
+  key_pair_name                                     = var.key_pair_name
+  master_instance_fleet_name                        = var.master_instance_fleet_name
+  master_instance_type                              = var.master_instance_type
+  master_instance_on_demand_count                   = var.master_instance_on_demand_count
+  master_instance_spot_count                        = var.master_instance_spot_count
+  master_bid_price                                  = var.master_bid_price
+  master_bid_price_as_percentage_of_on_demand_price = var.master_bid_price_as_percentage_of_on_demand_price
+  master_ebs_volumes_count                          = var.master_ebs_volumes_count
+  master_ebs_type                                   = var.master_ebs_type
+  master_ebs_size                                   = var.master_ebs_size
+  master_block_duration_minutes                     = var.master_block_duration_minutes
+  master_timeout_action                             = var.master_timeout_action
+  master_timeout_duration_minutes                   = var.master_timeout_duration_minutes
+  core_instance_fleet_name                          = var.core_instance_fleet_name
+  core_instance_type                                = var.core_instance_type
+  core_instance_on_demand_count                     = var.core_instance_on_demand_count
+  core_instance_spot_count                          = var.core_instance_spot_count
+  core_bid_price                                    = var.core_bid_price
+  core_bid_price_as_percentage_of_on_demand_price   = var.core_bid_price_as_percentage_of_on_demand_price
+  core_ebs_volumes_count                            = var.core_ebs_volumes_count
+  core_ebs_type                                     = var.core_ebs_type
+  core_ebs_size                                     = var.core_ebs_size
+  core_block_duration_minutes                       = var.core_block_duration_minutes
+  core_timeout_action                               = var.core_timeout_action
+  core_timeout_duration_minutes                     = var.core_timeout_duration_minutes
+  custom_ami_id                                     = var.custom_ami_id
 
   # Security groups
   emr_managed_master_sg_id    = module.emr-sgs.emr_managed_master_sg_id

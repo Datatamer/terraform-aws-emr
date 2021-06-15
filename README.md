@@ -66,12 +66,17 @@ No provider.
 | bucket\_path\_to\_logs | Path in logs bucket to store cluster logs e.g. mycluster/logs | `string` | `""` | no |
 | cluster\_name | Name for the EMR cluster to be created | `string` | `"TAMR-EMR-Cluster"` | no |
 | core\_bid\_price | Bid price for each EC2 instance in the core instance group, expressed in USD. By setting this attribute,<br>  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.<br>  Leave this blank to use On-Demand Instances | `string` | `""` | no |
+| core\_bid\_price\_as\_percentage\_of\_on\_demand\_price | Bid price as percentage of on-demand price for core instances | `number` | `100` | no |
+| core\_block\_duration\_minutes | Duration for core spot instances, in minutes | `number` | `0` | no |
 | core\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"500"` | no |
 | core\_ebs\_type | Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | core\_ebs\_volumes\_count | Number of volumes to attach to the core nodes | `number` | `1` | no |
-| core\_group\_instance\_count | Number of Amazon EC2 instances used to execute the job flow | `number` | `1` | no |
-| core\_instance\_group\_name | Name for the core instance group | `string` | `"CoreInstanceGroup"` | no |
+| core\_instance\_fleet\_name | Name for the core instance fleet | `string` | `"CoreInstanceFleet"` | no |
+| core\_instance\_on\_demand\_count | Number of on-demand instances for the spot instance fleet | `number` | `1` | no |
+| core\_instance\_spot\_count | Number of spot instances for the spot instance fleet | `number` | `0` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
+| core\_timeout\_action | Timeout action for core instances | `string` | `"SWITCH_TO_ON_DEMAND"` | no |
+| core\_timeout\_duration\_minutes | Spot provisioning timeout for core instances, in minutes | `number` | `10` | no |
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
 | custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `null` | no |
 | emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
@@ -89,12 +94,17 @@ No provider.
 | hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
 | json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
 | master\_bid\_price | Bid price for each EC2 instance in the master instance group, expressed in USD. By setting this attribute,<br>  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.<br>  Leave this blank to use On-Demand Instances | `string` | `""` | no |
+| master\_bid\_price\_as\_percentage\_of\_on\_demand\_price | Bid price as percentage of on-demand price for master instances | `number` | `1` | no |
+| master\_block\_duration\_minutes | Duration for master spot instances, in minutes | `number` | `0` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |
-| master\_group\_instance\_count | Number of instances for the master instance group. Must be 1 or 3. | `number` | `1` | no |
-| master\_instance\_group\_name | Name for the master instance group | `string` | `"MasterInstanceGroup"` | no |
+| master\_instance\_fleet\_name | Name for the master instance fleet | `string` | `"MasterInstanceFleet"` | no |
+| master\_instance\_on\_demand\_count | Number of on-demand instances for the master instance fleet | `number` | `1` | no |
+| master\_instance\_spot\_count | Number of spot instances for the master instance fleet | `number` | `1` | no |
 | master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |
+| master\_timeout\_action | Timeout action for master instances | `string` | `"SWITCH_TO_ON_DEMAND"` | no |
+| master\_timeout\_duration\_minutes | Spot provisioning timeout for master instances, in minutes | `number` | `10` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
 | tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
 | tamr\_sgs | Security Groups for the Tamr Instance | `list(string)` | `[]` | no |
@@ -107,7 +117,7 @@ No provider.
 | core\_ebs\_size | The core EBS volume size, in gibibytes (GiB). |
 | core\_ebs\_type | The core EBS volume size, in gibibytes (GiB). |
 | core\_ebs\_volumes\_count | Number of volumes to attach to the core nodes |
-| core\_group\_instance\_count | Number of cores configured to execute the job flow |
+| core\_fleet\_instance\_count | Number of on-demand and spot core instances configured |
 | core\_instance\_type | The EC2 instance type of the core nodes |
 | emr\_additional\_core\_sg\_id | Security group id of the EMR Additional Core Security Group |
 | emr\_additional\_master\_sg\_id | Security group id of the EMR Additional Master Security Group |
@@ -125,6 +135,7 @@ No provider.
 | master\_ebs\_size | The master EBS volume size, in gibibytes (GiB). |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 |
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes |
+| master\_fleet\_instance\_count | Number of on-demand and spot master instances configured |
 | master\_instance\_type | The EC2 instance type of the master nodes |
 | release\_label | The release label for the Amazon EMR release. |
 | subnet\_id | ID of the subnet where EMR cluster was created |

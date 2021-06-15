@@ -53,10 +53,10 @@ variable "key_pair_name" {
   description = "Name of the Key Pair that will be attached to the EC2 instances"
 }
 
-variable "master_instance_group_name" {
+variable "master_instance_fleet_name" {
   type        = string
-  description = "Name for the master instance group"
-  default     = "MasterInstanceGroup"
+  description = "Name for the master instance fleet"
+  default     = "MasterInstanceFleet"
 }
 
 variable "master_instance_type" {
@@ -65,10 +65,32 @@ variable "master_instance_type" {
   default     = "m4.xlarge"
 }
 
-variable "master_group_instance_count" {
+variable "master_bid_price" {
+  type        = string
+  description = <<EOF
+  Bid price for each EC2 instance in the master instance fleet, expressed in USD. By setting this attribute,
+  the instance fleet is being declared as a Spot Instance, and will implicitly create a Spot request.
+  Leave this blank to use On-Demand Instances
+  EOF
+  default     = ""
+}
+
+variable "master_bid_price_as_percentage_of_on_demand_price" {
+  type        = number
+  default     = 100
+  description = "Bid price as percentage of on-demand price for master instances"
+}
+
+variable "master_instance_on_demand_count" {
   type        = number
   default     = 1
-  description = "Number of instances for the master instance group. Must be 1 or 3."
+  description = "Number of on-demand instances for the master instance fleet."
+}
+
+variable "master_instance_spot_count" {
+  type        = number
+  default     = 0
+  description = "Number of spot instances for the master instance fleet."
 }
 
 variable "master_ebs_volumes_count" {
@@ -89,10 +111,28 @@ variable "master_ebs_size" {
   default     = "100"
 }
 
-variable "core_instance_group_name" {
+variable "master_block_duration_minutes" {
+  type        = number
+  description = "Duration for master spot instances, in minutes"
+  default     = 0
+}
+
+variable "master_timeout_action" {
   type        = string
-  description = "Name for the core instance group"
-  default     = "CoreInstanceGroup"
+  description = "Timeout action for master instances"
+  default     = "SWITCH_TO_ON_DEMAND"
+}
+
+variable "master_timeout_duration_minutes" {
+  type        = number
+  description = "Spot provisioning timeout for master instances, in minutes"
+  default     = 10
+}
+
+variable "core_instance_fleet_name" {
+  type        = string
+  description = "Name for the core instance fleet"
+  default     = "CoreInstanceFleet"
 }
 
 variable "core_instance_type" {
@@ -101,10 +141,32 @@ variable "core_instance_type" {
   default     = "m4.xlarge"
 }
 
-variable "core_group_instance_count" {
+variable "core_instance_on_demand_count" {
   type        = number
   default     = 1
-  description = "Number of Amazon EC2 instances used to execute the job flow"
+  description = "Number of on-demand instances for the core instance fleet."
+}
+
+variable "core_instance_spot_count" {
+  type        = number
+  default     = 0
+  description = "Number of spot instances for the master instance fleet."
+}
+
+variable "core_bid_price" {
+  type        = string
+  description = <<EOF
+  Bid price for each EC2 instance in the core instance fleet, expressed in USD. By setting this attribute,
+  the instance fleet is being declared as a Spot Instance, and will implicitly create a Spot request.
+  Leave this blank to use On-Demand Instances
+  EOF
+  default     = ""
+}
+
+variable "core_bid_price_as_percentage_of_on_demand_price" {
+  type        = number
+  default     = 100
+  description = "Bid price as percentage of on-demand price for core instances"
 }
 
 variable "core_ebs_volumes_count" {
@@ -123,6 +185,24 @@ variable "core_ebs_size" {
   type        = string
   description = "The volume size, in gibibytes (GiB)."
   default     = "500"
+}
+
+variable "core_block_duration_minutes" {
+  type        = number
+  description = "Duration for core spot instances, in minutes"
+  default     = 0
+}
+
+variable "core_timeout_action" {
+  type        = string
+  description = "Timeout action for core instances"
+  default     = "SWITCH_TO_ON_DEMAND"
+}
+
+variable "core_timeout_duration_minutes" {
+  type        = number
+  description = "Spot provisioning timeout for core instances, in minutes"
+  default     = 10
 }
 
 variable "emr_service_role_arn" {
@@ -186,24 +266,4 @@ variable "custom_ami_id" {
   type        = string
   description = "The ID of a custom Amazon EBS-backed Linux AMI"
   default     = null
-}
-
-variable "core_bid_price" {
-  type        = string
-  description = <<EOF
-  Bid price for each EC2 instance in the core instance group, expressed in USD. By setting this attribute,
-  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.
-  Leave this blank to use On-Demand Instances
-  EOF
-  default     = ""
-}
-
-variable "master_bid_price" {
-  type        = string
-  description = <<EOF
-  Bid price for each EC2 instance in the master instance group, expressed in USD. By setting this attribute,
-  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.
-  Leave this blank to use On-Demand Instances
-  EOF
-  default     = ""
 }

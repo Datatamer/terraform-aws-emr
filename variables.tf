@@ -99,22 +99,16 @@ variable "hadoop_config_path" {
   default     = "config/hadoop/conf/"
 }
 
-variable "master_instance_group_name" {
-  type        = string
-  description = "Name for the master instance group"
-  default     = "MasterInstanceGroup"
-}
-
-variable "core_instance_group_name" {
-  type        = string
-  description = "Name for the core instance group"
-  default     = "CoreInstanceGroup"
-}
-
 variable "release_label" {
   type        = string
   description = "The release label for the Amazon EMR release."
   default     = "emr-5.29.0"
+}
+
+variable "master_instance_fleet_name" {
+  type        = string
+  description = "Name for the master instance fleet"
+  default     = "MasterInstanceFleet"
 }
 
 variable "master_instance_type" {
@@ -123,22 +117,144 @@ variable "master_instance_type" {
   default     = "m4.xlarge"
 }
 
+variable "master_instance_on_demand_count" {
+  type        = number
+  default     = 1
+  description = "Number of on-demand instances for the master instance fleet"
+}
+
+variable "master_instance_spot_count" {
+  type        = number
+  default     = 0
+  description = "Number of spot instances for the master instance fleet"
+}
+
+variable "master_bid_price" {
+  type        = string
+  description = <<EOF
+  Bid price for each EC2 instance in the master instance group, expressed in USD. By setting this attribute,
+  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.
+  Leave this blank to use On-Demand Instances
+  EOF
+  default     = ""
+}
+
+variable "master_bid_price_as_percentage_of_on_demand_price" {
+  type        = number
+  default     = 1
+  description = "Bid price as percentage of on-demand price for master instances"
+}
+
+variable "master_ebs_volumes_count" {
+  type        = number
+  description = "Number of volumes to attach to the master nodes"
+  default     = 1
+}
+
+variable "master_ebs_type" {
+  type        = string
+  description = "Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1"
+  default     = "gp2"
+}
+
+variable "master_ebs_size" {
+  type        = string
+  description = "The volume size, in gibibytes (GiB)."
+  default     = "100"
+}
+
+variable "master_block_duration_minutes" {
+  type        = number
+  description = "Duration for master spot instances, in minutes"
+  default     = 0
+}
+
+variable "master_timeout_action" {
+  type        = string
+  description = "Timeout action for master instances"
+  default     = "SWITCH_TO_ON_DEMAND"
+}
+
+variable "master_timeout_duration_minutes" {
+  type        = number
+  description = "Spot provisioning timeout for master instances, in minutes"
+  default     = 10
+}
+
+variable "core_instance_fleet_name" {
+  type        = string
+  description = "Name for the core instance fleet"
+  default     = "CoreInstanceFleet"
+}
+
 variable "core_instance_type" {
   type        = string
   description = "The EC2 instance type of the core nodes"
   default     = "m4.xlarge"
 }
 
-variable "master_group_instance_count" {
+variable "core_instance_on_demand_count" {
   type        = number
   default     = 1
-  description = "Number of instances for the master instance group. Must be 1 or 3."
+  description = "Number of on-demand instances for the spot instance fleet"
 }
 
-variable "core_group_instance_count" {
+variable "core_instance_spot_count" {
   type        = number
+  default     = 0
+  description = "Number of spot instances for the spot instance fleet"
+}
+
+variable "core_ebs_volumes_count" {
+  type        = number
+  description = "Number of volumes to attach to the core nodes"
   default     = 1
-  description = "Number of Amazon EC2 instances used to execute the job flow"
+}
+
+variable "core_bid_price" {
+  type        = string
+  description = <<EOF
+  Bid price for each EC2 instance in the core instance group, expressed in USD. By setting this attribute,
+  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.
+  Leave this blank to use On-Demand Instances
+  EOF
+  default     = ""
+}
+
+variable "core_bid_price_as_percentage_of_on_demand_price" {
+  type        = number
+  default     = 100
+  description = "Bid price as percentage of on-demand price for core instances"
+}
+
+variable "core_ebs_type" {
+  type        = string
+  description = "Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1"
+  default     = "gp2"
+}
+
+variable "core_ebs_size" {
+  type        = string
+  description = "The volume size, in gibibytes (GiB)."
+  default     = "500"
+}
+
+variable "core_block_duration_minutes" {
+  type        = number
+  description = "Duration for core spot instances, in minutes"
+  default     = 0
+}
+
+variable "core_timeout_action" {
+  type        = string
+  description = "Timeout action for core instances"
+  default     = "SWITCH_TO_ON_DEMAND"
+}
+
+variable "core_timeout_duration_minutes" {
+  type        = number
+  description = "Spot provisioning timeout for core instances, in minutes"
+  default     = 10
 }
 
 variable "emr_managed_master_sg_name" {
@@ -188,42 +304,6 @@ variable "applications" {
   description = "List of applications to run on EMR"
 }
 
-variable "core_ebs_volumes_count" {
-  type        = number
-  description = "Number of volumes to attach to the core nodes"
-  default     = 1
-}
-
-variable "core_ebs_type" {
-  type        = string
-  description = "Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1"
-  default     = "gp2"
-}
-
-variable "core_ebs_size" {
-  type        = string
-  description = "The volume size, in gibibytes (GiB)."
-  default     = "500"
-}
-
-variable "master_ebs_volumes_count" {
-  type        = number
-  description = "Number of volumes to attach to the master nodes"
-  default     = 1
-}
-
-variable "master_ebs_type" {
-  type        = string
-  description = "Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1"
-  default     = "gp2"
-}
-
-variable "master_ebs_size" {
-  type        = string
-  description = "The volume size, in gibibytes (GiB)."
-  default     = "100"
-}
-
 variable "enable_http_port" {
   type        = bool
   description = "EMR services like Ganglia run on the http port"
@@ -269,24 +349,4 @@ variable "arn_partition" {
     aws-us-gov - AWS GovCloud (US) Regions
   EOF
   default     = "aws"
-}
-
-variable "core_bid_price" {
-  type        = string
-  description = <<EOF
-  Bid price for each EC2 instance in the core instance group, expressed in USD. By setting this attribute,
-  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.
-  Leave this blank to use On-Demand Instances
-  EOF
-  default     = ""
-}
-
-variable "master_bid_price" {
-  type        = string
-  description = <<EOF
-  Bid price for each EC2 instance in the master instance group, expressed in USD. By setting this attribute,
-  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.
-  Leave this blank to use On-Demand Instances
-  EOF
-  default     = ""
 }
