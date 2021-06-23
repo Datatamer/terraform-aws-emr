@@ -44,7 +44,7 @@ resource "aws_s3_bucket_object" "sample_bootstrap_script_2" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=3.0.1"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=4.0.0"
   source = "../.."
 
   # Configurations
@@ -88,8 +88,8 @@ module "emr-hbase" {
   emr_ec2_instance_profile_name = "hbase-test-instance-profile"
   emr_service_iam_policy_name   = "hbase-test-service-policy"
   emr_ec2_iam_policy_name       = "hbase-test-ec2-policy"
-  master_instance_group_name    = "HBase-Test-MasterInstanceGroup"
-  core_instance_group_name      = "Hbase-Test-CoreInstanceGroup"
+  master_instance_fleet_name    = "HBase-Test-MasterInstanceFleet"
+  core_instance_fleet_name      = "Hbase-Test-CoreInstanceFleet"
   emr_managed_master_sg_name    = "HBase-Test-EMR-Hbase-Master"
   emr_managed_core_sg_name      = "HBase-Test-EMR-Hbase-Core"
   emr_additional_master_sg_name = "HBase-Test-EMR-Hbase-Additional-Master"
@@ -97,12 +97,12 @@ module "emr-hbase" {
   emr_service_access_sg_name    = "HBase-Test-EMR-Hbase-Service-Access"
 
   # Scale
-  master_group_instance_count = 1
-  core_group_instance_count   = 2
-  master_instance_type        = "m4.large"
-  core_instance_type          = "r5.xlarge"
-  master_ebs_size             = 50
-  core_ebs_size               = 50
+  master_instance_on_demand_count = 1
+  core_instance_on_demand_count   = 2
+  master_instance_type            = "m4.large"
+  core_instance_type              = "r5.xlarge"
+  master_ebs_size                 = 50
+  core_ebs_size                   = 50
 
   # Spot Instance definition
   # on-demand r5.xlarge EC2 + EMR --> $0.252 + $0.063 = $0.315 per Hour

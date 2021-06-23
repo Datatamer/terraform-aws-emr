@@ -1,5 +1,31 @@
 # TAMR AWS EMR module
 
+## v4.0.0 - June 15, 2021
+* Update cluster to use instance fleets, for a mix of on-demand and spot instances
+* Changes variables:
+  * master_instance_group_name ==> master_instance_fleet_name
+  * core_instance_group_name ==> core_instance_group_name
+* Removes variables:
+  * master_group_instance_count
+  * core_group_instance_count
+* Adds variables:
+  * master_instance_on_demand_count
+  * master_instance_spot_count
+  * master_bid_price_as_percentage_of_on_demand_price
+  * master_block_duration_minutes
+  * master_timeout_action
+  * master_timeout_duration_minutes
+  * core_instance_on_demand_count
+  * core_instance_spot_count
+  * core_bid_price_as_percentage_of_on_demand_price
+  * core_block_duration_minutes
+  * core_timeout_action
+  * core_timeout_duration_minutes
+* Changes output:
+  * core_group_instance_count ==> core_fleet_instance_count
+* Adds output:
+  * master_fleet_instance_count
+
 ## v3.0.1 - April 27th 2021
 * Upgrades and pins `terraform-aws-modules/key-pair/aws` to version 1.0.0
 

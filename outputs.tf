@@ -58,6 +58,11 @@ output "tamr_emr_cluster_name" {
   description = "Name of the AWS EMR cluster created"
 }
 
+output "master_fleet_instance_count" {
+  value       = module.emr-cluster.master_instance_total_count
+  description = "Number of on-demand and spot master instances configured"
+}
+
 output "master_instance_type" {
   value       = module.emr-cluster.master_instance_type
   description = "The EC2 instance type of the master nodes"
@@ -78,9 +83,9 @@ output "master_ebs_type" {
   description = "Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1"
 }
 
-output "core_group_instance_count" {
-  value       = module.emr-cluster.core_group_instance_count
-  description = "Number of cores configured to execute the job flow"
+output "core_fleet_instance_count" {
+  value       = module.emr-cluster.core_instance_total_count
+  description = "Number of on-demand and spot core instances configured"
 }
 
 output "core_instance_type" {

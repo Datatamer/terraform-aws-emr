@@ -17,9 +17,34 @@ output "release_label" {
   description = "The release label for the Amazon EMR release."
 }
 
-output "core_group_instance_count" {
-  value       = var.core_group_instance_count
-  description = "Number of cores configured to execute the job flow"
+output "master_instance_on_demand_count" {
+  value       = var.master_instance_on_demand_count
+  description = "Number of on-demand master instances configured"
+}
+
+output "master_instance_spot_count" {
+  value       = var.master_instance_spot_count
+  description = "Number of spot master instances configured"
+}
+
+output "master_instance_total_count" {
+  value       = var.master_instance_on_demand_count + var.master_instance_spot_count
+  description = "Total number of on-demand and spot instances in master fleet"
+}
+
+output "core_instance_on_demand_count" {
+  value       = var.core_instance_on_demand_count
+  description = "Number of on-demand core instances configured"
+}
+
+output "core_instance_spot_count" {
+  value       = var.core_instance_spot_count
+  description = "Number of spot core instances configured"
+}
+
+output "core_instance_total_count" {
+  value       = var.core_instance_on_demand_count + var.core_instance_spot_count
+  description = "Total number of on-demand and spot instances in core fleet"
 }
 
 output "core_ebs_size" {

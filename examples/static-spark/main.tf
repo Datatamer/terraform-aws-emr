@@ -30,7 +30,7 @@ module "emr_key_pair" {
 
 # EMR Static Spark cluster
 module "emr-spark" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=3.0.1"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=4.0.0"
   source = "../.."
 
   # Configurations
@@ -60,8 +60,8 @@ module "emr-spark" {
   emr_ec2_instance_profile_name = "spark-test-instance-profile"
   emr_service_iam_policy_name   = "spark-test-service-policy"
   emr_ec2_iam_policy_name       = "spark-test-ec2-policy"
-  master_instance_group_name    = "Spark-Test-MasterInstanceGroup"
-  core_instance_group_name      = "Spark-Test-CoreInstanceGroup"
+  master_instance_fleet_name    = "Spark-Test-MasterInstanceFleet"
+  core_instance_fleet_name      = "Spark-Test-CoreInstanceFleet"
   emr_managed_master_sg_name    = "Spark-Test-EMR-Spark-Master"
   emr_managed_core_sg_name      = "Spark-Test-EMR-Spark-Core"
   emr_additional_master_sg_name = "Spark-Test-EMR-Spark-Additional-Master"
@@ -69,10 +69,10 @@ module "emr-spark" {
   emr_service_access_sg_name    = "Spark-Test-EMR-Spark-Service-Access"
 
   # Scale
-  master_group_instance_count = 1
-  core_group_instance_count   = 2
-  master_instance_type        = "m4.large"
-  core_instance_type          = "r5.xlarge"
-  master_ebs_size             = 50
-  core_ebs_size               = 50
+  master_instance_on_demand_count = 1
+  core_instance_on_demand_count   = 2
+  master_instance_type            = "m4.large"
+  core_instance_type              = "r5.xlarge"
+  master_ebs_size                 = 50
+  core_ebs_size                   = 50
 }
