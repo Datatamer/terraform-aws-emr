@@ -1,5 +1,6 @@
 // Get AWS account ID
 data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
 
 ####################
 # EMR Service Role
@@ -434,7 +435,9 @@ data "aws_iam_policy_document" "emr_ec2_policy" {
       "elasticmapreduce:ListInstances",
       "elasticmapreduce:ListSteps"
     ]
-    resources = ["*"]
+    resources = [
+      "arn:${var.arn_partition}:elasticmapreduce:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:cluster/${var.cluster_id!="" ? var.cluster_id : "*"}"
+    ]
   }
 
   statement {
