@@ -61,3 +61,9 @@ variable "arn_partition" {
   EOF
   default     = "aws"
 }
+
+variable "cluster_id" {
+  type        = string
+  description = "If Static cluster, ID for the EMR cluster being created"
+  default     = ""
+}

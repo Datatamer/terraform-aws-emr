@@ -19,6 +19,9 @@ module "emr-sgs" {
 
 module "emr-iam" {
   source                            = "./modules/aws-emr-iam"
+
+  depends_on = [module.emr-cluster]
+
   s3_bucket_name_for_logs           = var.bucket_name_for_logs
   s3_bucket_name_for_root_directory = var.bucket_name_for_root_directory
   s3_policy_arns                    = var.s3_policy_arns
@@ -29,6 +32,8 @@ module "emr-iam" {
   emr_ec2_role_name                 = var.emr_ec2_role_name
   additional_tags                   = var.additional_tags
   arn_partition                     = var.arn_partition
+  cluster_id                        = module.emr-cluster.tamr_emr_cluster_id
+
 }
 
 module "emr-cluster-config" {
