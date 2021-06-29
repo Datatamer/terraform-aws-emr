@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v4.1.0 - June 29, 2021
+* Open port 16030 on region servers to allow collection of HBase metrics
+
 ## v4.0.0 - June 15, 2021
 * Update cluster to use instance fleets, for a mix of on-demand and spot instances
 * Changes variables:
