@@ -540,7 +540,7 @@ resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_sgs" {
 }
 
 //Region Server rule - Additional SG for EMR Core with TAMR CIDRS for accessing HBase Metrics port
-resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_cidrs" {
+resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_cidrs_metrics" {
   count             = local.tamr_cidrs_provided ? 1 : 0
   from_port         = 16030
   to_port           = 16030
@@ -552,7 +552,7 @@ resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_cidrs" {
 }
 
 //Region Server rule - Additional SG for EMR Core with TAMR SGs for accessing HBase Metrics port
-resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_sgs" {
+resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_sgs_metrics" {
   count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
   from_port                = 16030
   to_port                  = 16030
