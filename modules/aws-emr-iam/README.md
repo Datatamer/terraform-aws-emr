@@ -51,7 +51,7 @@ This module creates:
 | s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
 | additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
 | arn\_partition | The partition in which the resource is located. A partition is a group of AWS Regions.<br>  Each AWS account is scoped to one partition.<br>  The following are the supported partitions:<br>    aws -AWS Regions<br>    aws-cn - China Regions<br>    aws-us-gov - AWS GovCloud (US) Regions | `string` | `"aws"` | no |
-| cluster\_id| If Static cluster, ID for the EMR cluster being created | `map(string)` | n/a | no |
+| emr\_cluster\_id | ID for the static EMR cluster if known because already created. If specified, restrict IAM policies to this cluster | `string` | `""` | no |
 | emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR service role | `string` | `"tamr-emr-ec2-policy"` | no |
 | emr\_ec2\_instance\_profile\_name | Name of the new instance profile for EMR EC2 instances | `string` | `"tamr_emr_ec2_instance_profile"` | no |
 | emr\_ec2\_role\_name | Name of the new IAM role for EMR EC2 instances | `string` | `"tamr_emr_ec2_role"` | no |

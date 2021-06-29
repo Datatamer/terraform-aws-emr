@@ -81,6 +81,7 @@ No provider.
 | custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `null` | no |
 | emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
 | emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
+| emr\_cluster\_id | ID for the static EMR cluster if known because already created. If specified, restrict IAM policies to this cluster | `string` | `""` | no |
 | emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR service role | `string` | `"tamr-emr-ec2-policy"` | no |
 | emr\_ec2\_instance\_profile\_name | Name of the new instance profile for EMR EC2 instances | `string` | `"tamr_emr_ec2_instance_profile"` | no |
 | emr\_ec2\_role\_name | Name of the new IAM role for EMR EC2 instances | `string` | `"tamr_emr_ec2_role"` | no |
@@ -101,7 +102,7 @@ No provider.
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |
 | master\_instance\_fleet\_name | Name for the master instance fleet | `string` | `"MasterInstanceFleet"` | no |
 | master\_instance\_on\_demand\_count | Number of on-demand instances for the master instance fleet | `number` | `1` | no |
-| master\_instance\_spot\_count | Number of spot instances for the master instance fleet | `number` | `1` | no |
+| master\_instance\_spot\_count | Number of spot instances for the master instance fleet | `number` | `0` | no |
 | master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |
 | master\_timeout\_action | Timeout action for master instances | `string` | `"SWITCH_TO_ON_DEMAND"` | no |
 | master\_timeout\_duration\_minutes | Spot provisioning timeout for master instances, in minutes | `number` | `10` | no |

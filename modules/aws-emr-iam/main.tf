@@ -436,7 +436,7 @@ data "aws_iam_policy_document" "emr_ec2_policy" {
       "elasticmapreduce:ListSteps"
     ]
     resources = [
-      "arn:${var.arn_partition}:elasticmapreduce:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:cluster/${var.cluster_id!="" ? var.cluster_id : "*"}"
+      "arn:${var.arn_partition}:elasticmapreduce:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:cluster/${var.emr_cluster_id != "" ? var.emr_cluster_id : "*"}"
     ]
   }
 
