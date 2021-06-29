@@ -539,6 +539,30 @@ resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_sgs" {
   description              = "Region Server - EMR Dashboard"
 }
 
+//Region Server rule - Additional SG for EMR Core with TAMR CIDRS for accessing HBase Metrics port
+resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_cidrs_metrics" {
+  count             = local.tamr_cidrs_provided ? 1 : 0
+  from_port         = 16030
+  to_port           = 16030
+  protocol          = "tcp"
+  security_group_id = aws_security_group.emr_additional_core.id
+  type              = "ingress"
+  cidr_blocks       = var.tamr_cidrs
+  description       = "Region Server - HBase Metrics"
+}
+
+//Region Server rule - Additional SG for EMR Core with TAMR SGs for accessing HBase Metrics port
+resource "aws_security_group_rule" "region_server_port_add_core_sg_tamr_sgs_metrics" {
+  count                    = local.tamr_sgs_provided ? length(var.tamr_sgs) : 0
+  from_port                = 16030
+  to_port                  = 16030
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.emr_additional_core.id
+  type                     = "ingress"
+  source_security_group_id = var.tamr_sgs[count.index]
+  description              = "Region Server - HBase Metrics"
+}
+
 //Egress SG rule for EMR Core Additional SG
 resource "aws_security_group_rule" "egress_for_add_core_sg" {
   from_port         = 0
