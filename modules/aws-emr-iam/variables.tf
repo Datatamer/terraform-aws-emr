@@ -62,8 +62,8 @@ variable "arn_partition" {
   default     = "aws"
 }
 
-variable "cluster_id" {
+variable "emr_cluster_id" {
   type        = string
-  description = "If Static cluster, ID for the EMR cluster being created"
+  description = "ID for the static EMR cluster if known because already created. If specified, restrict IAM policies to this cluster"
   default     = ""
 }

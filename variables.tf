@@ -350,3 +350,9 @@ variable "arn_partition" {
   EOF
   default     = "aws"
 }
+
+variable "emr_cluster_id" {
+  type        = string
+  description = "ID for the static EMR cluster if known because already created. If specified, restrict IAM policies to this cluster"
+  default     = ""
+}
