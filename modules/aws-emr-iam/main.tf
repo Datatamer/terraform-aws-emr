@@ -31,7 +31,7 @@ data "aws_iam_policy_document" "emr_service_policy" {
   version = "2012-10-17"
 
   statement {
-    effect = "Allow",
+    effect = "Allow"
     actions = [
       "ec2:DescribeAccountAttributes",
       "ec2:DescribeCapacityReservations",
@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "emr_service_policy" {
   }
 
   statement {
-    effect = "Allow",
+    effect = "Allow"
     actions = [
       "iam:GetRole",
       "iam:GetRolePolicy",
@@ -66,7 +66,7 @@ data "aws_iam_policy_document" "emr_service_policy" {
   }
 
   statement {
-    effect = "Allow",
+    effect = "Allow"
     actions =  [
       "ec2:CreateTags",
       "ec2:DeleteTags"
@@ -91,24 +91,6 @@ data "aws_iam_policy_document" "emr_service_policy" {
     ]
     resources = [
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-    ]
-  }
-
-  statement {
-    //template
-    effect = "Allow"
-    actions = [
-    ]
-    resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
     ]
   }
 
