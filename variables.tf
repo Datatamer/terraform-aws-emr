@@ -61,7 +61,7 @@ variable "tamr_sgs" {
 variable "additional_tags" {
   type        = map(string)
   description = "Additional tags to be attached to the resources created"
-  default     = {"for-use-with-tamr-emr" : "true"}
+  default     = {}
 }
 
 variable "emr_service_role_name" {
