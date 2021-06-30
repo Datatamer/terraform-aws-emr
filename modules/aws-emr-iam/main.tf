@@ -177,21 +177,20 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:RunInstances"
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:capacity-reservation/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:elastic-gpu/*",
-      #"arn:${var.arn_partition}:elastic-inference:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:elastic-inference-accelerator/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:capacity-reservation/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:elastic-gpu/*",
+      "arn:${var.arn_partition}:elastic-inference:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:elastic-inference-accelerator/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
     ]
   }
   statement {
