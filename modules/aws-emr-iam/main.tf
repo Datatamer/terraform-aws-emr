@@ -27,7 +27,7 @@ resource "aws_iam_role" "emr_service_role" {
 }
 
 //The minimal policy document for the EMR service role
-data "aws_iam_policy_document" "emr_service_policy" {
+data "aws_iam_policy_document" "emr_service_policy_1" {
   version = "2012-10-17"
 
   statement {
@@ -193,6 +193,12 @@ data "aws_iam_policy_document" "emr_service_policy" {
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
     ]
   }
+}
+
+//The minimal policy document for the EMR service role
+data "aws_iam_policy_document" "emr_service_policy_2" {
+  version = "2012-10-17"
+
   statement {
     effect = "Allow"
     actions = [
@@ -348,15 +354,26 @@ data "aws_iam_policy_document" "emr_service_policy" {
 }
 
 //The policy that attaches the minimal policy document
-resource "aws_iam_policy" "emr_service_policy" {
+resource "aws_iam_policy" "emr_service_policy_1" {
   name   = var.emr_service_iam_policy_name
-  policy = data.aws_iam_policy_document.emr_service_policy.json
+  policy = data.aws_iam_policy_document.emr_service_policy_1.json
+}
+
+//The policy that attaches the minimal policy document
+resource "aws_iam_policy" "emr_service_policy_2" {
+name   = var.emr_service_iam_policy_name
+policy = data.aws_iam_policy_document.emr_service_policy_2.json
 }
 
 //The IAM role policy attachement that attaches the minimal policy to the role
-resource "aws_iam_role_policy_attachment" "emr_service_role_policy" {
+resource "aws_iam_role_policy_attachment" "emr_service_role_policy_1" {
   role       = aws_iam_role.emr_service_role.name
-  policy_arn = aws_iam_policy.emr_service_policy.arn
+  policy_arn = aws_iam_policy.emr_service_policy_1.arn
+}
+
+resource "aws_iam_role_policy_attachment" "emr_service_role_policy_2" {
+  role       = aws_iam_role.emr_service_role.name
+  policy_arn = aws_iam_policy.emr_service_policy_2.arn
 }
 
 ###########################
