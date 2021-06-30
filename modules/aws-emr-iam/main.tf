@@ -29,16 +29,10 @@ resource "aws_iam_role" "emr_service_role" {
 //The minimal policy document for the EMR service role
 data "aws_iam_policy_document" "emr_service_policy" {
   version = "2012-10-17"
+
   statement {
-    effect = "Allow"
+    effect = "Allow",
     actions = [
-      "ec2:AuthorizeSecurityGroupEgress",
-      "ec2:AuthorizeSecurityGroupIngress",
-      "ec2:CancelSpotInstanceRequests",
-      "ec2:CreateNetworkInterface",
-      "ec2:CreateTags",
-      "ec2:DeleteNetworkInterface",
-      "ec2:DeleteTags",
       "ec2:DescribeAccountAttributes",
       "ec2:DescribeCapacityReservations",
       "ec2:DescribeDhcpOptions",
@@ -55,30 +49,244 @@ data "aws_iam_policy_document" "emr_service_policy" {
       "ec2:DescribeVpcAttribute",
       "ec2:DescribeVpcEndpoints",
       "ec2:DescribeVpcs",
-      "ec2:DetachNetworkInterface",
-      "ec2:ModifyImageAttribute",
-      "ec2:ModifyInstanceAttribute",
-      "ec2:RequestSpotInstances",
-      "ec2:RevokeSecurityGroupEgress",
-      "ec2:RunInstances",
-      "ec2:TerminateInstances",
-      "ec2:DeleteVolume",
-      "ec2:DetachVolume",
-      "ec2:DeleteLaunchTemplate",
-      "ec2:CreateLaunchTemplate",
-      "ec2:DescribeLaunchTemplates",
-      "ec2:CreateFleet",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    effect = "Allow",
+    actions = [
       "iam:GetRole",
       "iam:GetRolePolicy",
       "iam:ListInstanceProfiles",
       "iam:ListRolePolicies",
-      "iam:PassRole",
-      "cloudwatch:PutMetricAlarm",
-      "cloudwatch:DescribeAlarms",
-      "cloudwatch:DeleteAlarms",
+      "iam:PassRole"
     ]
     resources = ["*"]
   }
+
+  statement {
+    effect = "Allow",
+    actions =  [
+      "ec2:CreateTags",
+      "ec2:DeleteTags"
+    ],
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*"
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupIngress",
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+    ]
+  }
+
+  statement {
+    //template
+    effect = "Allow"
+    actions = [
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:CancelSpotInstanceRequests",
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*"
+
+    ]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:RequestSpotInstances",
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+    ]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:CreateNetworkInterface"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:DeleteNetworkInterface"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+    ]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:DetachNetworkInterface",
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:ModifyImageAttribute"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+    ]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:ModifyInstanceAttribute"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:RunInstances"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*"
+    ]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:TerminateInstances"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+    ]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:DeleteVolume"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*"
+    ]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:DetachVolume"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:CreateFleet"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fleet/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
+    ]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:CreateLaunchTemplate"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:capacity-reservation/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:dedicated-host/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
+    ]
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:DeleteLaunchTemplate"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*"
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "cloudwatch:PutMetricAlarm",
+      "cloudwatch:DescribeAlarms",
+      "cloudwatch:DeleteAlarms"
+    ]
+    resources = [
+      "arn:${var.arn_partition}:cloudwatch:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:alarm:*"
+    ]
+  }
+
   //The following permissions are for the cluster get/put S3 bucket info and objects for logs
   statement {
     effect = "Allow"
@@ -205,3 +413,4 @@ resource "aws_iam_instance_profile" "emr_ec2_instance_profile" {
   name = var.emr_ec2_instance_profile_name
   role = aws_iam_role.emr_ec2_instance_profile.name
 }
+
