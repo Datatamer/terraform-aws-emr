@@ -72,7 +72,6 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:DeleteTags"
     ]
     resources = [
-      "*"
       #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
       #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
       #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
@@ -91,8 +90,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:RevokeSecurityGroupIngress",
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
     ]
   }
 
@@ -102,8 +100,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:CancelSpotInstanceRequests",
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*"
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*"
 
     ]
   }
@@ -140,8 +137,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:DeleteNetworkInterface"
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
     ]
   }
   statement {
@@ -150,9 +146,8 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:DetachNetworkInterface",
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
     ]
   }
 
@@ -162,8 +157,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:ModifyImageAttribute"
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
     ]
   }
   statement {
@@ -208,8 +202,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:TerminateInstances"
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
     ]
   }
 }
@@ -224,8 +217,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:DeleteVolume"
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*"
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*"
     ]
   }
   statement {
@@ -234,9 +226,8 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:DetachVolume"
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
     ]
   }
 
@@ -282,8 +273,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:DeleteLaunchTemplate"
     ]
     resources = [
-      "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*"
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*"
     ]
   }
 
