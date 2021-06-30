@@ -355,14 +355,14 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
 
 //The policy that attaches the minimal policy document
 resource "aws_iam_policy" "emr_service_policy_1" {
-  name   = var.emr_service_iam_policy_name
+  name   = "${var.emr_service_iam_policy_name}_1"
   policy = data.aws_iam_policy_document.emr_service_policy_1.json
 }
 
 //The policy that attaches the minimal policy document
 resource "aws_iam_policy" "emr_service_policy_2" {
-name   = var.emr_service_iam_policy_name
-policy = data.aws_iam_policy_document.emr_service_policy_2.json
+  name   = "${var.emr_service_iam_policy_name}_2"
+  policy = data.aws_iam_policy_document.emr_service_policy_2.json
 }
 
 //The IAM role policy attachement that attaches the minimal policy to the role
