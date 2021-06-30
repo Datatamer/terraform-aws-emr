@@ -78,6 +78,11 @@ data "aws_iam_policy_document" "emr_service_policy" {
       "cloudwatch:DeleteAlarms",
     ]
     resources = ["*"]
+    condition {
+      test = "StringEquals"
+      variable = "for-use-with-tamr-emr"
+      values = ["true"]
+    }
   }
   //The following permissions are for the cluster get/put S3 bucket info and objects for logs
   statement {
