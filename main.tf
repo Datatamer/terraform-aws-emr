@@ -30,7 +30,6 @@ module "emr-iam" {
   emr_ec2_role_name                 = var.emr_ec2_role_name
   additional_tags                   = var.additional_tags
   arn_partition                     = var.arn_partition
-  emr_cluster_id                    = var.emr_cluster_id
 
 }
 
