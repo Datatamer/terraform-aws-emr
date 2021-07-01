@@ -421,4 +421,3 @@ resource "aws_iam_instance_profile" "emr_ec2_instance_profile" {
   name = var.emr_ec2_instance_profile_name
   role = aws_iam_role.emr_ec2_instance_profile.name
 }
-
