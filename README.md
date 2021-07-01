@@ -101,7 +101,7 @@ No provider.
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes | `number` | `1` | no |
 | master\_instance\_fleet\_name | Name for the master instance fleet | `string` | `"MasterInstanceFleet"` | no |
 | master\_instance\_on\_demand\_count | Number of on-demand instances for the master instance fleet | `number` | `1` | no |
-| master\_instance\_spot\_count | Number of spot instances for the master instance fleet | `number` | `1` | no |
+| master\_instance\_spot\_count | Number of spot instances for the master instance fleet | `number` | `0` | no |
 | master\_instance\_type | The EC2 instance type of the master nodes | `string` | `"m4.xlarge"` | no |
 | master\_timeout\_action | Timeout action for master instances | `string` | `"SWITCH_TO_ON_DEMAND"` | no |
 | master\_timeout\_duration\_minutes | Spot provisioning timeout for master instances, in minutes | `number` | `10` | no |
