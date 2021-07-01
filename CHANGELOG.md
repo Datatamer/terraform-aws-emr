@@ -1,5 +1,9 @@
 # TAMR AWS EMR module
 
+## v5.0.0 - July 1st, 2021
+* Remove wildcards from IAM policies where possible
+* Removes policy entirely for the ec2 role
+
 ## v4.1.0 - June 29, 2021
 * Open port 16030 on region servers to allow collection of HBase metrics
 
