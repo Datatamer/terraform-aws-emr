@@ -67,18 +67,12 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
 
   statement {
     effect = "Allow"
-    actions =  [
+    actions = [
       "ec2:CreateTags",
       "ec2:DeleteTags"
     ]
     resources = [
       "*"
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-      #"arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*"
     ]
   }
 
