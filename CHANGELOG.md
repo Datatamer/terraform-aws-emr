@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v5.1.0 - July 6th, 2021
+* Adds new variable `permissions_boundary` to set the permissions boundary for all IAM Roles created by the module
+
 ## v5.0.0 - July 1st, 2021
 * Remove wildcards from IAM policies where possible
 * Removes policy entirely for the ec2 role
