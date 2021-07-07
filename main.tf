@@ -30,7 +30,7 @@ module "emr-iam" {
   emr_ec2_role_name                 = var.emr_ec2_role_name
   additional_tags                   = var.additional_tags
   arn_partition                     = var.arn_partition
-
+  permissions_boundary              = var.permissions_boundary
 }
 
 module "emr-cluster-config" {
