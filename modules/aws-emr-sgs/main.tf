@@ -4,7 +4,6 @@ resource "aws_security_group" "emr_managed_master" {
   description            = "EMR Managed Master Security Group"
   revoke_rules_on_delete = true
   name                   = var.emr_managed_master_sg_name
-
   tags = var.additional_tags
 }
 

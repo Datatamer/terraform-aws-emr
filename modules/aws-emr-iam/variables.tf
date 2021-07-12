@@ -67,3 +67,9 @@ variable "permissions_boundary" {
   description = "ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module"
   default     = null
 }
+
+variable "additional_tags" {
+  type        = map(string)
+  description = "Additional tags to be attached to the resources created"
+  default     = {}
+}
