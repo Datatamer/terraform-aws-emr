@@ -58,12 +58,9 @@ This module creates:
 | applications | List of applications to run on EMR | `list(string)` | n/a | yes |
 | bucket\_name\_for\_logs | S3 bucket name for cluster logs. | `string` | n/a | yes |
 | bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory | `string` | n/a | yes |
-| emr\_additional\_core\_sg\_id | Security group id of the EMR Additional Core Security Group | `string` | n/a | yes |
-| emr\_additional\_master\_sg\_id | Security group id of the EMR Additional Master Security Group | `string` | n/a | yes |
 | emr\_ec2\_instance\_profile\_arn | ARN of the EMR EC2 instance profile | `string` | n/a | yes |
-| emr\_managed\_core\_sg\_id | Security group id of the EMR Managed Core Security Group | `string` | n/a | yes |
-| emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group | `string` | n/a | yes |
-| emr\_service\_access\_sg\_id | Security group id of Service Access Security Group | `string` | n/a | yes |
+| emr\_managed\_core\_sg\_ids | List of security group ids of the EMR Managed Core Security Group | `list(string)` | n/a | yes |
+| emr\_managed\_master\_sg\_ids | List of security group ids of the EMR Managed Master Security Group | `list(string)` | n/a | yes |
 | emr\_service\_role\_arn | ARN of the IAM service role for the EMR cluster | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
