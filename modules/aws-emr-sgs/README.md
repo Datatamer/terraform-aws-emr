@@ -45,27 +45,16 @@ This terraform module creates:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| applications | List of applications to run on EMR | `list(string)` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
-| emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
-| emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
-| emr\_managed\_core\_sg\_name | Name for the EMR managed core security group | `string` | `"TAMR-EMR-Core"` | no |
-| emr\_managed\_master\_sg\_name | Name for the EMR managed master security group | `string` | `"TAMR-EMR-Master"` | no |
-| emr\_service\_access\_sg\_name | Name for the EMR service access security group | `string` | `"TAMR-EMR-Service-Access"` | no |
-| enable\_http\_port | EMR services like Ganglia run on the http port | `bool` | `false` | no |
+| additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
+| emr\_managed\_sg\_name | Name for the EMR managed security group | `string` | `"TAMR-EMR-Internal"` | no |
 | tags | A map of tags to add to all resources. | `map(string)` | `{}` | no |
-| tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
-| tamr\_sgs | Security Group for the Tamr Instance | `list(string)` | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| emr\_additional\_core\_sg\_id | Security group id of the EMR Additional Core Security Group |
-| emr\_additional\_master\_sg\_id | Security group id of the EMR Additional Master Security Group |
-| emr\_managed\_core\_sg\_id | Security group id of the EMR Managed Core Security Group |
-| emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group |
-| emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
+| emr\_managed\_sg\_id | Security group id of the EMR Managed Security Group |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
