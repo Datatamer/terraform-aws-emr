@@ -7,6 +7,7 @@ module "emr-logs-bucket" {
     "s3:PutObject",
   ]
   read_write_paths = ["logs/hbase-test-cluster"] # r/w policy permitting specified rw actions on entire bucket
+  tags        = var.tags
 }
 
 # Set up root directory bucket
@@ -14,6 +15,7 @@ module "emr-rootdir-bucket" {
   source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.0.0"
   bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
+  tags        = var.tags
 }
 
 # Create new EC2 key pair
@@ -26,6 +28,7 @@ module "emr_key_pair" {
   version    = "1.0.0"
   key_name   = "hbase-test-emr-key"
   public_key = tls_private_key.emr_private_key.public_key_openssh
+  tags       = var.tags
 }
 
 resource "aws_s3_bucket_object" "sample_bootstrap_script" {
@@ -55,7 +58,7 @@ module "emr-hbase" {
   bucket_path_to_logs           = "logs/hbase-test-cluster/"
   json_configuration_bucket_key = "tamr/emr/emr.json"
   utility_script_bucket_key     = "tamr/emr/upload_config.sh"
-  additional_tags               = {}
+  tags                          = var.tags
   bootstrap_actions = [
     {
       name = "sample_bootstrap_action",

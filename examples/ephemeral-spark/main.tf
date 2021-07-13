@@ -7,6 +7,7 @@ module "emr-logs-bucket" {
     "s3:PutObject",
   ]
   read_write_paths = [""] # r/w policy permitting specified rw actions on entire bucket
+  tags        = var.tags
 }
 
 # Set up root directory bucket
@@ -14,6 +15,7 @@ module "emr-rootdir-bucket" {
   source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.0.0"
   bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
+  tags             = var.tags
 }
 
 module "ephemeral-spark-sgs" {
@@ -26,6 +28,7 @@ module "ephemeral-spark-sgs" {
   emr_additional_master_sg_name = "Ephem-Spark-Test-EMR-Spark-Additional-Master"
   emr_additional_core_sg_name   = "Ephem-Spark-Test-EMR-Spark-Additional-Core"
   emr_service_access_sg_name    = "Ephem-Spark-Test-EMR-Spark-Service-Access"
+  tags                          = var.tags
 }
 
 module "ephemeral-spark-iam" {
@@ -39,6 +42,7 @@ module "ephemeral-spark-iam" {
   emr_service_role_name             = "ephem-spark-test-service-role"
   emr_ec2_instance_profile_name     = "ephem-spark-test-instance-profile"
   emr_ec2_role_name                 = "ephem-spark-test-ec2-role"
+  tags                              = var.tags
 }
 
 module "ephemeral-spark-config" {

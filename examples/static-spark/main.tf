@@ -7,6 +7,7 @@ module "emr-logs-bucket" {
     "s3:PutObject",
   ]
   read_write_paths = [""] # r/w policy permitting specified rw actions on entire bucket
+  tags        = var.tags
 }
 
 # Set up root directory bucket
@@ -14,6 +15,7 @@ module "emr-rootdir-bucket" {
   source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.0.0"
   bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
+  tags             = var.tags
 }
 
 # Create new EC2 key pair
@@ -26,6 +28,7 @@ module "emr_key_pair" {
   version    = "1.0.0"
   key_name   = "spark-test-emr-key"
   public_key = tls_private_key.emr_private_key.public_key_openssh
+  tags       = var.tags
 }
 
 # EMR Static Spark cluster
@@ -38,7 +41,7 @@ module "emr-spark" {
   release_label         = "emr-5.29.0" # spark 2.4.4
   applications          = ["Spark"]
   emr_config_file_path  = "../emr-config-template.json"
-  additional_tags       = {}
+  tags                  = var.tags
 
   # Networking
   subnet_id  = var.subnet_id
