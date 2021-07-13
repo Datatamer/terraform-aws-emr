@@ -210,29 +210,14 @@ variable "emr_service_role_arn" {
   description = "ARN of the IAM service role for the EMR cluster"
 }
 
-variable "emr_managed_master_sg_id" {
-  type        = string
-  description = "Security group id of the EMR Managed Master Security Group"
+variable "emr_managed_master_sg_ids" {
+  type        = list(string)
+  description = "List of security group ids of the EMR Managed Master Security Group"
 }
 
-variable "emr_additional_master_sg_id" {
-  type        = string
-  description = "Security group id of the EMR Additional Master Security Group"
-}
-
-variable "emr_managed_core_sg_id" {
-  type        = string
-  description = "Security group id of the EMR Managed Core Security Group"
-}
-
-variable "emr_additional_core_sg_id" {
-  type        = string
-  description = "Security group id of the EMR Additional Core Security Group"
-}
-
-variable "emr_service_access_sg_id" {
-  type        = string
-  description = "Security group id of Service Access Security Group"
+variable "emr_managed_core_sg_ids" {
+  type        = list(string)
+  description = "List of security group ids of the EMR Managed Core Security Group"
 }
 
 variable "emr_ec2_instance_profile_arn" {

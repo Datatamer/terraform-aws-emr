@@ -16,4 +16,5 @@ output "ec2-key" {
 
 output "private-key" {
   value = tls_private_key.emr_private_key.private_key_pem
+  sensitive = true
 }

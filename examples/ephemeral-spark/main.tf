@@ -21,13 +21,8 @@ module "emr-rootdir-bucket" {
 module "ephemeral-spark-sgs" {
   # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=5.0.0"
   source                        = "../../modules/aws-emr-sgs"
-  applications                  = ["Spark"]
   vpc_id                        = var.vpc_id
-  emr_managed_master_sg_name    = "Ephem-Spark-Test-EMR-Spark-Master"
-  emr_managed_core_sg_name      = "Ephem-Spark-Test-EMR-Spark-Core"
-  emr_additional_master_sg_name = "Ephem-Spark-Test-EMR-Spark-Additional-Master"
-  emr_additional_core_sg_name   = "Ephem-Spark-Test-EMR-Spark-Additional-Core"
-  emr_service_access_sg_name    = "Ephem-Spark-Test-EMR-Spark-Service-Access"
+  emr_managed_sg_name = "Ephem-Spark-Test-EMR-Spark-Internal"
   tags                          = var.tags
 }
 
