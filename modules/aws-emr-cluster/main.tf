@@ -16,11 +16,8 @@ resource "aws_emr_cluster" "emr-cluster" {
 
   ec2_attributes {
     subnet_id                         = var.subnet_id
-    emr_managed_master_security_group = var.emr_managed_master_sg_id
-    additional_master_security_groups = var.emr_additional_master_sg_id
-    emr_managed_slave_security_group  = var.emr_managed_core_sg_id
-    additional_slave_security_groups  = var.emr_additional_core_sg_id
-    service_access_security_group     = var.emr_service_access_sg_id
+    additional_master_security_groups = join(", ", [for s in var.emr_managed_master_sg_ids : s])
+    additional_slave_security_groups  = join(", ", [for s in var.emr_managed_core_sg_ids : s])
     instance_profile                  = var.emr_ec2_instance_profile_arn
     key_name                          = var.key_pair_name
   }
