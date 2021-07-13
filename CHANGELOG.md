@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v6.0.0 - July 13th, 2021
+* Removes creation of security groups except for internal use within the cluster
+
 ## v5.1.0 - July 6th, 2021
 * Adds new variable `permissions_boundary` to set the permissions boundary for all IAM Roles created by the module
 

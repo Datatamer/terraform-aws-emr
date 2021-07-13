@@ -44,7 +44,7 @@ resource "aws_s3_bucket_object" "sample_bootstrap_script_2" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=5.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=6.0.0"
   source = "../.."
 
   # Configurations
@@ -112,7 +112,7 @@ module "emr-hbase" {
 }
 
 module "sg-ports" {
-  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=5.0.0"
+  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.0.0"
   source = "../../modules/aws-emr-ports"
 }
 
