@@ -33,7 +33,7 @@ module "emr_key_pair" {
 
 # EMR Static Spark cluster
 module "emr-spark" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=5.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=6.0.0"
   source = "../.."
 
   # Configurations
@@ -80,7 +80,7 @@ module "emr-spark" {
 }
 
 module "sg-ports" {
-  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=5.0.0"
+  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.0.0"
   source = "../../modules/aws-emr-ports"
 }
 

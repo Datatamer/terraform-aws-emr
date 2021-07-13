@@ -46,18 +46,6 @@ variable "cluster_name" {
   default     = "TAMR-EMR-Cluster"
 }
 
-variable "tamr_cidrs" {
-  type        = list(string)
-  description = "List of CIDRs for Tamr"
-  default     = []
-}
-
-variable "tamr_sgs" {
-  type        = list(string)
-  description = "Security Groups for the Tamr Instance"
-  default     = []
-}
-
 variable "additional_tags" {
   type        = map(string)
   description = "[DEPRECATED: Use `tags` instead] Additional tags to be attached to the resources created."

@@ -19,15 +19,15 @@ module "emr-rootdir-bucket" {
 }
 
 module "ephemeral-spark-sgs" {
-  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=5.0.0"
-  source                        = "../../modules/aws-emr-sgs"
-  vpc_id                        = var.vpc_id
+  # source              = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=6.0.0"
+  source              = "../../modules/aws-emr-sgs"
+  vpc_id              = var.vpc_id
   emr_managed_sg_name = "Ephem-Spark-Test-EMR-Spark-Internal"
   tags                          = var.tags
 }
 
 module "ephemeral-spark-iam" {
-  # source                            = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=5.0.0"
+  # source                            = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=6.0.0"
   source                            = "../../modules/aws-emr-iam"
   s3_bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
@@ -41,7 +41,7 @@ module "ephemeral-spark-iam" {
 }
 
 module "ephemeral-spark-config" {
-  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-config?ref=5.0.0"
+  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-config?ref=6.0.0"
   source                         = "../../modules/aws-emr-config"
   create_static_cluster          = false
   cluster_name                   = "" # unused
