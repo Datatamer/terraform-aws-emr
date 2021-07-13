@@ -67,7 +67,7 @@ This module creates:
 | emr\_service\_role\_arn | ARN of the IAM service role for the EMR cluster | `string` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
-| additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
+| additional\_tags | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 | bootstrap\_actions | Ordered list of bootstrap actions that will be run before Hadoop is started on the cluster nodes. | <pre>list(object({<br>    name = string<br>    path = string<br>    args = list(string)<br>  }))</pre> | `[]` | no |
 | bucket\_path\_to\_logs | Path in logs bucket to store cluster logs e.g. mycluster/logs | `string` | `""` | no |
 | cluster\_name | Name for the EMR cluster to be created | `string` | `"TAMR-EMR-Cluster"` | no |

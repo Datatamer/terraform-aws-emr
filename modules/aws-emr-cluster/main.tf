@@ -115,5 +115,5 @@ resource "aws_emr_cluster" "emr-cluster" {
     ignore_changes = [step]
   }
 
-  tags = var.additional_tags
+  tags = var.tags
 }

@@ -47,7 +47,7 @@ This terraform module creates:
 |------|-------------|------|---------|:--------:|
 | applications | List of applications to run on EMR | `list(string)` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
-| additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
+| additional\_tags | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 | emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
 | emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
 | emr\_managed\_core\_sg\_name | Name for the EMR managed core security group | `string` | `"TAMR-EMR-Core"` | no |
