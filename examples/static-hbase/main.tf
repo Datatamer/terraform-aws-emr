@@ -7,7 +7,7 @@ module "emr-logs-bucket" {
     "s3:PutObject",
   ]
   read_write_paths = ["logs/hbase-test-cluster"] # r/w policy permitting specified rw actions on entire bucket
-  tags        = var.tags
+  tags             = var.tags
 }
 
 # Set up root directory bucket
@@ -15,7 +15,7 @@ module "emr-rootdir-bucket" {
   source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.0"
   bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
-  tags        = var.tags
+  tags             = var.tags
 }
 
 # Create new EC2 key pair

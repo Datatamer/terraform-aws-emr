@@ -1,5 +1,5 @@
 locals {
-  applications = [for app in var.applications : lower(app)]
+  applications   = [for app in var.applications : lower(app)]
   effective_tags = length(var.tags) > 0 ? var.tags : var.additional_tags
 }
 
@@ -103,5 +103,5 @@ module "emr-cluster" {
   emr_service_role_arn         = module.emr-iam.emr_service_role_arn
   emr_ec2_instance_profile_arn = module.emr-iam.emr_ec2_instance_profile_arn
 
-  tags                         = local.effective_tags
+  tags = local.effective_tags
 }

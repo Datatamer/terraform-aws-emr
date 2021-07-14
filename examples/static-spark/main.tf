@@ -7,7 +7,7 @@ module "emr-logs-bucket" {
     "s3:PutObject",
   ]
   read_write_paths = [""] # r/w policy permitting specified rw actions on entire bucket
-  tags        = var.tags
+  tags             = var.tags
 }
 
 # Set up root directory bucket
