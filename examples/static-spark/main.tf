@@ -1,3 +1,7 @@
+locals {
+  this_application = ["Spark"]
+}
+
 # Set up logs bucket with read/write permissions
 module "emr-logs-bucket" {
   source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.0"
@@ -39,7 +43,7 @@ module "emr-spark" {
   # Configurations
   create_static_cluster = true
   release_label         = "emr-5.29.0" # spark 2.4.4
-  applications          = ["Spark"]
+  applications          = local.this_application
   emr_config_file_path  = "../emr-config-template.json"
   tags                  = var.tags
 
@@ -82,6 +86,7 @@ module "emr-spark" {
 module "sg-ports" {
   # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.0.0"
   source = "../../modules/aws-emr-ports"
+  applications = local.this_application
 }
 
 module "aws-emr-sg-master" {

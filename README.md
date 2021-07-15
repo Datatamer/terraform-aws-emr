@@ -108,8 +108,6 @@ No provider.
 | permissions\_boundary | ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module | `string` | `null` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
 | tags | A map of tags to add to all resources. Replaces `additional_tags`. | `map(string)` | `{}` | no |
-| tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
-| tamr\_sgs | Security Groups for the Tamr Instance | `list(string)` | `[]` | no |
 | utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
 
 ## Outputs

@@ -1,3 +1,7 @@
+locals {
+  this_application = ["Hbase"]
+}
+
 # Set up logs bucket with read/write permissions
 module "emr-logs-bucket" {
   source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.0"
@@ -53,7 +57,7 @@ module "emr-hbase" {
   # Configurations
   create_static_cluster         = true
   release_label                 = "emr-5.29.0" # hbase 1.4.10
-  applications                  = ["Hbase"]
+  applications                  = local.this_application
   emr_config_file_path          = "../emr-config-template.json"
   bucket_path_to_logs           = "logs/hbase-test-cluster/"
   json_configuration_bucket_key = "tamr/emr/emr.json"
@@ -102,10 +106,6 @@ module "emr-hbase" {
   master_ebs_size                 = 50
   core_ebs_size                   = 50
 
-  # Spot Instance definition
-  # on-demand r5.xlarge EC2 + EMR --> $0.252 + $0.063 = $0.315 per Hour
-  # core_bid_price = ".100"
-
   # Don't use spot instances for the master nodes
   master_bid_price = ""
 
@@ -117,6 +117,7 @@ module "emr-hbase" {
 module "sg-ports" {
   # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.0.0"
   source = "../../modules/aws-emr-ports"
+  applications = local.this_application
 }
 
 module "aws-emr-sg-master" {
