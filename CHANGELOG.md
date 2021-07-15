@@ -2,6 +2,17 @@
 
 ## v6.0.0 - July 13th, 2021
 * Removes creation of security groups except for internal use within the cluster
+* Removes security group input variables:
+  * `emr_managed_master_sg_id`
+  * `emr_additional_master_sg_id`
+  * `emr_managed_core_sg_id`
+  * `emr_additional_core_sg_id`
+  * `emr_service_access_sg_id`
+* Replaces above 5 variables with:
+  * `emr_managed_master_sg_ids`
+  * `emr_managed_core_sg_ids`
+* Adds a new ports module
+* Updates examples to use new ports module
 
 ## v5.1.0 - July 6th, 2021
 * Adds new variable `permissions_boundary` to set the permissions boundary for all IAM Roles created by the module
