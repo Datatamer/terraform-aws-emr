@@ -2,36 +2,34 @@ variable "master_ports_emr" {
   type        = list(number)
   description = "Ports used by AWS EMR"
   default     = [
-    8443
+    8443  // EMR Cluster Manager
   ]
 }
 
 variable "master_ports_spark" {
   type        = list(number)
-  description = "Ports used by Spark"
+  description = "Ports used by AWS EMR Master Spark"
   default     = [
-    8088,
-    18080,
-    19888,
-    20888
+    8088,  // Yarn Resource Manager
+    18080, // Spark HistoryServer
+    19888, // MapReduce JobHistory Server Webapp Port
+    20888  // Yarn Resource Manager - Proxy
   ]
 }
 
 variable "master_ports_hbase" {
   type        = list(number)
-  description = "Ports used by HBase"
+  description = "Ports used by AWS EMR Master HBase"
   default     = [
-    2181,
-    8020,
-    8070,
-    8085,
-    9090,
-    9095,
-    16000,
-    16010,
-    16020,
-    16030,
-    50070
+    2181,  // Zookeeper client
+    8020,  // HDFS RPC
+    8070,  // REST server
+    8085,  // REST UI
+    9090,  // Thrift server
+    9095,  // Thrift server UI
+    16000, // Hbase Master
+    16010, // Hbase Master UI
+    50070  // HDFS NameNode
   ]
 }
 
@@ -39,17 +37,33 @@ variable "master_ports_ganglia" {
   type        = list(number)
   description = "Ports used by Ganglia"
   default     = [
-    80
+    80 // HTTP port
   ]
 }
 
-variable "core_ports" {
+variable "core_ports_emr" {
   type        = list(number)
   description = "Ports used by AWS EMR Core"
   default     = [
-    8042,
-    50010,
-    50075
+    50010, // HDFS DataNode 2
+    50075  // HDFS DataNode 1
+  ]
+}
+
+variable "core_ports_spark" {
+  type        = list(number)
+  description = "Ports used by AWS EMR Core Spark"
+  default     = [
+    8042 // YARN NodeManager
+  ]
+}
+
+variable "core_ports_hbase" {
+  type        = list(number)
+  description = "Ports used by AWS EMR Core HBase"
+  default     = [
+    16020, // RegionServer
+    16030  // RegionServer Info
   ]
 }
 
