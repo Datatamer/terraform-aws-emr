@@ -1,21 +1,32 @@
 locals {
-  applications  = [for app in var.applications : lower(app)]
-  running_hbase = contains(local.applications, "hbase")
-  running_spark = contains(local.applications, "spark")
-  output_hbase  = concat(var.master_ports_emr, var.master_ports_hbase, var.master_ports_ganglia, var.additional_ports)
-  output_spark  = concat(var.master_ports_emr, var.master_ports_spark, var.additional_ports)
-  output        = concat(var.master_ports_emr, var.additional_ports)
+  applications          = [for app in var.applications : lower(app)]
+  running_hbase         = contains(local.applications, "hbase")
+  running_spark         = contains(local.applications, "spark")
+  running_ganglia       = contains(local.applications, "ganglia")
+  output_hbase_core     = local.running_hbase ? var.core_ports_hbase : []
+  output_hbase_master   = local.running_hbase ? var.master_ports_hbase : []
+  output_spark_master   = local.running_spark ? var.master_ports_spark : []
+  output_ganglia_master = local.running_ganglia ? var.master_ports_ganglia: []
 }
 
 output "ingress_master_ports" {
-  value = local.running_hbase ? local.output_hbase : (local.running_spark ? local.output_spark : local.output)
+  value = flatten(
+    setunion(
+      local.output_hbase_master,
+      local.output_spark_master,
+      local.output_ganglia_master,
+      var.master_ports_emr,
+      var.additional_ports
+    ))
   description = "List of ingress master ports"
 }
 
 output "ingress_core_ports" {
-  value = concat(
-  var.core_ports,
-  var.additional_ports,
-  )
+  value = flatten(
+    setunion(
+      local.output_hbase_core,
+      var.core_ports_emr,
+      var.additional_ports
+  ))
   description = "List of ingress core ports"
 }
