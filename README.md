@@ -60,7 +60,7 @@ No provider.
 | s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
-| additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
+| additional\_tags | [DEPRECATED: Use `tags` instead] Additional tags to be attached to the resources created. | `map(string)` | `{}` | no |
 | arn\_partition | The partition in which the resource is located. A partition is a group of AWS Regions.<br>  Each AWS account is scoped to one partition.<br>  The following are the supported partitions:<br>    aws -AWS Regions<br>    aws-cn - China Regions<br>    aws-us-gov - AWS GovCloud (US) Regions | `string` | `"aws"` | no |
 | bootstrap\_actions | Ordered list of bootstrap actions that will be run before Hadoop is started on the cluster nodes. | <pre>list(object({<br>    name = string<br>    path = string<br>    args = list(string)<br>  }))</pre> | `[]` | no |
 | bucket\_path\_to\_logs | Path in logs bucket to store cluster logs e.g. mycluster/logs | `string` | `""` | no |
@@ -107,6 +107,7 @@ No provider.
 | master\_timeout\_duration\_minutes | Spot provisioning timeout for master instances, in minutes | `number` | `10` | no |
 | permissions\_boundary | ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module | `string` | `null` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
+| tags | A map of tags to add to all resources. Replaces `additional_tags`. | `map(string)` | `{}` | no |
 | tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
 | tamr\_sgs | Security Groups for the Tamr Instance | `list(string)` | `[]` | no |
 | utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |

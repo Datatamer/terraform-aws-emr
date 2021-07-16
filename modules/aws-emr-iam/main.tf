@@ -25,6 +25,7 @@ resource "aws_iam_role" "emr_service_role" {
   name                 = var.emr_service_role_name
   assume_role_policy   = data.aws_iam_policy_document.emr_assume_role.json
   permissions_boundary = var.permissions_boundary
+  tags                 = var.tags
 }
 
 //The minimal policy document for the EMR service role
@@ -367,12 +368,14 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
 resource "aws_iam_policy" "emr_service_policy_1" {
   name   = "${var.emr_service_iam_policy_name}-1"
   policy = data.aws_iam_policy_document.emr_service_policy_1.json
+  tags   = var.tags
 }
 
 //The policy that attaches the minimal policy document
 resource "aws_iam_policy" "emr_service_policy_2" {
   name   = "${var.emr_service_iam_policy_name}-2"
   policy = data.aws_iam_policy_document.emr_service_policy_2.json
+  tags   = var.tags
 }
 
 //The IAM role policy attachement that attaches the minimal policy to the role
@@ -409,6 +412,7 @@ resource "aws_iam_role" "emr_ec2_instance_profile" {
   name                 = var.emr_ec2_role_name
   assume_role_policy   = data.aws_iam_policy_document.ec2_assume_role.json
   permissions_boundary = var.permissions_boundary
+  tags                 = var.tags
 }
 
 // The IAM role policy attachment(s) that attach s3 policy ARNs to the EMR EC2 iam role
@@ -422,4 +426,5 @@ resource "aws_iam_role_policy_attachment" "emr_ec2_s3_policies" {
 resource "aws_iam_instance_profile" "emr_ec2_instance_profile" {
   name = var.emr_ec2_instance_profile_name
   role = aws_iam_role.emr_ec2_instance_profile.name
+  tags = var.tags
 }

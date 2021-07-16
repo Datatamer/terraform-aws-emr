@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v5.2.0 - July 13th 2021
+* Deprecates `additional_tags` in favor of `tags`
+
 ## v5.1.0 - July 6th, 2021
 * Adds new variable `permissions_boundary` to set the permissions boundary for all IAM Roles created by the module
 

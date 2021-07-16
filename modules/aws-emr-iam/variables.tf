@@ -21,12 +21,6 @@ variable "s3_policy_arns" {
   description = "List of policy ARNs to attach to EMR EC2 instance profile."
 }
 
-variable "additional_tags" {
-  type        = map(string)
-  description = "Additional tags to be attached to the resources created"
-  default     = {}
-}
-
 variable "s3_bucket_name_for_root_directory" {
   type        = string
   description = "S3 bucket name for storing root directory"
@@ -66,4 +60,10 @@ variable "permissions_boundary" {
   type        = string
   description = "ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module"
   default     = null
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to add to all resources."
+  default     = {}
 }

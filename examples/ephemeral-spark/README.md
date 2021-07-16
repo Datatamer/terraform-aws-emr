@@ -16,6 +16,7 @@ No provider.
 | bucket\_name\_for\_logs | S3 bucket name for cluster logs. | `string` | n/a | yes |
 | bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory. | `string` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
+| tags | A map of tags to add to all resources created by this example. | `map(string)` | <pre>{<br>  "Author": "Tamr",<br>  "Environment": "Example"<br>}</pre> | no |
 
 ## Outputs
 
