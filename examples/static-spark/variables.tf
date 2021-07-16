@@ -18,6 +18,25 @@ variable "bucket_name_for_logs" {
   description = "S3 bucket name for cluster logs."
 }
 
+variable "master_name_prefix" {
+  description = "A string to prepend to names of resources created by this example"
+}
+
+variable "core_name_prefix" {
+  description = "A string to prepend to names of resources created by this example"
+}
+
+variable "ingress_cidr_blocks" {
+  description = "CIDR blocks to attach to security groups for ingress"
+  type = list(string)
+}
+
+variable "egress_cidr_blocks" {
+  description = "CIDR blocks to attach to security groups for egress"
+  type = list(string)
+  default = ["0.0.0.0/0"]
+}
+
 variable "tags" {
   type        = map(string)
   description = "A map of tags to add to all resources created by this example."
