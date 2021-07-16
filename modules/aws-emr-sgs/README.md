@@ -44,7 +44,6 @@ This terraform module creates:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
-| additional\_tags | Additional tags to be attached to the resources created | `map(string)` | `{}` | no |
 | emr\_managed\_sg\_name | Name for the EMR managed security group | `string` | `"TAMR-EMR-Internal"` | no |
 | tags | A map of tags to add to all resources. | `map(string)` | `{}` | no |
 
