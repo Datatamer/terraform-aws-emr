@@ -60,7 +60,13 @@ variable "tamr_sgs" {
 
 variable "additional_tags" {
   type        = map(string)
-  description = "Additional tags to be attached to the resources created"
+  description = "[DEPRECATED: Use `tags` instead] Additional tags to be attached to the resources created."
+  default     = {}
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to add to all resources. Replaces `additional_tags`."
   default     = {}
 }
 

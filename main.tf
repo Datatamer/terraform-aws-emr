@@ -1,5 +1,6 @@
 locals {
-  applications = [for app in var.applications : lower(app)]
+  applications   = [for app in var.applications : lower(app)]
+  effective_tags = length(var.tags) > 0 ? var.tags : var.additional_tags
 }
 
 module "emr-sgs" {
@@ -14,7 +15,7 @@ module "emr-sgs" {
   tamr_cidrs                    = var.tamr_cidrs
   tamr_sgs                      = var.tamr_sgs
   enable_http_port              = var.enable_http_port
-  additional_tags               = var.additional_tags
+  tags                          = local.effective_tags
 }
 
 module "emr-iam" {
@@ -28,9 +29,9 @@ module "emr-iam" {
   emr_service_role_name             = var.emr_service_role_name
   emr_ec2_instance_profile_name     = var.emr_ec2_instance_profile_name
   emr_ec2_role_name                 = var.emr_ec2_role_name
-  additional_tags                   = var.additional_tags
   arn_partition                     = var.arn_partition
   permissions_boundary              = var.permissions_boundary
+  tags                              = local.effective_tags
 }
 
 module "emr-cluster-config" {
@@ -102,5 +103,5 @@ module "emr-cluster" {
   emr_service_role_arn         = module.emr-iam.emr_service_role_arn
   emr_ec2_instance_profile_arn = module.emr-iam.emr_ec2_instance_profile_arn
 
-  additional_tags = var.additional_tags
+  tags = local.effective_tags
 }
