@@ -85,7 +85,9 @@ module "emr-cluster" {
   custom_ami_id                                     = var.custom_ami_id
 
   # Security groups
+  emr_managed_master_sg_id  = module.emr-sgs.emr_managed_sg_id
   emr_managed_master_sg_ids = var.emr_managed_master_sg_ids
+  emr_managed_core_sg_id    = module.emr-sgs.emr_managed_sg_id
   emr_managed_core_sg_ids   = var.emr_managed_core_sg_ids
 
   # IAM

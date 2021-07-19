@@ -3,7 +3,7 @@ output "emr_managed_master_sg_ids" {
   description = "List of security group ids of the EMR Master Security Group"
 }
 
-output "emr_managed_core_sg_id" {
+output "emr_managed_core_sg_ids" {
   value       = var.emr_managed_core_sg_ids
   description = "List of security group ids of the EMR Core Security Group"
 }

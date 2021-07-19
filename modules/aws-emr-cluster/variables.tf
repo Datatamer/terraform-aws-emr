@@ -210,9 +210,19 @@ variable "emr_service_role_arn" {
   description = "ARN of the IAM service role for the EMR cluster"
 }
 
+variable "emr_managed_master_sg_id" {
+  type        = string
+  description = "Security group id for internal communication"
+}
+
 variable "emr_managed_master_sg_ids" {
   type        = list(string)
   description = "List of security group ids of the EMR Managed Master Security Group"
+}
+
+variable "emr_managed_core_sg_id" {
+  type        = string
+  description = "Security group id for internal communication"
 }
 
 variable "emr_managed_core_sg_ids" {

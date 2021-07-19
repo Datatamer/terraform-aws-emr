@@ -19,22 +19,24 @@ variable "subnet_id" {
 }
 
 variable "master_name_prefix" {
+  type        = string
   description = "A string to prepend to names of resources created by this example"
 }
 
 variable "core_name_prefix" {
+  type        = string
   description = "A string to prepend to names of resources created by this example"
 }
 
 variable "ingress_cidr_blocks" {
-  description = "CIDR blocks to attach to security groups for ingress"
   type = list(string)
+  description = "CIDR blocks to attach to security groups for ingress"
 }
 
 variable "egress_cidr_blocks" {
-  description = "CIDR blocks to attach to security groups for egress"
   type = list(string)
   default = ["0.0.0.0/0"]
+  description = "CIDR blocks to attach to security groups for egress"
 }
 
 variable "tags" {
