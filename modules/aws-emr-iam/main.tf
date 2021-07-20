@@ -2,6 +2,15 @@
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
+locals {
+  arn_prefix_ec2_region = format("arn:%s:ec2:%s", var.arn_partition, data.aws_region.current.name)
+  arn_prefix_ec2_account = format("%s:%s", local.arn_prefix_ec2_region, data.aws_caller_identity.current.account_id)
+  arn_prefix_s3  = format("arn:%s:s3::", var.arn_partition)
+  arn_prefix_cloudwatch = format("arn:%s:cloudwatch:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
+  arn_prefix_resource_groups = format("arn:%s:resource-groups:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
+  arn_prefix_elastic_inference = format("arn:%s:elastic-inference:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
+}
+
 ####################
 # EMR Service Role
 ####################
@@ -86,7 +95,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:RevokeSecurityGroupIngress",
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
     ]
   }
 
@@ -96,7 +105,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:CancelSpotInstanceRequests",
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*"
+      "${local.arn_prefix_ec2_account}:spot-instances-request/*"
 
     ]
   }
@@ -106,11 +115,11 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:RequestSpotInstances",
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "${local.arn_prefix_ec2_account}:spot-instances-request/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:subnet/*",
+      "${local.arn_prefix_ec2_account}:key-pair/*",
+      "${local.arn_prefix_ec2_region}:image/*",
     ]
   }
   statement {
@@ -119,9 +128,9 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:CreateNetworkInterface"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*",
+      "${local.arn_prefix_ec2_account}:subnet/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
     ]
   }
 
@@ -131,7 +140,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:DeleteNetworkInterface"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*",
     ]
   }
   statement {
@@ -140,8 +149,8 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:DetachNetworkInterface",
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "${local.arn_prefix_ec2_account}:instance/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*",
     ]
   }
 
@@ -151,7 +160,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:ModifyImageAttribute"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "${local.arn_prefix_ec2_region}::image/*",
     ]
   }
   statement {
@@ -160,9 +169,9 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:ModifyInstanceAttribute"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "${local.arn_prefix_ec2_account}:instance/*",
+      "${local.arn_prefix_ec2_account}:volume/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
     ]
   }
 
@@ -172,20 +181,20 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:RunInstances"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:capacity-reservation/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:elastic-gpu/*",
-      "arn:${var.arn_partition}:elastic-inference:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:elastic-inference-accelerator/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
+      "${local.arn_prefix_ec2_region}::image/*",
+      "${local.arn_prefix_ec2_account}:instance/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:subnet/*",
+      "${local.arn_prefix_ec2_account}:volume/*",
+      "${local.arn_prefix_ec2_region}::image/*",
+      "${local.arn_prefix_ec2_account}:capacity-reservation/*",
+      "${local.arn_prefix_ec2_account}:elastic-gpu/*",
+      "${local.arn_prefix_elastic_inference}:elastic-inference-accelerator/*",
+      "${local.arn_prefix_ec2_account}:key-pair/*",
+      "${local.arn_prefix_ec2_account}:launch-template/*",
+      "${local.arn_prefix_ec2_account}:placement-group/*",
+      "${local.arn_prefix_ec2_region}::snapshot/*",
     ]
   }
   statement {
@@ -194,7 +203,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:TerminateInstances"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "${local.arn_prefix_ec2_account}:instance/*",
     ]
   }
 }
@@ -209,7 +218,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:DeleteVolume"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*"
+      "${local.arn_prefix_ec2_account}:volume/*"
     ]
   }
   statement {
@@ -218,8 +227,8 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:DetachVolume"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "${local.arn_prefix_ec2_account}:volume/*",
+      "${local.arn_prefix_ec2_account}:instance/*",
     ]
   }
 
@@ -229,20 +238,20 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:CreateFleet"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fleet/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:capacity-reservation/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:dedicated-host/*",
-      "arn:${var.arn_partition}:resource-groups:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:group-host/*",
+      "${local.arn_prefix_ec2_account}:fleet/*",
+      "${local.arn_prefix_ec2_region}::image/*", // maybe this can't have the resourceTag
+      "${local.arn_prefix_ec2_account}:key-pair/*", // maybe this can't have the resourceTag
+      "${local.arn_prefix_ec2_account}:launch-template/*", // OK
+      "${local.arn_prefix_ec2_account}:network-interface/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_region}::snapshot/*",
+      "${local.arn_prefix_ec2_account}:subnet/*",
+      "${local.arn_prefix_ec2_account}:volume/*",
+      "${local.arn_prefix_ec2_account}:instance/*",
+      "${local.arn_prefix_ec2_account}:capacity-reservation/*",
+      "${local.arn_prefix_ec2_account}:placement-group/*",
+      "${local.arn_prefix_ec2_account}:dedicated-host/*",
+      "${local.arn_prefix_resource_groups}:group-host/*",
     ]
   }
   statement {
@@ -251,16 +260,16 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:CreateLaunchTemplate"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:capacity-reservation/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:dedicated-host/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
+      "${local.arn_prefix_ec2_account}:launch-template/*",
+      "${local.arn_prefix_ec2_account}:capacity-reservation/*",
+      "${local.arn_prefix_ec2_account}:dedicated-host/*",
+      "${local.arn_prefix_ec2_region}::image/*",
+      "${local.arn_prefix_ec2_account}:key-pair/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*",
+      "${local.arn_prefix_ec2_account}:placement-group/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_region}::snapshot/*",
+      "${local.arn_prefix_ec2_account}:subnet/*",
     ]
   }
   statement {
@@ -269,7 +278,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:DeleteLaunchTemplate"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*"
+      "${local.arn_prefix_ec2_account}:launch-template/*"
     ]
   }
 
@@ -281,7 +290,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "cloudwatch:DeleteAlarms"
     ]
     resources = [
-      "arn:${var.arn_partition}:cloudwatch:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:alarm:*"
+      "${local.arn_prefix_cloudwatch}:alarm:*"
     ]
   }
 
@@ -347,8 +356,8 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "s3:PutObjectTagging"
     ]
     resources = [
-      "arn:${var.arn_partition}:s3:::${var.s3_bucket_name_for_logs}",
-      "arn:${var.arn_partition}:s3:::${var.s3_bucket_name_for_logs}/*"
+      "${local.arn_prefix_s3}:${var.s3_bucket_name_for_logs}",
+      "${local.arn_prefix_s3}:${var.s3_bucket_name_for_logs}/*"
     ]
   }
   //The following permission passes the EC2 instance profile role to the EC2 instances created by the EMR cluster
