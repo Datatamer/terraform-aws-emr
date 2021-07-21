@@ -26,6 +26,7 @@ No provider.
 | master\_ports\_ganglia | Ports used by Ganglia | `list(number)` | <pre>[<br>  80<br>]</pre> | no |
 | master\_ports\_hbase | Ports used by AWS EMR Master HBase | `list(number)` | <pre>[<br>  2181,<br>  8020,<br>  8070,<br>  8085,<br>  9090,<br>  9095,<br>  16000,<br>  16010,<br>  50070<br>]</pre> | no |
 | master\_ports\_spark | Ports used by AWS EMR Master Spark | `list(number)` | <pre>[<br>  8088,<br>  18080,<br>  19888,<br>  20888<br>]</pre> | no |
+| service\_access\_ports | Ports used by AWS Service Access | `list(number)` | <pre>[<br>  22,<br>  9443<br>]</pre> | no |
 
 ## Outputs
 
@@ -33,6 +34,7 @@ No provider.
 |------|-------------|
 | ingress\_core\_ports | List of ingress core ports |
 | ingress\_master\_ports | List of ingress master ports |
+| ingress\_service\_access\_ports | List of service access ports |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

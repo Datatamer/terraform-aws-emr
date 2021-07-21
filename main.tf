@@ -89,6 +89,7 @@ module "emr-cluster" {
   emr_managed_master_sg_ids = var.emr_managed_master_sg_ids
   emr_managed_core_sg_id    = module.emr-sgs.emr_managed_sg_id
   emr_managed_core_sg_ids   = var.emr_managed_core_sg_ids
+  emr_service_access_sg_ids = var.emr_service_access_sg_ids
 
   # IAM
   emr_service_role_arn         = module.emr-iam.emr_service_role_arn

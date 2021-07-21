@@ -112,6 +112,7 @@ module "emr-hbase" {
   # Security Group IDs
   emr_managed_master_sg_ids = module.aws-emr-sg-master.security_group_ids
   emr_managed_core_sg_ids = module.aws-emr-sg-core.security_group_ids
+  emr_service_access_sg_ids = module.aws-emr-sg-service-access.security_group_ids
 }
 
 module "sg-ports" {
@@ -138,6 +139,17 @@ module "aws-emr-sg-core" {
   egress_cidr_blocks = var.egress_cidr_blocks
   ingress_ports  = module.sg-ports.ingress_core_ports
   sg_name_prefix = var.core_name_prefix
+  egress_protocol = "all"
+  ingress_protocol = "tcp"
+}
+
+module "aws-emr-sg-service-access" {
+  source = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  vpc_id = var.vpc_id
+  ingress_cidr_blocks = var.ingress_cidr_blocks
+  egress_cidr_blocks = var.egress_cidr_blocks
+  ingress_ports  = module.sg-ports.ingress_service_access_ports
+  sg_name_prefix = var.service_access_prefix
   egress_protocol = "all"
   ingress_protocol = "tcp"
 }

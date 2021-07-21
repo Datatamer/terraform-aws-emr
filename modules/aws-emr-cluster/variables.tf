@@ -230,6 +230,11 @@ variable "emr_managed_core_sg_ids" {
   description = "List of security group ids of the EMR Managed Core Security Group"
 }
 
+variable "emr_service_access_sg_ids" {
+  type        = list(string)
+  description = "List of security group ids of the EMR Service Access Security Group"
+}
+
 variable "emr_ec2_instance_profile_arn" {
   type        = string
   description = "ARN of the EMR EC2 instance profile"

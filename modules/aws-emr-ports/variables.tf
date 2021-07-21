@@ -67,6 +67,15 @@ variable "core_ports_hbase" {
   ]
 }
 
+variable "service_access_ports" {
+  type = list(number)
+  description = "Ports used by AWS Service Access"
+  default = [
+    22,
+    9443
+  ]
+}
+
 variable "additional_ports" {
   type        = list(number)
   description = "Additional ports to add to the output of this module"

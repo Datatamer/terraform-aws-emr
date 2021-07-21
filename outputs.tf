@@ -8,6 +8,11 @@ output "emr_managed_core_sg_ids" {
   description = "List of security group ids of the EMR Core Security Group"
 }
 
+output "emr_service_access_sg_ids" {
+  value       = var.emr_service_access_sg_ids
+  description = "List of security group ids of the EMR Service Access Security Group"
+}
+
 output "emr_service_role_arn" {
   value       = module.emr-iam.emr_service_role_arn
   description = "ARN of the EMR service role created"

@@ -279,6 +279,11 @@ variable "emr_managed_core_sg_ids" {
   description = "List of EMR managed core security group ids"
 }
 
+variable "emr_service_access_sg_ids" {
+  type        = list(string)
+  description = "List of EMR service access security group ids"
+}
+
 variable "emr_service_iam_policy_name" {
   type        = string
   description = "Name for the IAM policy attached to the EMR Service role"

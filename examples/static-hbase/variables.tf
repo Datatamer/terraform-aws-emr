@@ -20,12 +20,17 @@ variable "subnet_id" {
 
 variable "master_name_prefix" {
   type        = string
-  description = "A string to prepend to names of resources created by this example"
+  description = "A string to prepend to names of master resources created by this example"
 }
 
 variable "core_name_prefix" {
   type        = string
-  description = "A string to prepend to names of resources created by this example"
+  description = "A string to prepend to names of core resources created by this example"
+}
+
+variable "service_access_prefix" {
+  type = string
+  description = "A string to prepend to names of service access resources created by this example"
 }
 
 variable "ingress_cidr_blocks" {

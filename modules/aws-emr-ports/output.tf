@@ -32,3 +32,8 @@ output "ingress_core_ports" {
   ))
   description = "List of ingress core ports"
 }
+
+output "ingress_service_access_ports" {
+  value = var.service_access_ports
+  description = "List of service access ports"
+}
