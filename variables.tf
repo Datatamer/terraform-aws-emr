@@ -209,7 +209,7 @@ variable "core_instance_type" {
 
 variable "core_instance_on_demand_count" {
   type        = number
-  default     = 0
+  default     = 1
   description = "Number of on-demand instances for the spot instance fleet"
 }
 
