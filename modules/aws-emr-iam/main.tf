@@ -32,8 +32,8 @@ resource "aws_iam_role" "emr_service_role" {
 data "aws_iam_policy_document" "emr_service_policy_1" {
   version = "2012-10-17"
 
-  # this has a star in the official docs too, we can test using resource tags 
-  # but i don think it will work
+  # Describe Actions have neither Resource or Conditions specifications
+  # See more in https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2.html
   statement {
     effect = "Allow"
     actions = [
@@ -56,19 +56,6 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     ]
     resources = ["*"]
   }
-
-  # i think we can delete, lets test its deletion
-  # statement {
-  #   effect = "Allow"
-  #   actions = [
-  #     "iam:GetRole",
-  #     "iam:GetRolePolicy",
-  #     "iam:ListInstanceProfiles",
-  #     "iam:ListRolePolicies",
-  #     "iam:PassRole"
-  #   ]
-  #   resources = ["*"]
-  # }
 
   ## ABAC OK - copied from docs
   statement {
@@ -216,8 +203,6 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     }
   }
 
-  ## not sure if this is needed
-  ## gotta test
   statement {
     effect = "Allow"
     actions = [
@@ -227,30 +212,6 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
     ]
   }
-
-### ##### ### COMMENTING THIS FOR TESTING PURPOSE
-  # statement {
-  #   effect = "Allow"
-  #   actions = [
-  #     "ec2:RunInstances"
-  #   ]
-  #   resources = [
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:capacity-reservation/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:elastic-gpu/*",
-  #     "arn:${var.arn_partition}:elastic-inference:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:elastic-inference-accelerator/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
-  #   ]
-  # }
 
   ## ABAC OK - Copied from Docs
   statement {
@@ -328,29 +289,6 @@ statement {
       values = [ "true" ]
     }
   }
-### ### COMMENTING THIS FOR TESTING PURPOSE
-  # statement {
-  #   effect = "Allow"
-  #   actions = [
-  #     "ec2:CreateFleet"
-  #   ]
-  #   resources = [
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fleet/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:capacity-reservation/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:dedicated-host/*",
-  #     "arn:${var.arn_partition}:resource-groups:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:group-host/*",
-  #   ]
-  # }
 
   # ABAC OK - copied from docs
   statement {
@@ -403,26 +341,6 @@ statement {
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fleet/*"  
     ]
   }
-
-###### COMMENTING THIS FOR TESTING PURPOSE
-  # statement {
-  #   effect = "Allow"
-  #   actions = [
-  #     "ec2:CreateLaunchTemplate"
-  #   ]
-  #   resources = [
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:capacity-reservation/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:dedicated-host/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:placement-group/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::snapshot/*",
-  #     "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-  #   ]
-  # }
 
   ## in here just added the resource name suffix (has not been tested)
   statement {
@@ -547,32 +465,6 @@ resource "aws_iam_role_policy_attachment" "emr_service_role_policy_2" {
   policy_arn = aws_iam_policy.emr_service_policy_2.arn
 }
 
-# resource "aws_iam_role_policy_attachment" "new_emr_service_policy" {
-#   role       = aws_iam_role.emr_service_role.name
-#   policy_arn = aws_iam_policy.new_emr_service_policy.arn
-# }
-
-
-
-
-
-
-###########################
-###########################
-###########################
-###########################
-###########################
-###########################
-###########################
-###########################
-###########################
-###########################
-###########################
-###########################
-###########################
-# EMR EC2 Instance Profile
-###########################
-
 //The assume role policy document for the IAM instance profile for EMR EC2 instances
 data "aws_iam_policy_document" "ec2_assume_role" {
   statement {
@@ -607,331 +499,4 @@ resource "aws_iam_instance_profile" "emr_ec2_instance_profile" {
   name = var.emr_ec2_instance_profile_name
   role = aws_iam_role.emr_ec2_instance_profile.name
   tags = var.tags
-}
-
-//The policy that attaches the new policy document
-resource "aws_iam_policy" "new_emr_service_policy" {
-  name   = "${var.emr_service_iam_policy_name}-lpp"
-  policy = <<EOT
-{
-	"Version": "2012-10-17",
-	"Statement": [
-		{
-			"Sid": "CreateInTaggedNetwork",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateNetworkInterface",
-				"ec2:RunInstances",
-				"ec2:CreateFleet",
-				"ec2:CreateLaunchTemplate",
-				"ec2:CreateLaunchTemplateVersion"
-			],
-			"Resource": [
-				"arn:aws:ec2:*:*:subnet/*",
-				"arn:aws:ec2:*:*:security-group/*"
-			],
-			"Condition": {
-				"StringEquals": {
-					"aws:ResourceTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-		{
-			"Sid": "CreateWithEMRTaggedLaunchTemplate",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateFleet",
-				"ec2:RunInstances",
-				"ec2:CreateLaunchTemplateVersion"
-			],
-			"Resource": "arn:aws:ec2:*:*:launch-template/*",
-			"Condition": {
-				"StringEquals": {
-					"aws:ResourceTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-		{
-			"Sid": "CreateEMRTaggedLaunchTemplate",
-			"Effect": "Allow",
-			"Action": "ec2:CreateLaunchTemplate",
-			"Resource": "arn:aws:ec2:*:*:launch-template/*",
-			"Condition": {
-				"StringEquals": {
-					"aws:RequestTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-		{
-			"Sid": "CreateEMRTaggedInstancesAndVolumes",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:RunInstances",
-				"ec2:CreateFleet"
-			],
-			"Resource": [
-				"arn:aws:ec2:*:*:instance/*",
-				"arn:aws:ec2:*:*:volume/*"
-			],
-			"Condition": {
-				"StringEquals": {
-					"aws:RequestTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-		{
-			"Sid": "ResourcesToLaunchEC2",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:RunInstances",
-				"ec2:CreateFleet",
-				"ec2:CreateLaunchTemplate",
-				"ec2:CreateLaunchTemplateVersion"
-			],
-			"Resource": [
-				"arn:aws:ec2:*:*:network-interface/*",
-				"arn:aws:ec2:*::image/ami-*",
-				"arn:aws:ec2:*:*:key-pair/*",
-				"arn:aws:ec2:*:*:capacity-reservation/*",
-				"arn:aws:ec2:*:*:placement-group/EMR_*",
-				"arn:aws:ec2:*:*:fleet/*",
-				"arn:aws:ec2:*:*:dedicated-host/*",
-				"arn:aws:resource-groups:*:*:group/*"
-			]
-		},
-		{
-			"Sid": "ManageEMRTaggedResources",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateLaunchTemplateVersion",
-				"ec2:DeleteLaunchTemplate",
-				"ec2:DeleteNetworkInterface",
-				"ec2:ModifyInstanceAttribute",
-				"ec2:TerminateInstances"
-			],
-			"Resource": "*",
-			"Condition": {
-				"StringEquals": {
-					"aws:ResourceTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-		{
-			"Sid": "ManageTagsOnEMRTaggedResources",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateTags",
-				"ec2:DeleteTags"
-			],
-			"Resource": [
-				"arn:aws:ec2:*:*:instance/*",
-				"arn:aws:ec2:*:*:volume/*",
-				"arn:aws:ec2:*:*:network-interface/*",
-				"arn:aws:ec2:*:*:launch-template/*"
-			],
-			"Condition": {
-				"StringEquals": {
-					"aws:ResourceTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-		{
-			"Sid": "CreateNetworkInterfaceNeededForPrivateSubnet",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateNetworkInterface"
-			],
-			"Resource": [
-				"arn:aws:ec2:*:*:network-interface/*"
-			],
-			"Condition": {
-				"StringEquals": {
-					"aws:RequestTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-		{
-			"Sid": "TagOnCreateTaggedEMRResources",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateTags"
-			],
-			"Resource": [
-				"arn:aws:ec2:*:*:network-interface/*",
-				"arn:aws:ec2:*:*:instance/*",
-				"arn:aws:ec2:*:*:volume/*",
-				"arn:aws:ec2:*:*:launch-template/*"
-			],
-			"Condition": {
-				"StringEquals": {
-					"ec2:CreateAction": [
-						"RunInstances",
-						"CreateFleet",
-						"CreateLaunchTemplate",
-						"CreateNetworkInterface"
-					]
-				}
-			}
-		},
-		{
-			"Sid": "TagPlacementGroups",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateTags",
-				"ec2:DeleteTags"
-			],
-			"Resource": [
-				"arn:aws:ec2:*:*:placement-group/EMR_*"
-			]
-		},
-		{
-			"Sid": "ListActionsForEC2Resources",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:DescribeAccountAttributes",
-				"ec2:DescribeCapacityReservations",
-				"ec2:DescribeDhcpOptions",
-				"ec2:DescribeInstances",
-				"ec2:DescribeLaunchTemplates",
-				"ec2:DescribeNetworkAcls",
-				"ec2:DescribeNetworkInterfaces",
-				"ec2:DescribePlacementGroups",
-				"ec2:DescribeRouteTables",
-				"ec2:DescribeSecurityGroups",
-				"ec2:DescribeSubnets",
-				"ec2:DescribeVolumes",
-				"ec2:DescribeVolumeStatus",
-				"ec2:DescribeVpcAttribute",
-				"ec2:DescribeVpcEndpoints",
-				"ec2:DescribeVpcs"
-			],
-			"Resource": "*"
-		},
-		{
-			"Sid": "CreateDefaultSecurityGroupWithEMRTags",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateSecurityGroup"
-			],
-			"Resource": [
-				"arn:aws:ec2:*:*:security-group/*"
-			],
-			"Condition": {
-				"StringEquals": {
-					"aws:RequestTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-		{
-			"Sid": "CreateDefaultSecurityGroupInVPCWithEMRTags",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateSecurityGroup"
-			],
-			"Resource": [
-				"arn:aws:ec2:*:*:vpc/*"
-			],
-			"Condition": {
-				"StringEquals": {
-					"aws:ResourceTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-		{
-			"Sid": "TagOnCreateDefaultSecurityGroupWithEMRTags",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreateTags"
-			],
-			"Resource": "arn:aws:ec2:*:*:security-group/*",
-			"Condition": {
-				"StringEquals": {
-					"aws:RequestTag/for-use-with-amazon-emr-managed-policies": "true",
-					"ec2:CreateAction": "CreateSecurityGroup"
-				}
-			}
-		},
-		{
-			"Sid": "ManageSecurityGroups",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:AuthorizeSecurityGroupEgress",
-				"ec2:AuthorizeSecurityGroupIngress",
-				"ec2:RevokeSecurityGroupEgress",
-				"ec2:RevokeSecurityGroupIngress"
-			],
-			"Resource": "*",
-			"Condition": {
-				"StringEquals": {
-					"aws:ResourceTag/for-use-with-amazon-emr-managed-policies": "true"
-				}
-			}
-		},
-
-
-
-		{
-			"Sid": "CreateEMRPlacementGroups",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:CreatePlacementGroup"
-			],
-			"Resource": "arn:aws:ec2:*:*:placement-group/EMR_*"
-		},
-		{
-			"Sid": "DeletePlacementGroups",
-			"Effect": "Allow",
-			"Action": [
-				"ec2:DeletePlacementGroup"
-			],
-			"Resource": "*"
-		},
-
-
-		{
-			"Sid": "AutoScaling",
-			"Effect": "Allow",
-			"Action": [
-				"application-autoscaling:DeleteScalingPolicy",
-				"application-autoscaling:DeregisterScalableTarget",
-				"application-autoscaling:DescribeScalableTargets",
-				"application-autoscaling:DescribeScalingPolicies",
-				"application-autoscaling:PutScalingPolicy",
-				"application-autoscaling:RegisterScalableTarget"
-			],
-			"Resource": "*"
-		},
-		{
-			"Sid": "ResourceGroupsForCapacityReservations",
-			"Effect": "Allow",
-			"Action": [
-				"resource-groups:ListGroupResources"
-			],
-			"Resource": "*"
-		},
-		{
-			"Sid": "AutoScalingCloudWatch",
-			"Effect": "Allow",
-			"Action": [
-				"cloudwatch:PutMetricAlarm",
-				"cloudwatch:DeleteAlarms",
-				"cloudwatch:DescribeAlarms"
-			],
-			"Resource": "arn:aws:cloudwatch:*:*:alarm:*_EMR_Auto_Scaling"
-		},
-		{
-			"Sid": "PassRoleForAutoScaling",
-			"Effect": "Allow",
-			"Action": "iam:PassRole",
-			"Resource": "arn:aws:iam::*:role/*",
-			"Condition": {
-				"StringLike": {
-					"iam:PassedToService": "application-autoscaling.amazonaws.com*"
-				}
-			}
-		}
-	]
-}
-EOT
-  tags   = var.tags
 }
