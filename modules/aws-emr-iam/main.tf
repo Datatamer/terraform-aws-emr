@@ -71,10 +71,13 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "arn:aws:ec2:*:*:network-interface/*",
       "arn:aws:ec2:*:*:launch-template/*"
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
   ## ABAC OK - copied from docs
@@ -115,10 +118,13 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     resources = [
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
 
@@ -163,10 +169,13 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
 
@@ -180,10 +189,13 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     resources = [
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*"
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:RequestTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:RequestTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
   # ABAC OK - not sure this works, has to be tested. there was no example using this.
@@ -196,10 +208,13 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
 
@@ -227,10 +242,13 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     resources = [
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*",
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
 }
@@ -248,10 +266,13 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
     resources = [
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*"
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
   ## ABAC - not sure if it works. has yet to be tested
@@ -264,10 +285,13 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
 
@@ -283,10 +307,13 @@ statement {
     resources = [
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*"
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
 
@@ -300,10 +327,13 @@ statement {
     resources = [
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*"
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:RequestTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:RequestTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
   # ABAC OK - copied from docs
@@ -318,10 +348,13 @@ statement {
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*"  
     ]
-    condition {
-      test = "StringEquals"
-      variable = "aws:RequestTag/for-use-with-amazon-emr-managed-policies"
-      values = [ "true" ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test = "StringEquals"
+        variable = "aws:RequestTag/${condition.key}"
+        values = [ condition.value ]
+      }
     }
   }
   # ABAC OK - copied from docs

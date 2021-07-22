@@ -15,7 +15,7 @@ module "emr-sgs" {
   tamr_cidrs                    = var.tamr_cidrs
   tamr_sgs                      = var.tamr_sgs
   enable_http_port              = var.enable_http_port
-  tags                          = local.effective_tags
+  tags                          = merge(local.effective_tags, var.abac_tags)
 }
 
 module "emr-iam" {
@@ -32,6 +32,7 @@ module "emr-iam" {
   arn_partition                     = var.arn_partition
   permissions_boundary              = var.permissions_boundary
   tags                              = local.effective_tags
+  abac_tags                         = var.abac_tags
 }
 
 module "emr-cluster-config" {
@@ -103,5 +104,8 @@ module "emr-cluster" {
   emr_service_role_arn         = module.emr-iam.emr_service_role_arn
   emr_ec2_instance_profile_arn = module.emr-iam.emr_ec2_instance_profile_arn
 
-  tags = local.effective_tags
+  tags = merge(
+    local.effective_tags, 
+    var.abac_tags
+    )
 }

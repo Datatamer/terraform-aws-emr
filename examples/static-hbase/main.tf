@@ -59,6 +59,7 @@ module "emr-hbase" {
   json_configuration_bucket_key = "tamr/emr/emr.json"
   utility_script_bucket_key     = "tamr/emr/upload_config.sh"
   tags                          = var.tags
+  abac_tags                     = var.abac_tags
   bootstrap_actions = [
     {
       name = "sample_bootstrap_action",
@@ -101,16 +102,17 @@ module "emr-hbase" {
 
   # Scale
   master_instance_on_demand_count = 1
-  core_instance_on_demand_count   = 2
-  master_instance_type            = "m4.large"
+  core_instance_spot_count        = 2
+  core_instance_on_demand_count   = 0
+  master_instance_type            = "m4.xlarge"
   core_instance_type              = "r5.xlarge"
   master_ebs_size                 = 50
   core_ebs_size                   = 50
 
   # Spot Instance definition
   # on-demand r5.xlarge EC2 + EMR --> $0.252 + $0.063 = $0.315 per Hour
-  core_bid_price = ".100"
+  // core_bid_price = ".100"
 
   # Don't use spot instances for the master nodes
-  master_bid_price = ""
+  // master_bid_price = ""
 }

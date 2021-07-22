@@ -42,6 +42,7 @@ module "emr-spark" {
   applications          = ["Spark"]
   emr_config_file_path  = "../emr-config-template.json"
   tags                  = var.tags
+  abac_tags             = var.abac_tags
 
   # Networking
   subnet_id  = var.subnet_id

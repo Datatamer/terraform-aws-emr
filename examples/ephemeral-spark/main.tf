@@ -28,7 +28,7 @@ module "ephemeral-spark-sgs" {
   emr_additional_master_sg_name = "Ephem-Spark-Test-EMR-Spark-Additional-Master"
   emr_additional_core_sg_name   = "Ephem-Spark-Test-EMR-Spark-Additional-Core"
   emr_service_access_sg_name    = "Ephem-Spark-Test-EMR-Spark-Service-Access"
-  tags                          = var.tags
+  tags                          = merge(var.tags, var.abac_tags)
 }
 
 module "ephemeral-spark-iam" {
@@ -43,6 +43,7 @@ module "ephemeral-spark-iam" {
   emr_ec2_instance_profile_name     = "ephem-spark-test-instance-profile"
   emr_ec2_role_name                 = "ephem-spark-test-ec2-role"
   tags                              = var.tags
+  abac_tags                         = var.abac_tags
 }
 
 module "ephemeral-spark-config" {

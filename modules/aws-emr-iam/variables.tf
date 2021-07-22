@@ -67,3 +67,9 @@ variable "tags" {
   description = "A map of tags to add to all resources."
   default     = {}
 }
+
+variable "abac_tags" {
+  type        = map(string)
+  description = "A map of tags to reference inside the condition in ABAC Statements."
+  default     = {}
+}

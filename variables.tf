@@ -70,6 +70,14 @@ variable "tags" {
   default     = {}
 }
 
+variable "abac_tags" {
+  type = map(string)
+  description = "Map of tags that will be used inside IAM Policies for restricting EMR Service Role access"
+  default = {
+    "tamr.com/role"= "emr"
+  }
+}
+
 variable "emr_service_role_name" {
   type        = string
   description = "Name of the new IAM service role for the EMR cluster"
@@ -201,7 +209,7 @@ variable "core_instance_type" {
 
 variable "core_instance_on_demand_count" {
   type        = number
-  default     = 1
+  default     = 0
   description = "Number of on-demand instances for the spot instance fleet"
 }
 
