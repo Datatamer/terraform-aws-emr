@@ -105,7 +105,7 @@ module "emr-cluster" {
   emr_ec2_instance_profile_arn = module.emr-iam.emr_ec2_instance_profile_arn
 
   tags = merge(
-    local.effective_tags, 
+    local.effective_tags,
     var.abac_tags
-    )
+  )
 }

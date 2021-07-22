@@ -59,7 +59,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
 
   ## ABAC OK - copied from docs
   statement {
-    sid = "ManageTagsOnEMRTaggedResources"
+    sid    = "ManageTagsOnEMRTaggedResources"
     effect = "Allow"
     actions = [
       "ec2:CreateTags",
@@ -74,15 +74,15 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
   ## ABAC OK - copied from docs
   statement {
-    sid = "TagOnCreateTaggedEMRResources"
+    sid    = "TagOnCreateTaggedEMRResources"
     effect = "Allow"
     actions = [
       "ec2:CreateTags"
@@ -94,7 +94,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "arn:aws:ec2:*:*:launch-template/*"
     ]
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "ec2:CreateAction"
       values = [
         "RunInstances",
@@ -107,7 +107,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
 
   ## ABAC OK - maybe we can add the specific SG - or maybe aint needed
   statement {
-    sid = "ManageSecurityGroups"
+    sid    = "ManageSecurityGroups"
     effect = "Allow"
     actions = [
       "ec2:AuthorizeSecurityGroupEgress",
@@ -121,9 +121,9 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
@@ -156,7 +156,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
 
   ## OK ABAC (statement copied from docs)
   statement {
-    sid = "CreateInTaggedNetwork"
+    sid    = "CreateInTaggedNetwork"
     effect = "Allow"
     actions = [
       "ec2:CreateNetworkInterface",
@@ -172,16 +172,16 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
 
   ## OK ABAC  (statement copied from docs) 
   statement {
-    sid = "CreateNetworkInterfaceNeededForPrivateSubnet"
+    sid    = "CreateNetworkInterfaceNeededForPrivateSubnet"
     effect = "Allow"
     actions = [
       "ec2:CreateNetworkInterface"
@@ -192,9 +192,9 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
@@ -211,9 +211,9 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
@@ -230,7 +230,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
 
   ## ABAC OK - Copied from Docs
   statement {
-    sid = "ManageEMRTaggedResources"
+    sid    = "ManageEMRTaggedResources"
     effect = "Allow"
     actions = [
       "ec2:CreateLaunchTemplateVersion",
@@ -245,9 +245,9 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
@@ -269,9 +269,9 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
@@ -288,16 +288,16 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
 
-## ABAC OK - Copied from Docs
-statement {
-    sid = "CreateWithEMRTaggedLaunchTemplate"
+  ## ABAC OK - Copied from Docs
+  statement {
+    sid    = "CreateWithEMRTaggedLaunchTemplate"
     effect = "Allow"
     actions = [
       "ec2:CreateFleet",
@@ -310,16 +310,16 @@ statement {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
 
   # ABAC OK - copied from docs
   statement {
-    sid = "CreateEMRTaggedLaunchTemplate"
+    sid    = "CreateEMRTaggedLaunchTemplate"
     effect = "Allow"
     actions = [
       "ec2:CreateLaunchTemplate"
@@ -330,15 +330,15 @@ statement {
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
   # ABAC OK - copied from docs
   statement {
-    sid = "CreateEMRTaggedInstancesAndVolumes"
+    sid    = "CreateEMRTaggedInstancesAndVolumes"
     effect = "Allow"
     actions = [
       "ec2:RunInstances",
@@ -346,20 +346,20 @@ statement {
     ]
     resources = [
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*"  
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*"
     ]
     dynamic "condition" {
       for_each = var.abac_tags
       content {
-        test = "StringEquals"
+        test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values = [ condition.value ]
+        values   = [condition.value]
       }
     }
   }
   # ABAC OK - copied from docs
   statement {
-    sid = "NotTaggableResourcesToLaunchEC2" # we may be able to specify specfic names (for ex key_pair_name is variable in this root module)
+    sid    = "NotTaggableResourcesToLaunchEC2" # we may be able to specify specfic names (for ex key_pair_name is variable in this root module)
     effect = "Allow"
     actions = [
       "ec2:RunInstances",
@@ -368,10 +368,10 @@ statement {
       "ec2:CreateLaunchTemplateVersion"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*", # key pairs are not taggable
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*", # images are not taggable?
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",          # key pairs are not taggable
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",                                                           # images are not taggable?
       "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*", # really not taggable? i want to check
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fleet/*"  
+      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fleet/*"
     ]
   }
 
@@ -463,13 +463,13 @@ statement {
     resources = [
       aws_iam_role.emr_ec2_instance_profile.arn
     ]
-		condition {
-      test = "StringLike"
+    condition {
+      test     = "StringLike"
       variable = "iam:PassedToService"
       values = [
-				"ec2.amazonaws.com*"
+        "ec2.amazonaws.com*"
       ]
-		}
+    }
   }
 }
 

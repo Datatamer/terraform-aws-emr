@@ -23,7 +23,7 @@ variable "tags" {
 }
 
 variable "abac_tags" {
-  type  = map(string)
+  type        = map(string)
   description = "A map of tags that will be inserted inside IAM Policies conditions for restricting EMR Service Role access"
   default = {
     "tamr.com/role" = "emr"
