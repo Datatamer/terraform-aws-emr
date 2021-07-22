@@ -9,7 +9,4 @@ module "emr-iam" {
   emr_service_role_name             = "hbase-terratest-service-role"                 // var.emr_service_role_name
   emr_ec2_instance_profile_name     = "hbase-terratest-instance-profile"             // var.emr_ec2_instance_profile_name
   emr_ec2_role_name                 = "hbase-terratest-ec2-role"                     // var.emr_ec2_role_name
-  // arn_partition                     = "" // var.arn_partition
-  // permissions_boundary              = "" // var.permissions_boundary
-  // tags                              = "" // var.tags
 }
