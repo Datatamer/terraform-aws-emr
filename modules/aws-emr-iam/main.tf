@@ -179,7 +179,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     }
   }
 
-  ## OK ABAC  (statement copied from docs) 
+  ## OK ABAC  (statement copied from docs)
   statement {
     sid    = "CreateNetworkInterfaceNeededForPrivateSubnet"
     effect = "Allow"

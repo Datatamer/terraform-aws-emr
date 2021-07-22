@@ -60,6 +60,7 @@ No provider.
 | s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
+| abac\_tags | Map of tags that will be used inside IAM Policies for restricting EMR Service Role access | `map(string)` | <pre>{<br>  "tamr.com/role": "emr"<br>}</pre> | no |
 | additional\_tags | [DEPRECATED: Use `tags` instead] Additional tags to be attached to the resources created. | `map(string)` | `{}` | no |
 | arn\_partition | The partition in which the resource is located. A partition is a group of AWS Regions.<br>  Each AWS account is scoped to one partition.<br>  The following are the supported partitions:<br>    aws -AWS Regions<br>    aws-cn - China Regions<br>    aws-us-gov - AWS GovCloud (US) Regions | `string` | `"aws"` | no |
 | bootstrap\_actions | Ordered list of bootstrap actions that will be run before Hadoop is started on the cluster nodes. | <pre>list(object({<br>    name = string<br>    path = string<br>    args = list(string)<br>  }))</pre> | `[]` | no |
@@ -72,7 +73,7 @@ No provider.
 | core\_ebs\_type | Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | core\_ebs\_volumes\_count | Number of volumes to attach to the core nodes | `number` | `1` | no |
 | core\_instance\_fleet\_name | Name for the core instance fleet | `string` | `"CoreInstanceFleet"` | no |
-| core\_instance\_on\_demand\_count | Number of on-demand instances for the spot instance fleet | `number` | `1` | no |
+| core\_instance\_on\_demand\_count | Number of on-demand instances for the spot instance fleet | `number` | `0` | no |
 | core\_instance\_spot\_count | Number of spot instances for the spot instance fleet | `number` | `0` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
 | core\_timeout\_action | Timeout action for core instances | `string` | `"SWITCH_TO_ON_DEMAND"` | no |
