@@ -87,16 +87,18 @@ module "emr-hbase" {
   key_pair_name                  = module.emr_key_pair.key_pair_key_name
 
   # Names
-  cluster_name                  = "HBase-Test-EMR-Cluster"
-  emr_service_role_name         = "hbase-test-service-role"
-  emr_ec2_role_name             = "hbase-test-ec2-role"
-  emr_ec2_instance_profile_name = "hbase-test-instance-profile"
-  emr_service_iam_policy_name   = "hbase-test-service-policy"
-  emr_ec2_iam_policy_name       = "hbase-test-ec2-policy"
-  master_instance_fleet_name    = "HBase-Test-MasterInstanceFleet"
-  core_instance_fleet_name      = "Hbase-Test-CoreInstanceFleet"
-  emr_managed_master_sg_name    = "HBase-Test-EMR-Hbase-Master"
-  emr_managed_core_sg_name      = "HBase-Test-EMR-Hbase-Core"
+  name_prefix                   = var.name_prefix
+  cluster_name                  = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Cluster")
+  emr_service_role_name         = format("%s-%s", var.name_prefix, "hbase-test-service-role")
+  emr_ec2_role_name             = format("%s-%s", var.name_prefix, "hbase-test-ec2-role")
+  emr_ec2_instance_profile_name = format("%s-%s", var.name_prefix, "hbase-test-instance-profile")
+  emr_service_iam_policy_name   = format("%s-%s", var.name_prefix, "hbase-test-service-policy")
+  emr_ec2_iam_policy_name       = format("%s-%s", var.name_prefix, "hbase-test-ec2-policy")
+  master_instance_fleet_name    = format("%s-%s", var.name_prefix, "HBase-Test-MasterInstanceFleet")
+  core_instance_fleet_name      = format("%s-%s", var.name_prefix, "Hbase-Test-CoreInstanceFleet")
+  emr_managed_master_sg_name    = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Hbase-Master")
+  emr_managed_core_sg_name      = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Hbase-Core")
+  emr_service_access_sg_name    = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Hbase-Service-Access")
 
   # Scale
   master_instance_on_demand_count = 1

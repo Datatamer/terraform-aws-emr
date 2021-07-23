@@ -18,6 +18,11 @@ variable "bucket_name_for_logs" {
   description = "S3 bucket name for cluster logs."
 }
 
+variable "name_prefix" {
+  type        = string
+  description = "A string to prepend to names of the resources in the cluster"
+}
+
 variable "master_name_prefix" {
   type        = string
   description = "A string to prepend to names of master resources created by this example"

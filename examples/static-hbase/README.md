@@ -21,6 +21,7 @@ No requirements.
 | core\_name\_prefix | A string to prepend to names of core resources created by this example | `string` | n/a | yes |
 | ingress\_cidr\_blocks | CIDR blocks to attach to security groups for ingress | `list(string)` | n/a | yes |
 | master\_name\_prefix | A string to prepend to names of master resources created by this example | `string` | n/a | yes |
+| name\_prefix | A string to prepend to names of the resources in the cluster | `string` | n/a | yes |
 | service\_access\_prefix | A string to prepend to names of service access resources created by this example | `string` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |

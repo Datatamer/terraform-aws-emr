@@ -59,16 +59,18 @@ module "emr-spark" {
   key_pair_name                  = module.emr_key_pair.key_pair_key_name
 
   # Names
-  cluster_name                  = "Spark-Test-EMR-Cluster"
-  emr_service_role_name         = "spark-test-service-role"
-  emr_ec2_role_name             = "spark-test-ec2-role"
-  emr_ec2_instance_profile_name = "spark-test-instance-profile"
-  emr_service_iam_policy_name   = "spark-test-service-policy"
-  emr_ec2_iam_policy_name       = "spark-test-ec2-policy"
-  master_instance_fleet_name    = "Spark-Test-MasterInstanceFleet"
-  core_instance_fleet_name      = "Spark-Test-CoreInstanceFleet"
-  emr_managed_master_sg_name    = "Spark-Test-EMR-Spark-Master"
-  emr_managed_core_sg_name      = "Spark-Test-EMR-Spark-Core"
+  name_prefix                   = var.name_prefix
+  cluster_name                  = format("%s-%s", var.name_prefix, "Spark-Test-EMR-Cluster")
+  emr_service_role_name         = format("%s-%s", var.name_prefix, "spark-test-service-role")
+  emr_ec2_role_name             = format("%s-%s", var.name_prefix, "spark-test-ec2-role")
+  emr_ec2_instance_profile_name = format("%s-%s", var.name_prefix, "spark-test-instance-profile")
+  emr_service_iam_policy_name   = format("%s-%s", var.name_prefix, "spark-test-service-policy")
+  emr_ec2_iam_policy_name       = format("%s-%s", var.name_prefix, "spark-test-ec2-policy")
+  master_instance_fleet_name    = format("%s-%s", var.name_prefix, "Spark-Test-MasterInstanceFleet")
+  core_instance_fleet_name      = format("%s-%s", var.name_prefix, "Spark-Test-CoreInstanceFleet")
+  emr_managed_master_sg_name    = format("%s-%s", var.name_prefix, "Spark-Test-EMR-Spark-Master")
+  emr_managed_core_sg_name      = format("%s-%s", var.name_prefix, "Spark-Test-EMR-Spark-Core")
+  emr_service_access_sg_name    = format("%s-%s", var.name_prefix, "Spark-Test-EMR-Spark-Service-Access")
 
   # Scale
   master_instance_on_demand_count = 1
@@ -80,12 +82,12 @@ module "emr-spark" {
 
   # Security Group IDs
   emr_managed_master_sg_ids = module.aws-emr-sg-master.security_group_ids
-  emr_managed_core_sg_ids = module.aws-emr-sg-core.security_group_ids
+  emr_managed_core_sg_ids   = module.aws-emr-sg-core.security_group_ids
   emr_service_access_sg_ids = module.aws-emr-sg-service-access.security_group_ids
 }
 
 module "sg-ports" {
-  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.0.0"
+  # source  = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.0.0"
   source = "../../modules/aws-emr-ports"
   applications = local.this_application
 }

@@ -269,6 +269,12 @@ variable "emr_managed_core_sg_name" {
   default     = "TAMR-EMR-Core"
 }
 
+variable "emr_service_access_sg_name" {
+  type        = string
+  description = "Name for the EMR Service Access security group"
+  default     = "TAMR-EMR-Service-Access"
+}
+
 variable "emr_managed_master_sg_ids" {
   type        = list(string)
   description = "List of EMR managed master security group ids"
@@ -352,4 +358,9 @@ variable "permissions_boundary" {
   type        = string
   description = "ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module"
   default     = null
+}
+
+variable "name_prefix" {
+  type        = string
+  description = "A string to prepend to names of the resources in the cluster"
 }

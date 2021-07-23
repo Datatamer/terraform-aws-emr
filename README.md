@@ -60,6 +60,7 @@ No provider.
 | emr\_managed\_master\_sg\_ids | List of EMR managed master security group ids | `list(string)` | n/a | yes |
 | emr\_service\_access\_sg\_ids | List of EMR service access security group ids | `list(string)` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
+| name\_prefix | A string to prepend to names of the resources in the cluster | `string` | n/a | yes |
 | s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
@@ -88,6 +89,7 @@ No provider.
 | emr\_managed\_core\_sg\_name | Name for the EMR managed core security group | `string` | `"TAMR-EMR-Core"` | no |
 | emr\_managed\_master\_sg\_name | Name for the EMR managed master security group | `string` | `"TAMR-EMR-Master"` | no |
 | emr\_managed\_sg\_name | Name for the EMR managed security group | `string` | `"TAMR-EMR-Internal"` | no |
+| emr\_service\_access\_sg\_name | Name for the EMR Service Access security group | `string` | `"TAMR-EMR-Service-Access"` | no |
 | emr\_service\_iam\_policy\_name | Name for the IAM policy attached to the EMR Service role | `string` | `"tamr-emr-service-policy"` | no |
 | emr\_service\_role\_name | Name of the new IAM service role for the EMR cluster | `string` | `"tamr_emr_service_role"` | no |
 | enable\_http\_port | EMR services like Ganglia run on the http port | `bool` | `false` | no |

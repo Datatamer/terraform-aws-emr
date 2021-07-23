@@ -18,6 +18,11 @@ variable "subnet_id" {
   description = "ID of the subnet where the EMR cluster will be created"
 }
 
+variable "name_prefix" {
+  type        = string
+  description = "A string to prepend to names of the resources in the cluster"
+}
+
 variable "master_name_prefix" {
   type        = string
   description = "A string to prepend to names of master resources created by this example"
