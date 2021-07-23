@@ -41,7 +41,7 @@ resource "aws_iam_role" "emr_service_role" {
 data "aws_iam_policy_document" "emr_service_policy_1" {
   version = "2012-10-17"
 
-  # Describe Actions have neither Resource or Conditions specifications
+  # Describe Actions have neither Resource nor Conditions specifications
   # See more in https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonec2.html
   statement {
     effect = "Allow"

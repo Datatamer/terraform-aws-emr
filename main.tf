@@ -32,7 +32,7 @@ module "emr-iam" {
   arn_partition                     = var.arn_partition
   permissions_boundary              = var.permissions_boundary
   tags                              = local.effective_tags
-  abac_tags                         = var.abac_tags
+  abac_tags                         = var.use_abac_tags ? var.abac_tags : {}
 }
 
 module "emr-cluster-config" {
