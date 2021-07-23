@@ -43,25 +43,4 @@ func TestTerraformCreateSG(t *testing.T) {
 	outAll := terraform.OutputAll(t, terraformOptions)
 	assert.NotNil(t, outAll)
 
-	// gets all outputs and put into a map
-	// in this case we have one output only: the whole module.  which is also a map
-	// containing whatever outputs it is giving out.
-	// moduleOut := outAll["module-security-groups"].(map[string]interface{})
-	// assert.NotNil(t, moduleOut)
-
-	// // grabs each output from the module block and asserts it is not nil
-	// // treats each output as a "list of anything". Each value has to be cast to its type later (string in this case)
-	// // as we can't cast a list of interface{} to a list of string directly.
-	// sgs := moduleOut["security_groups"].([]interface{})
-	// assert.NotNil(t, sgs)
-
-	// ids := moduleOut["security_group_ids"].([]interface{})
-	// assert.NotNil(t, ids)
-
-	// i_ids := moduleOut["ingress_security_group_ids"].([]interface{})
-	// assert.NotNil(t, i_ids)
-
-	// e_ids := moduleOut["egress_security_group_ids"].([]interface{})
-	// assert.NotNil(t, e_ids)
-
 }
