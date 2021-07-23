@@ -75,10 +75,10 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:DeleteTags"
     ]
     resources = [
-      "arn:aws:ec2:*:*:instance/*",
-      "arn:aws:ec2:*:*:volume/*",
-      "arn:aws:ec2:*:*:network-interface/*",
-      "arn:aws:ec2:*:*:launch-template/*"
+      "${local.arn_prefix_ec2_account}:instance/*",
+      "${local.arn_prefix_ec2_account}:volume/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*",
+      "${local.arn_prefix_ec2_account}:launch-template/*"
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -97,10 +97,10 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:CreateTags"
     ]
     resources = [
-      "arn:aws:ec2:*:*:instance/*",
-      "arn:aws:ec2:*:*:volume/*",
-      "arn:aws:ec2:*:*:network-interface/*",
-      "arn:aws:ec2:*:*:launch-template/*"
+      "${local.arn_prefix_ec2_account}:instance/*",
+      "${local.arn_prefix_ec2_account}:volume/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*",
+      "${local.arn_prefix_ec2_account}:launch-template/*"
     ]
     condition {
       test     = "StringEquals"
