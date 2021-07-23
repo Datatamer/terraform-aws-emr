@@ -137,27 +137,68 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     }
   }
 
-  # TODO: Find out what resources we can use [Resource/Request]Tag condition here. It was not used in the default policy
   statement {
+    sid = "CancelTaggedSpotRequests"
     effect = "Allow"
     actions = [
       "ec2:CancelSpotInstanceRequests",
     ]
     resources = [
       "${local.arn_prefix_ec2_account}:spot-instances-request/*"
-
     ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values   = [condition.value]
+      }
+    }
   }
-  # TODO: Find out what resources we can use [Resource/Request]Tag condition here. It was not used in the default policy
+
+  statement {
+    sid = "CreateTaggedSpotRequests"
+    effect = "Allow"
+    actions = [
+      "ec2:RequestSpotInstances",
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:spot-instances-request/*"
+    ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:RequestTag/${condition.key}"
+        values   = [condition.value]
+      }
+    }
+  }
   statement {
     effect = "Allow"
     actions = [
       "ec2:RequestSpotInstances",
     ]
     resources = [
-      "${local.arn_prefix_ec2_account}:spot-instances-request/*",
       "${local.arn_prefix_ec2_account}:security-group/*",
-      "${local.arn_prefix_ec2_account}:subnet/*",
+      "${local.arn_prefix_ec2_account}:subnet/*"
+    ]
+    dynamic "condition" {
+      for_each = var.abac_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values   = [condition.value]
+      }
+    }
+  }
+  # Key pairs and Images are OK not to be tagged. (won't have conditions in the statement)
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:RequestSpotInstances",
+    ]
+    resources = [
       "${local.arn_prefix_ec2_account}:key-pair/*",
       "${local.arn_prefix_ec2_region}::image/*",
     ]
