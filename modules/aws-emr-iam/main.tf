@@ -114,7 +114,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     }
   }
 
-  ## ABAC OK - maybe we can add the specific SG - or maybe aint needed
+  ## ABAC OK
   statement {
     sid    = "ManageSecurityGroups"
     effect = "Allow"
@@ -137,7 +137,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     }
   }
 
-  # This is not in the default abac policy. Gotta find out if it's needed to add any tag condition
+  # TODO: Find out what resources we can use [Resource/Request]Tag condition here. It was not used in the default policy
   statement {
     effect = "Allow"
     actions = [
@@ -148,7 +148,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
 
     ]
   }
-  # This is not in the default abac policy. Gotta find out if it's needed to add any tag condition
+  # TODO: Find out what resources we can use [Resource/Request]Tag condition here. It was not used in the default policy
   statement {
     effect = "Allow"
     actions = [
@@ -207,7 +207,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       }
     }
   }
-  # ABAC OK - not sure this works, has to be tested. there was no example using this.
+  ## Not sure if ABAC works here. When would EMR do this? (So that we can test)
   statement {
     effect = "Allow"
     actions = [
@@ -266,7 +266,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
 data "aws_iam_policy_document" "emr_service_policy_2" {
   version = "2012-10-17"
 
-  ## ABAC OK - not sure if it works
+  ## Not sure if ABAC works here. When would EMR do this? (So that we can test)
   statement {
     effect = "Allow"
     actions = [
@@ -284,7 +284,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       }
     }
   }
-  ## ABAC - not sure if it works. has yet to be tested
+  ## Not sure if ABAC works here. When would EMR do this? (So that we can test)
   statement {
     effect = "Allow"
     actions = [
@@ -368,7 +368,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
   }
   # ABAC OK - copied from docs
   statement {
-    sid    = "NotTaggableResourcesToLaunchEC2" # we may be able to specify specfic names (for ex key_pair_name is a var in this root module)
+    sid    = "ResourcesToLaunchEC2"
     effect = "Allow"
     actions = [
       "ec2:RunInstances",
@@ -377,14 +377,14 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:CreateLaunchTemplateVersion"
     ]
     resources = [
+      # we may be able to specify the names of resources (for ex key_pair_name comes from a var in this root module that can be passed to here)
       "${local.arn_prefix_ec2_region}::image/*",
       "${local.arn_prefix_ec2_account}:key-pair/*",
-      "${local.arn_prefix_ec2_account}:network-interface/*", # really not taggable? i want to check
+      "${local.arn_prefix_ec2_account}:network-interface/*",
       "${local.arn_prefix_ec2_account}:fleet/*"
     ]
   }
 
-  ## in here just added the resource name suffix (has not been tested)
   statement {
     effect = "Allow"
     actions = [
@@ -393,6 +393,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "cloudwatch:DeleteAlarms"
     ]
     resources = [
+      ## Added the resource name suffix (has not been tested)
       "${local.arn_prefix_cloudwatch}:alarm:*_EMR_Auto_Scaling"
     ]
   }
@@ -506,6 +507,10 @@ resource "aws_iam_role_policy_attachment" "emr_service_role_policy_2" {
   role       = aws_iam_role.emr_service_role.name
   policy_arn = aws_iam_policy.emr_service_policy_2.arn
 }
+
+###########################
+# EMR EC2 Instance Profile
+###########################
 
 //The assume role policy document for the IAM instance profile for EMR EC2 instances
 data "aws_iam_policy_document" "ec2_assume_role" {
