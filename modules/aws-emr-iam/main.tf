@@ -2,6 +2,15 @@
 data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
+locals {
+  arn_prefix_ec2_region        = format("arn:%s:ec2:%s", var.arn_partition, data.aws_region.current.name)
+  arn_prefix_ec2_account       = format("%s:%s", local.arn_prefix_ec2_region, data.aws_caller_identity.current.account_id)
+  arn_prefix_s3                = format("arn:%s:s3::", var.arn_partition)
+  arn_prefix_cloudwatch        = format("arn:%s:cloudwatch:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
+  arn_prefix_resource_groups   = format("arn:%s:resource-groups:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
+  arn_prefix_elastic_inference = format("arn:%s:elastic-inference:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
+}
+
 ####################
 # EMR Service Role
 ####################
@@ -116,7 +125,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:RevokeSecurityGroupIngress",
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -135,7 +144,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:CancelSpotInstanceRequests",
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*"
+      "${local.arn_prefix_ec2_account}:spot-instances-request/*"
 
     ]
   }
@@ -146,11 +155,11 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:RequestSpotInstances",
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:spot-instances-request/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "${local.arn_prefix_ec2_account}:spot-instances-request/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:subnet/*",
+      "${local.arn_prefix_ec2_account}:key-pair/*",
+      "${local.arn_prefix_ec2_region}::image/*",
     ]
   }
 
@@ -166,8 +175,8 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:CreateLaunchTemplateVersion",
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:subnet/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:security-group/*",
+      "${local.arn_prefix_ec2_account}:subnet/*",
+      "${local.arn_prefix_ec2_account}:security-group/*",
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -187,7 +196,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:CreateNetworkInterface"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*"
+      "${local.arn_prefix_ec2_account}:network-interface/*"
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -205,8 +214,8 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:DetachNetworkInterface",
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*",
+      "${local.arn_prefix_ec2_account}:instance/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*",
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -224,7 +233,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:ModifyImageAttribute"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",
+      "${local.arn_prefix_ec2_region}::image/*",
     ]
   }
 
@@ -240,7 +249,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:TerminateInstances"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*",
+      "${local.arn_prefix_ec2_account}:*",
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -264,7 +273,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:DeleteVolume"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*"
+      "${local.arn_prefix_ec2_account}:volume/*"
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -282,8 +291,8 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:DetachVolume"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*",
+      "${local.arn_prefix_ec2_account}:volume/*",
+      "${local.arn_prefix_ec2_account}:instance/*",
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -305,7 +314,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:CreateLaunchTemplateVersion"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*"
+      "${local.arn_prefix_ec2_account}:launch-template/*"
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -325,7 +334,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:CreateLaunchTemplate"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:launch-template/*"
+      "${local.arn_prefix_ec2_account}:launch-template/*"
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -345,8 +354,8 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:CreateFleet"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:volume/*",
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:instance/*"
+      "${local.arn_prefix_ec2_account}:volume/*",
+      "${local.arn_prefix_ec2_account}:instance/*"
     ]
     dynamic "condition" {
       for_each = var.abac_tags
@@ -359,7 +368,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
   }
   # ABAC OK - copied from docs
   statement {
-    sid    = "NotTaggableResourcesToLaunchEC2" # we may be able to specify specfic names (for ex key_pair_name is variable in this root module)
+    sid    = "NotTaggableResourcesToLaunchEC2" # we may be able to specify specfic names (for ex key_pair_name is a var in this root module)
     effect = "Allow"
     actions = [
       "ec2:RunInstances",
@@ -368,10 +377,10 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "ec2:CreateLaunchTemplateVersion"
     ]
     resources = [
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:key-pair/*",          # key pairs are not taggable
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}::image/*",                                                           # images are not taggable?
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:network-interface/*", # really not taggable? i want to check
-      "arn:${var.arn_partition}:ec2:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fleet/*"
+      "${local.arn_prefix_ec2_region}::image/*",
+      "${local.arn_prefix_ec2_account}:key-pair/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*", # really not taggable? i want to check
+      "${local.arn_prefix_ec2_account}:fleet/*"
     ]
   }
 
@@ -384,7 +393,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "cloudwatch:DeleteAlarms"
     ]
     resources = [
-      "arn:${var.arn_partition}:cloudwatch:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:alarm:*_EMR_Auto_Scaling"
+      "${local.arn_prefix_cloudwatch}:alarm:*_EMR_Auto_Scaling"
     ]
   }
   //The following permissions are for the cluster get/put S3 bucket info and objects for logs
@@ -449,8 +458,8 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "s3:PutObjectTagging"
     ]
     resources = [
-      "arn:${var.arn_partition}:s3:::${var.s3_bucket_name_for_logs}",
-      "arn:${var.arn_partition}:s3:::${var.s3_bucket_name_for_logs}/*"
+      "${local.arn_prefix_s3}:${var.s3_bucket_name_for_logs}",
+      "${local.arn_prefix_s3}:${var.s3_bucket_name_for_logs}/*"
     ]
   }
   // ABAC OK
