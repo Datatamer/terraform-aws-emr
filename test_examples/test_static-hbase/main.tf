@@ -64,6 +64,8 @@ module "emr-hbase" {
   utility_script_bucket_key     = "tamr/emr/upload_config.sh"
   tags                          = local.tags
   abac_tags                     = local.abac_tags
+  use_abac_tags                 = false
+  
   bootstrap_actions = [
     {
       name = "sample_bootstrap_action",
