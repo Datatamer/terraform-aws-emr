@@ -60,7 +60,6 @@ No provider.
 | emr\_managed\_master\_sg\_ids | List of EMR managed master security group ids | `list(string)` | n/a | yes |
 | emr\_service\_access\_sg\_ids | List of EMR service access security group ids | `list(string)` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
-| name\_prefix | A string to prepend to names of the resources in the cluster | `string` | n/a | yes |
 | s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
@@ -127,6 +126,7 @@ No provider.
 | emr\_ec2\_role\_arn | ARN of the EMR EC2 role created for EC2 instances |
 | emr\_managed\_core\_sg\_ids | List of security group ids of the EMR Core Security Group |
 | emr\_managed\_master\_sg\_ids | List of security group ids of the EMR Master Security Group |
+| emr\_managed\_sg\_id | Security group id of the EMR Managed Security Group for internal communication |
 | emr\_service\_access\_sg\_ids | List of security group ids of the EMR Service Access Security Group |
 | emr\_service\_role\_arn | ARN of the EMR service role created |
 | emr\_service\_role\_name | Name of the EMR service role created |

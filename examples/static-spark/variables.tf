@@ -23,21 +23,6 @@ variable "name_prefix" {
   description = "A string to prepend to names of the resources in the cluster"
 }
 
-variable "master_name_prefix" {
-  type        = string
-  description = "A string to prepend to names of master resources created by this example"
-}
-
-variable "core_name_prefix" {
-  type        = string
-  description = "A string to prepend to names of core resources created by this example"
-}
-
-variable "service_access_name_prefix" {
-  type        = string
-  description = "A string to prepend to names of service access resources created by this example"
-}
-
 variable "ingress_cidr_blocks" {
   description = "CIDR blocks to attach to security groups for ingress"
   type = list(string)

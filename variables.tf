@@ -359,8 +359,3 @@ variable "permissions_boundary" {
   description = "ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module"
   default     = null
 }
-
-variable "name_prefix" {
-  type        = string
-  description = "A string to prepend to names of the resources in the cluster"
-}

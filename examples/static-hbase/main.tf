@@ -87,7 +87,6 @@ module "emr-hbase" {
   key_pair_name                  = module.emr_key_pair.key_pair_key_name
 
   # Names
-  name_prefix                   = var.name_prefix
   cluster_name                  = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Cluster")
   emr_service_role_name         = format("%s-%s", var.name_prefix, "hbase-test-service-role")
   emr_ec2_role_name             = format("%s-%s", var.name_prefix, "hbase-test-ec2-role")
@@ -129,7 +128,7 @@ module "aws-emr-sg-master" {
   ingress_cidr_blocks = var.ingress_cidr_blocks
   egress_cidr_blocks = var.egress_cidr_blocks
   ingress_ports  = module.sg-ports.ingress_master_ports
-  sg_name_prefix = var.master_name_prefix
+  sg_name_prefix = format("%s-%s", var.name_prefix, "-master")
   egress_protocol = "all"
   ingress_protocol = "tcp"
 }
@@ -140,7 +139,7 @@ module "aws-emr-sg-core" {
   ingress_cidr_blocks = var.ingress_cidr_blocks
   egress_cidr_blocks = var.egress_cidr_blocks
   ingress_ports  = module.sg-ports.ingress_core_ports
-  sg_name_prefix = var.core_name_prefix
+  sg_name_prefix = format("%s-%s", var.name_prefix, "-core")
   egress_protocol = "all"
   ingress_protocol = "tcp"
 }
@@ -151,7 +150,7 @@ module "aws-emr-sg-service-access" {
   ingress_cidr_blocks = var.ingress_cidr_blocks
   egress_cidr_blocks = var.egress_cidr_blocks
   ingress_ports  = module.sg-ports.ingress_service_access_ports
-  sg_name_prefix = var.service_access_prefix
+  sg_name_prefix = format("%s-%s", var.name_prefix, "-service-access")
   egress_protocol = "all"
   ingress_protocol = "tcp"
 }

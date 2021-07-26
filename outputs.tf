@@ -13,6 +13,11 @@ output "emr_service_access_sg_ids" {
   description = "List of security group ids of the EMR Service Access Security Group"
 }
 
+output "emr_managed_sg_id" {
+  value       = module.emr-sgs.emr_managed_sg_id
+  description = "Security group id of the EMR Managed Security Group for internal communication"
+}
+
 output "emr_service_role_arn" {
   value       = module.emr-iam.emr_service_role_arn
   description = "ARN of the EMR service role created"
