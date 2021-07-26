@@ -77,8 +77,8 @@ module "emr-hbase" {
   ]
 
   # Networking
-  subnet_id  = var.subnet_id
-  vpc_id     = var.vpc_id
+  subnet_id = var.subnet_id
+  vpc_id    = var.vpc_id
 
   # External resource references
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
@@ -112,45 +112,45 @@ module "emr-hbase" {
 
   # Security Group IDs
   emr_managed_master_sg_ids = module.aws-emr-sg-master.security_group_ids
-  emr_managed_core_sg_ids = module.aws-emr-sg-core.security_group_ids
+  emr_managed_core_sg_ids   = module.aws-emr-sg-core.security_group_ids
   emr_service_access_sg_ids = module.aws-emr-sg-service-access.security_group_ids
 }
 
 module "sg-ports" {
   # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.0.0"
-  source = "../../modules/aws-emr-ports"
+  source       = "../../modules/aws-emr-ports"
   applications = local.this_application
 }
 
 module "aws-emr-sg-master" {
-  source = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
-  vpc_id = var.vpc_id
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
-  egress_cidr_blocks = var.egress_cidr_blocks
-  ingress_ports  = module.sg-ports.ingress_master_ports
-  sg_name_prefix = format("%s-%s", var.name_prefix, "-master")
-  egress_protocol = "all"
-  ingress_protocol = "tcp"
+  egress_cidr_blocks  = var.egress_cidr_blocks
+  ingress_ports       = module.sg-ports.ingress_master_ports
+  sg_name_prefix      = format("%s-%s", var.name_prefix, "-master")
+  egress_protocol     = "all"
+  ingress_protocol    = "tcp"
 }
 
 module "aws-emr-sg-core" {
-  source = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
-  vpc_id = var.vpc_id
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
-  egress_cidr_blocks = var.egress_cidr_blocks
-  ingress_ports  = module.sg-ports.ingress_core_ports
-  sg_name_prefix = format("%s-%s", var.name_prefix, "-core")
-  egress_protocol = "all"
-  ingress_protocol = "tcp"
+  egress_cidr_blocks  = var.egress_cidr_blocks
+  ingress_ports       = module.sg-ports.ingress_core_ports
+  sg_name_prefix      = format("%s-%s", var.name_prefix, "-core")
+  egress_protocol     = "all"
+  ingress_protocol    = "tcp"
 }
 
 module "aws-emr-sg-service-access" {
-  source = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
-  vpc_id = var.vpc_id
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
-  egress_cidr_blocks = var.egress_cidr_blocks
-  ingress_ports  = module.sg-ports.ingress_service_access_ports
-  sg_name_prefix = format("%s-%s", var.name_prefix, "-service-access")
-  egress_protocol = "all"
-  ingress_protocol = "tcp"
+  egress_cidr_blocks  = var.egress_cidr_blocks
+  ingress_ports       = module.sg-ports.ingress_service_access_ports
+  sg_name_prefix      = format("%s-%s", var.name_prefix, "-service-access")
+  egress_protocol     = "all"
+  ingress_protocol    = "tcp"
 }
