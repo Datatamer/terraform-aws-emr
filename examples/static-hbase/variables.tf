@@ -18,6 +18,22 @@ variable "subnet_id" {
   description = "ID of the subnet where the EMR cluster will be created"
 }
 
+variable "name_prefix" {
+  type        = string
+  description = "A string to prepend to names of the resources in the cluster"
+}
+
+variable "ingress_cidr_blocks" {
+  type        = list(string)
+  description = "CIDR blocks to attach to security groups for ingress"
+}
+
+variable "egress_cidr_blocks" {
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+  description = "CIDR blocks to attach to security groups for egress"
+}
+
 variable "tags" {
   type        = map(string)
   description = "A map of tags to add to all resources created by this example."

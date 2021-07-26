@@ -46,18 +46,6 @@ variable "cluster_name" {
   default     = "TAMR-EMR-Cluster"
 }
 
-variable "tamr_cidrs" {
-  type        = list(string)
-  description = "List of CIDRs for Tamr"
-  default     = []
-}
-
-variable "tamr_sgs" {
-  type        = list(string)
-  description = "Security Groups for the Tamr Instance"
-  default     = []
-}
-
 variable "additional_tags" {
   type        = map(string)
   description = "[DEPRECATED: Use `tags` instead] Additional tags to be attached to the resources created."
@@ -263,6 +251,12 @@ variable "core_timeout_duration_minutes" {
   default     = 10
 }
 
+variable "emr_managed_sg_name" {
+  type        = string
+  description = "Name for the EMR managed security group"
+  default     = "TAMR-EMR-Internal"
+}
+
 variable "emr_managed_master_sg_name" {
   type        = string
   description = "Name for the EMR managed master security group"
@@ -275,22 +269,25 @@ variable "emr_managed_core_sg_name" {
   default     = "TAMR-EMR-Core"
 }
 
-variable "emr_additional_master_sg_name" {
-  type        = string
-  description = "Name for the EMR additional master security group"
-  default     = "TAMR-EMR-Master-Additional"
-}
-
-variable "emr_additional_core_sg_name" {
-  type        = string
-  description = "Name for the EMR additional core security group"
-  default     = "TAMR-EMR-Core-Additional"
-}
-
 variable "emr_service_access_sg_name" {
   type        = string
-  description = "Name for the EMR service access security group"
+  description = "Name for the EMR Service Access security group"
   default     = "TAMR-EMR-Service-Access"
+}
+
+variable "emr_managed_master_sg_ids" {
+  type        = list(string)
+  description = "List of EMR managed master security group ids"
+}
+
+variable "emr_managed_core_sg_ids" {
+  type        = list(string)
+  description = "List of EMR managed core security group ids"
+}
+
+variable "emr_service_access_sg_ids" {
+  type        = list(string)
+  description = "List of EMR service access security group ids"
 }
 
 variable "emr_service_iam_policy_name" {
