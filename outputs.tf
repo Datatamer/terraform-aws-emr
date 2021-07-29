@@ -1,26 +1,21 @@
-output "emr_managed_master_sg_id" {
-  value       = module.emr-sgs.emr_managed_master_sg_id
-  description = "Security group id of the EMR Managed Master Security Group"
+output "emr_managed_master_sg_ids" {
+  value       = var.emr_managed_master_sg_ids
+  description = "List of security group ids of the EMR Master Security Group"
 }
 
-output "emr_managed_core_sg_id" {
-  value       = module.emr-sgs.emr_managed_core_sg_id
-  description = "Security group id of the EMR Managed Core Security Group"
+output "emr_managed_core_sg_ids" {
+  value       = var.emr_managed_core_sg_ids
+  description = "List of security group ids of the EMR Core Security Group"
 }
 
-output "emr_additional_master_sg_id" {
-  value       = module.emr-sgs.emr_additional_master_sg_id
-  description = "Security group id of the EMR Additional Master Security Group"
+output "emr_service_access_sg_ids" {
+  value       = var.emr_service_access_sg_ids
+  description = "List of security group ids of the EMR Service Access Security Group"
 }
 
-output "emr_additional_core_sg_id" {
-  value       = module.emr-sgs.emr_additional_core_sg_id
-  description = "Security group id of the EMR Additional Core Security Group"
-}
-
-output "emr_service_access_sg_id" {
-  value       = module.emr-sgs.emr_service_access_sg_id
-  description = "Security group id of Service Access Security Group"
+output "emr_managed_sg_id" {
+  value       = module.emr-sgs.emr_managed_sg_id
+  description = "Security group id of the EMR Managed Security Group for internal communication"
 }
 
 output "emr_service_role_arn" {

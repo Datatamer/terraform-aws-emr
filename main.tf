@@ -4,18 +4,10 @@ locals {
 }
 
 module "emr-sgs" {
-  source                        = "./modules/aws-emr-sgs"
-  applications                  = local.applications
-  emr_managed_master_sg_name    = var.emr_managed_master_sg_name
-  emr_managed_core_sg_name      = var.emr_managed_core_sg_name
-  emr_additional_master_sg_name = var.emr_additional_master_sg_name
-  emr_additional_core_sg_name   = var.emr_additional_core_sg_name
-  emr_service_access_sg_name    = var.emr_service_access_sg_name
-  vpc_id                        = var.vpc_id
-  tamr_cidrs                    = var.tamr_cidrs
-  tamr_sgs                      = var.tamr_sgs
-  enable_http_port              = var.enable_http_port
-  tags                          = local.effective_tags
+  source              = "./modules/aws-emr-sgs"
+  emr_managed_sg_name = var.emr_managed_sg_name
+  vpc_id              = var.vpc_id
+  tags                = local.effective_tags
 }
 
 module "emr-iam" {
@@ -94,11 +86,11 @@ module "emr-cluster" {
   custom_ami_id                                     = var.custom_ami_id
 
   # Security groups
-  emr_managed_master_sg_id    = module.emr-sgs.emr_managed_master_sg_id
-  emr_additional_master_sg_id = module.emr-sgs.emr_additional_master_sg_id
-  emr_managed_core_sg_id      = module.emr-sgs.emr_managed_core_sg_id
-  emr_additional_core_sg_id   = module.emr-sgs.emr_additional_core_sg_id
-  emr_service_access_sg_id    = module.emr-sgs.emr_service_access_sg_id
+  emr_managed_master_sg_id  = module.emr-sgs.emr_managed_sg_id
+  emr_managed_master_sg_ids = var.emr_managed_master_sg_ids
+  emr_managed_core_sg_id    = module.emr-sgs.emr_managed_sg_id
+  emr_managed_core_sg_ids   = var.emr_managed_core_sg_ids
+  emr_service_access_sg_ids = var.emr_service_access_sg_ids
 
   # IAM
   emr_service_role_arn         = module.emr-iam.emr_service_role_arn
