@@ -15,7 +15,7 @@ variable "vpc_id" {
 
 variable "subnet_id" {
   type        = string
-  description = "ID of the subnet where the EMR cluster will be created. This Subnet is required to be Tagged with what is in abac_tags"
+  description = "ID of the subnet where the EMR cluster will be created. If `abac_valid_tags` key values are set, this subnet is required to have a valid key value tag as well."
 }
 
 variable "name_prefix" {
@@ -43,10 +43,8 @@ variable "tags" {
   }
 }
 
-variable "abac_tags" {
-  type        = map(string)
-  description = "A map of tags that will be inserted inside IAM Policies conditions for restricting EMR Service Role access"
-  default = {
-    "tamr.com/role" = "emr"
-  }
+variable "abac_valid_tags" {
+  type = map(list(string))
+  description = "Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here."
+  default = {}
 }

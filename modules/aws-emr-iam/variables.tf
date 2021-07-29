@@ -68,8 +68,8 @@ variable "tags" {
   default     = {}
 }
 
-variable "abac_tags" {
-  type        = map(string)
-  description = "A map of tags to reference inside the condition in ABAC Statements."
-  default     = {}
+variable "abac_valid_tags" {
+  type = map(list(string))
+  description = "Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here."
+  default = {}
 }

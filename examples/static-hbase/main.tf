@@ -63,7 +63,7 @@ module "emr-hbase" {
   json_configuration_bucket_key = "tamr/emr/emr.json"
   utility_script_bucket_key     = "tamr/emr/upload_config.sh"
   tags                          = var.tags
-  abac_tags                     = var.abac_tags
+  abac_valid_tags               = var.abac_valid_tags
   bootstrap_actions = [
     {
       name = "sample_bootstrap_action",

@@ -23,7 +23,7 @@ module "ephemeral-spark-sgs" {
   source              = "../../modules/aws-emr-sgs"
   vpc_id              = var.vpc_id
   emr_managed_sg_name = "Ephem-Spark-Test-EMR-Spark-Internal"
-  tags                = merge(var.tags, var.abac_tags)
+  tags                = var.tags
 }
 
 module "ephemeral-spark-iam" {
@@ -38,7 +38,7 @@ module "ephemeral-spark-iam" {
   emr_ec2_instance_profile_name     = "ephem-spark-test-instance-profile"
   emr_ec2_role_name                 = "ephem-spark-test-ec2-role"
   tags                              = var.tags
-  abac_tags                         = var.abac_tags
+  abac_valid_tags                         = var.abac_valid_tags
 }
 
 module "ephemeral-spark-config" {
