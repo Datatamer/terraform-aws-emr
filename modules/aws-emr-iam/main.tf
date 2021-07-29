@@ -85,7 +85,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -132,7 +132,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -151,7 +151,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -170,7 +170,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       content {
         test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -188,7 +188,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -224,7 +224,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -244,7 +244,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       content {
         test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -263,7 +263,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -297,7 +297,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -321,7 +321,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -340,7 +340,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -362,7 +362,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -382,7 +382,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       content {
         test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -403,7 +403,7 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       content {
         test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }

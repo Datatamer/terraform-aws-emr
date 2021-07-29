@@ -70,16 +70,10 @@ variable "tags" {
   default     = {}
 }
 
-variable "abac_tags" {
-  type        = map(string)
-  description = "Map of tags that will be used inside IAM Policies for restricting EMR Service Role access"
+variable "abac_valid_tags" {
+  type = map(list(string))
+  description = "Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here."
   default = {}
-}
-
-variable "use_abac_tags" {
-  type = bool
-  description = "Whether the IAM Module will insert Conditions based on Tags into the EMR Policies. Use abac_tags variable for specifying tag keys and values. Setting to true will require your Subnet to have the specified tags."
-  default = false
 }
 
 variable "emr_service_role_name" {
