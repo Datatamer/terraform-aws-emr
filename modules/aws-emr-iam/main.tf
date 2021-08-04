@@ -114,6 +114,69 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
   }
 
   statement {
+    sid    = "CreateSecurityGroups"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateSecurityGroup"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:vpc/${var.vpc_id}",
+    ]
+    dynamic "condition" {
+      for_each = var.abac_valid_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:RequestTag/${condition.key}"
+        values   = condition.value
+      }
+    }
+  }
+
+  statement {
+    sid    = "TagManagedSecurityGroup"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateTags"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*"
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "ec2:CreateAction"
+      values = [
+        "CreateSecurityGroup"
+      ]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestTag/for-use-with-amazon-emr-managed-policies"
+      values = [
+        "true"
+      ]
+    }
+  }
+
+
+  statement {
+    sid    = "CreateManagedSecurityGroup"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateSecurityGroup"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:vpc/${var.vpc_id}",
+    ]
+    condition {
+      test = "StringEquals"
+      variable = "aws:RequestTag/for-use-with-amazon-emr-managed-policies"
+      values = ["true"]
+    }
+  }
+
+  statement {
     sid    = "ManageSecurityGroups"
     effect = "Allow"
     actions = [
@@ -123,7 +186,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:RevokeSecurityGroupIngress",
     ]
     resources = [
-      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:security-group/*"
     ]
     dynamic "condition" {
       for_each = var.abac_valid_tags
@@ -132,6 +195,25 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
         variable = "aws:ResourceTag/${condition.key}"
         values   = condition.value
       }
+    }
+  }
+
+  statement {
+    sid    = "ManageManagedSecurityGroup"
+    effect = "Allow"
+    actions = [
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupIngress",
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*"
+    ]
+    condition {
+      test = "StringEquals"
+      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
+      values = ["true"]
     }
   }
 
@@ -225,6 +307,24 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       }
     }
   }
+  statement {
+    sid    = "RunInstanceUsingManagedSecurityGroup"
+    effect = "Allow"
+    actions = [
+      "ec2:RunInstances"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*",
+    ]
+    dynamic "condition" {
+      for_each = var.abac_valid_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
+        values   = ["true"]
+      }
+    }
+  }
 
   statement {
     sid    = "CreateNetworkInterfaceNeededForPrivateSubnet"
@@ -241,6 +341,25 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
         test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
         values   = condition.value
+      }
+    }
+  }
+  statement {
+    sid    = "CreateManagedNetworkInterfaceNeededForPrivateSubnet"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateNetworkInterface"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*"
+    ]
+    dynamic "condition" {
+      for_each = var.abac_valid_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
+        values   = ["true"]
       }
     }
   }
@@ -273,6 +392,10 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_region}::image/*",
     ]
   }
+}
+//The minimal policy document for the EMR service role
+data "aws_iam_policy_document" "emr_service_policy_2" {
+  version = "2012-10-17"
 
   statement {
     sid    = "ManageEMRTaggedResources"
@@ -296,13 +419,6 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       }
     }
   }
-}
-
-//The minimal policy document for the EMR service role
-data "aws_iam_policy_document" "emr_service_policy_2" {
-  version = "2012-10-17"
-
-
   statement {
     effect = "Allow"
     actions = [

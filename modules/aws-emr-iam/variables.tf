@@ -73,3 +73,8 @@ variable "abac_valid_tags" {
   description = "Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here."
   default = {}
 }
+
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID of the network"
+}
