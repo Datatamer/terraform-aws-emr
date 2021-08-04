@@ -170,9 +170,9 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:vpc/${var.vpc_id}",
     ]
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "aws:RequestTag/for-use-with-amazon-emr-managed-policies"
-      values = ["true"]
+      values   = ["true"]
     }
   }
 
@@ -211,14 +211,14 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:security-group/*"
     ]
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
-      values = ["true"]
+      values   = ["true"]
     }
   }
 
   statement {
-    sid = "CancelTaggedSpotRequests"
+    sid    = "CancelTaggedSpotRequests"
     effect = "Allow"
     actions = [
       "ec2:CancelSpotInstanceRequests",
@@ -237,7 +237,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
   }
 
   statement {
-    sid = "CreateTaggedSpotRequests"
+    sid    = "CreateTaggedSpotRequests"
     effect = "Allow"
     actions = [
       "ec2:RequestSpotInstances",
