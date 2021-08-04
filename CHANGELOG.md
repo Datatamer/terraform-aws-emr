@@ -1,5 +1,10 @@
 # TAMR AWS EMR module
 
+## v6.1.0 - August 4th, 2021
+
+* Adds new variable `abac_valid_tags` to be used in IAM Policies conditions for creating EMR Resources using ABAC
+* Adds Terratest for emr-iam submodule
+
 ## v6.0.0 - July 13th, 2021
 * Removes creation of security groups except for internal use within the cluster
 * Removes security group input variables:
