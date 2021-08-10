@@ -1,8 +1,10 @@
 # TAMR AWS EMR module
 
-## v6.1.0 - August 4th, 2021
-
+## v6.1.0 - August 10th, 2021
 * Adds new variable `abac_valid_tags` to be used in IAM Policies conditions for creating EMR Resources using ABAC
+
+## v6.0.1 - August 10th, 2021
+* Fixes an issue in the way `emr_managed_master_sg_ids` and `emr_managed_core_sg_ids` are passed to the AWS provider that would make Terraform need to recreate the cluster in every plan
 
 ## v6.0.0 - July 13th, 2021
 * Removes creation of security groups except for internal use within the cluster
