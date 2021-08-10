@@ -58,6 +58,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "abac_valid_tags" {
+  type        = map(list(string))
+  description = "Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here."
+  default     = {}
+}
+
 variable "emr_service_role_name" {
   type        = string
   description = "Name of the new IAM service role for the EMR cluster"

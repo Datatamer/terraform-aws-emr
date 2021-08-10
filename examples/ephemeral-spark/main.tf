@@ -38,6 +38,7 @@ module "ephemeral-spark-iam" {
   emr_ec2_instance_profile_name     = "ephem-spark-test-instance-profile"
   emr_ec2_role_name                 = "ephem-spark-test-ec2-role"
   tags                              = var.tags
+  abac_valid_tags                   = var.abac_valid_tags
 }
 
 module "ephemeral-spark-config" {

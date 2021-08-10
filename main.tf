@@ -13,6 +13,7 @@ module "emr-sgs" {
 module "emr-iam" {
   source = "./modules/aws-emr-iam"
 
+  vpc_id                            = var.vpc_id
   s3_bucket_name_for_logs           = var.bucket_name_for_logs
   s3_bucket_name_for_root_directory = var.bucket_name_for_root_directory
   s3_policy_arns                    = var.s3_policy_arns
@@ -24,6 +25,7 @@ module "emr-iam" {
   arn_partition                     = var.arn_partition
   permissions_boundary              = var.permissions_boundary
   tags                              = local.effective_tags
+  abac_valid_tags                   = var.abac_valid_tags
 }
 
 module "emr-cluster-config" {

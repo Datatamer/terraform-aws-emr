@@ -63,6 +63,7 @@ module "emr-hbase" {
   json_configuration_bucket_key = "tamr/emr/emr.json"
   utility_script_bucket_key     = "tamr/emr/upload_config.sh"
   tags                          = var.tags
+  abac_valid_tags               = var.abac_valid_tags
   bootstrap_actions = [
     {
       name = "sample_bootstrap_action",
@@ -101,8 +102,9 @@ module "emr-hbase" {
 
   # Scale
   master_instance_on_demand_count = 1
-  core_instance_on_demand_count   = 2
-  master_instance_type            = "m4.large"
+  core_instance_spot_count        = 2
+  core_instance_on_demand_count   = 0
+  master_instance_type            = "m4.xlarge"
   core_instance_type              = "r5.xlarge"
   master_ebs_size                 = 50
   core_ebs_size                   = 50
