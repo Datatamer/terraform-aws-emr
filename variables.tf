@@ -141,7 +141,7 @@ variable "master_bid_price" {
 
 variable "master_bid_price_as_percentage_of_on_demand_price" {
   type        = number
-  default     = 1
+  default     = 100
   description = "Bid price as percentage of on-demand price for master instances"
 }
 

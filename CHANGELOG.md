@@ -2,6 +2,7 @@
 
 ## v6.2.0 - August 10th, 2021
 * Adds new variable `emr_service_access_sg_ids` to the nested security group module to support EMR 5.30 and newer
+* Updates `master_bid_price_as_percentage_of_on_demand_price` default value
 
 ## v6.1.0 - August 10th, 2021
 * Adds new variable `abac_valid_tags` to be used in IAM Policies conditions for creating EMR Resources using ABAC
