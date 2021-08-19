@@ -4,10 +4,11 @@ locals {
 }
 
 module "emr-sgs" {
-  source              = "./modules/aws-emr-sgs"
-  emr_managed_sg_name = var.emr_managed_sg_name
-  vpc_id              = var.vpc_id
-  tags                = local.effective_tags
+  source                    = "./modules/aws-emr-sgs"
+  emr_managed_sg_name       = var.emr_managed_sg_name
+  vpc_id                    = var.vpc_id
+  emr_service_access_sg_ids = var.emr_service_access_sg_ids
+  tags                      = local.effective_tags
 }
 
 module "emr-iam" {

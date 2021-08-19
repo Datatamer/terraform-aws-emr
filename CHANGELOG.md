@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v6.2.0 - August 10th, 2021
+* Adds new variable `emr_service_access_sg_ids` to the nested security group module to support EMR 5.30 and newer
+
 ## v6.1.0 - August 10th, 2021
 * Adds new variable `abac_valid_tags` to be used in IAM Policies conditions for creating EMR Resources using ABAC
 
