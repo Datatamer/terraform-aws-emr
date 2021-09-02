@@ -19,20 +19,17 @@ module "emr-rootdir-bucket" {
 }
 
 module "ephemeral-spark-sgs" {
-  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=5.0.0"
-  source                        = "../../modules/aws-emr-sgs"
-  applications                  = ["Spark"]
-  vpc_id                        = var.vpc_id
-  emr_managed_master_sg_name    = "Ephem-Spark-Test-EMR-Spark-Master"
-  emr_managed_core_sg_name      = "Ephem-Spark-Test-EMR-Spark-Core"
-  emr_additional_master_sg_name = "Ephem-Spark-Test-EMR-Spark-Additional-Master"
-  emr_additional_core_sg_name   = "Ephem-Spark-Test-EMR-Spark-Additional-Core"
-  emr_service_access_sg_name    = "Ephem-Spark-Test-EMR-Spark-Service-Access"
-  tags                          = merge(var.tags, var.abac_tags)
+  # source              = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=6.2.0"
+  source                    = "../../modules/aws-emr-sgs"
+  vpc_id                    = var.vpc_id
+  emr_managed_sg_name       = "Ephem-Spark-Test-EMR-Spark-Internal"
+  emr_service_access_sg_ids = []
+
+  tags = var.tags
 }
 
 module "ephemeral-spark-iam" {
-  # source                            = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=5.0.0"
+  # source                            = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=6.2.0"
   source                            = "../../modules/aws-emr-iam"
   s3_bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
@@ -43,11 +40,11 @@ module "ephemeral-spark-iam" {
   emr_ec2_instance_profile_name     = "ephem-spark-test-instance-profile"
   emr_ec2_role_name                 = "ephem-spark-test-ec2-role"
   tags                              = var.tags
-  abac_tags                         = var.abac_tags
+  abac_valid_tags                   = var.abac_valid_tags
 }
 
 module "ephemeral-spark-config" {
-  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-config?ref=5.0.0"
+  # source                        = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-config?ref=6.2.0"
   source                         = "../../modules/aws-emr-config"
   create_static_cluster          = false
   cluster_name                   = "" # unused

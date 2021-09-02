@@ -56,11 +56,14 @@ No provider.
 | bucket\_name\_for\_logs | S3 bucket name for cluster logs. | `string` | n/a | yes |
 | bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory | `string` | n/a | yes |
 | emr\_config\_file\_path | Path to the EMR JSON configuration file. Please include the file name as well. | `string` | n/a | yes |
+| emr\_managed\_core\_sg\_ids | List of EMR managed core security group ids | `list(string)` | n/a | yes |
+| emr\_managed\_master\_sg\_ids | List of EMR managed master security group ids | `list(string)` | n/a | yes |
+| emr\_service\_access\_sg\_ids | List of EMR service access security group ids | `list(string)` | n/a | yes |
 | key\_pair\_name | Name of the Key Pair that will be attached to the EC2 instances | `string` | n/a | yes |
 | s3\_policy\_arns | List of policy ARNs to attach to EMR EC2 instance profile. | `list(string)` | n/a | yes |
 | subnet\_id | ID of the subnet where the EMR cluster will be created | `string` | n/a | yes |
 | vpc\_id | VPC ID of the network | `string` | n/a | yes |
-| abac\_tags | Map of tags that will be used inside IAM Policies for restricting EMR Service Role access | `map(string)` | <pre>{<br>  "tamr.com/role": "emr"<br>}</pre> | no |
+| abac\_valid\_tags | Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here. | `map(list(string))` | `{}` | no |
 | additional\_tags | [DEPRECATED: Use `tags` instead] Additional tags to be attached to the resources created. | `map(string)` | `{}` | no |
 | arn\_partition | The partition in which the resource is located. A partition is a group of AWS Regions.<br>  Each AWS account is scoped to one partition.<br>  The following are the supported partitions:<br>    aws -AWS Regions<br>    aws-cn - China Regions<br>    aws-us-gov - AWS GovCloud (US) Regions | `string` | `"aws"` | no |
 | bootstrap\_actions | Ordered list of bootstrap actions that will be run before Hadoop is started on the cluster nodes. | <pre>list(object({<br>    name = string<br>    path = string<br>    args = list(string)<br>  }))</pre> | `[]` | no |
@@ -73,21 +76,20 @@ No provider.
 | core\_ebs\_type | Type of volumes to attach to the core nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
 | core\_ebs\_volumes\_count | Number of volumes to attach to the core nodes | `number` | `1` | no |
 | core\_instance\_fleet\_name | Name for the core instance fleet | `string` | `"CoreInstanceFleet"` | no |
-| core\_instance\_on\_demand\_count | Number of on-demand instances for the spot instance fleet | `number` | `0` | no |
+| core\_instance\_on\_demand\_count | Number of on-demand instances for the spot instance fleet | `number` | `1` | no |
 | core\_instance\_spot\_count | Number of spot instances for the spot instance fleet | `number` | `0` | no |
 | core\_instance\_type | The EC2 instance type of the core nodes | `string` | `"m4.xlarge"` | no |
 | core\_timeout\_action | Timeout action for core instances | `string` | `"SWITCH_TO_ON_DEMAND"` | no |
 | core\_timeout\_duration\_minutes | Spot provisioning timeout for core instances, in minutes | `number` | `10` | no |
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
 | custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `null` | no |
-| emr\_additional\_core\_sg\_name | Name for the EMR additional core security group | `string` | `"TAMR-EMR-Core-Additional"` | no |
-| emr\_additional\_master\_sg\_name | Name for the EMR additional master security group | `string` | `"TAMR-EMR-Master-Additional"` | no |
 | emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR service role | `string` | `"tamr-emr-ec2-policy"` | no |
 | emr\_ec2\_instance\_profile\_name | Name of the new instance profile for EMR EC2 instances | `string` | `"tamr_emr_ec2_instance_profile"` | no |
 | emr\_ec2\_role\_name | Name of the new IAM role for EMR EC2 instances | `string` | `"tamr_emr_ec2_role"` | no |
 | emr\_managed\_core\_sg\_name | Name for the EMR managed core security group | `string` | `"TAMR-EMR-Core"` | no |
 | emr\_managed\_master\_sg\_name | Name for the EMR managed master security group | `string` | `"TAMR-EMR-Master"` | no |
-| emr\_service\_access\_sg\_name | Name for the EMR service access security group | `string` | `"TAMR-EMR-Service-Access"` | no |
+| emr\_managed\_sg\_name | Name for the EMR managed security group | `string` | `"TAMR-EMR-Internal"` | no |
+| emr\_service\_access\_sg\_name | Name for the EMR Service Access security group | `string` | `"TAMR-EMR-Service-Access"` | no |
 | emr\_service\_iam\_policy\_name | Name for the IAM policy attached to the EMR Service role | `string` | `"tamr-emr-service-policy"` | no |
 | emr\_service\_role\_name | Name of the new IAM service role for the EMR cluster | `string` | `"tamr_emr_service_role"` | no |
 | enable\_http\_port | EMR services like Ganglia run on the http port | `bool` | `false` | no |
@@ -109,8 +111,6 @@ No provider.
 | permissions\_boundary | ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module | `string` | `null` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
 | tags | A map of tags to add to all resources. Replaces `additional_tags`. | `map(string)` | `{}` | no |
-| tamr\_cidrs | List of CIDRs for Tamr | `list(string)` | `[]` | no |
-| tamr\_sgs | Security Groups for the Tamr Instance | `list(string)` | `[]` | no |
 | utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
 
 ## Outputs
@@ -122,14 +122,13 @@ No provider.
 | core\_ebs\_volumes\_count | Number of volumes to attach to the core nodes |
 | core\_fleet\_instance\_count | Number of on-demand and spot core instances configured |
 | core\_instance\_type | The EC2 instance type of the core nodes |
-| emr\_additional\_core\_sg\_id | Security group id of the EMR Additional Core Security Group |
-| emr\_additional\_master\_sg\_id | Security group id of the EMR Additional Master Security Group |
 | emr\_ec2\_instance\_profile\_arn | ARN of the EMR EC2 instance profile created |
 | emr\_ec2\_instance\_profile\_name | Name of the EMR EC2 instance profile created |
 | emr\_ec2\_role\_arn | ARN of the EMR EC2 role created for EC2 instances |
-| emr\_managed\_core\_sg\_id | Security group id of the EMR Managed Core Security Group |
-| emr\_managed\_master\_sg\_id | Security group id of the EMR Managed Master Security Group |
-| emr\_service\_access\_sg\_id | Security group id of Service Access Security Group |
+| emr\_managed\_core\_sg\_ids | List of security group ids of the EMR Core Security Group |
+| emr\_managed\_master\_sg\_ids | List of security group ids of the EMR Master Security Group |
+| emr\_managed\_sg\_id | Security group id of the EMR Managed Security Group for internal communication |
+| emr\_service\_access\_sg\_ids | List of security group ids of the EMR Service Access Security Group |
 | emr\_service\_role\_arn | ARN of the EMR service role created |
 | emr\_service\_role\_name | Name of the EMR service role created |
 | hbase\_config\_path | Path in the root directory bucket that HBase config was uploaded to. |

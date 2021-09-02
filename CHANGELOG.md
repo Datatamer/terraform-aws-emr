@@ -1,5 +1,29 @@
 # TAMR AWS EMR module
 
+## v6.2.0 - August 10th, 2021
+* Adds new variable `emr_service_access_sg_ids` to the nested security group module to support EMR 5.30 and newer
+* Updates `master_bid_price_as_percentage_of_on_demand_price` default value
+
+## v6.1.0 - August 10th, 2021
+* Adds new variable `abac_valid_tags` to be used in IAM Policies conditions for creating EMR Resources using ABAC
+
+## v6.0.1 - August 10th, 2021
+* Fixes an issue in the way `emr_managed_master_sg_ids` and `emr_managed_core_sg_ids` are passed to the AWS provider that would make Terraform need to recreate the cluster in every plan
+
+## v6.0.0 - July 13th, 2021
+* Removes creation of security groups except for internal use within the cluster
+* Removes security group input variables:
+  * `emr_managed_master_sg_id`
+  * `emr_additional_master_sg_id`
+  * `emr_managed_core_sg_id`
+  * `emr_additional_core_sg_id`
+  * `emr_service_access_sg_id`
+* Replaces above 5 variables with:
+  * `emr_managed_master_sg_ids`
+  * `emr_managed_core_sg_ids`
+* Adds a new ports module
+* Updates examples to use new ports module
+
 ## v5.2.0 - July 13th 2021
 * Deprecates `additional_tags` in favor of `tags`
 

@@ -66,7 +66,6 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     resources = ["*"]
   }
 
-  ## ABAC OK - copied from docs
   statement {
     sid    = "ManageTagsOnEMRTaggedResources"
     effect = "Allow"
@@ -81,15 +80,15 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:launch-template/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
-  ## ABAC OK - copied from docs
+
   statement {
     sid    = "TagOnCreateTaggedEMRResources"
     effect = "Allow"
@@ -114,7 +113,69 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     }
   }
 
-  ## ABAC OK
+  statement {
+    sid    = "CreateSecurityGroups"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateSecurityGroup"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:vpc/${var.vpc_id}",
+    ]
+    dynamic "condition" {
+      for_each = var.abac_valid_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:RequestTag/${condition.key}"
+        values   = condition.value
+      }
+    }
+  }
+
+  statement {
+    sid    = "TagManagedSecurityGroup"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateTags"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*"
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "ec2:CreateAction"
+      values = [
+        "CreateSecurityGroup"
+      ]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestTag/for-use-with-amazon-emr-managed-policies"
+      values = [
+        "true"
+      ]
+    }
+  }
+
+
+  statement {
+    sid    = "CreateManagedSecurityGroup"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateSecurityGroup"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:vpc/${var.vpc_id}",
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:RequestTag/for-use-with-amazon-emr-managed-policies"
+      values   = ["true"]
+    }
+  }
+
   statement {
     sid    = "ManageSecurityGroups"
     effect = "Allow"
@@ -125,20 +186,39 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "ec2:RevokeSecurityGroupIngress",
     ]
     resources = [
-      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:security-group/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
 
   statement {
-    sid = "CancelTaggedSpotRequests"
+    sid    = "ManageManagedSecurityGroup"
+    effect = "Allow"
+    actions = [
+      "ec2:AuthorizeSecurityGroupEgress",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:RevokeSecurityGroupEgress",
+      "ec2:RevokeSecurityGroupIngress",
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*"
+    ]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
+      values   = ["true"]
+    }
+  }
+
+  statement {
+    sid    = "CancelTaggedSpotRequests"
     effect = "Allow"
     actions = [
       "ec2:CancelSpotInstanceRequests",
@@ -147,17 +227,17 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:spot-instances-request/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
 
   statement {
-    sid = "CreateTaggedSpotRequests"
+    sid    = "CreateTaggedSpotRequests"
     effect = "Allow"
     actions = [
       "ec2:RequestSpotInstances",
@@ -166,11 +246,11 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:spot-instances-request/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -184,15 +264,15 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:subnet/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
-  # Key pairs and Images are OK not to be tagged. (won't have conditions in the statement)
+
   statement {
     effect = "Allow"
     actions = [
@@ -204,7 +284,6 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     ]
   }
 
-  ## OK ABAC (statement copied from docs)
   statement {
     sid    = "CreateInTaggedNetwork"
     effect = "Allow"
@@ -220,16 +299,33 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:security-group/*",
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
+      }
+    }
+  }
+  statement {
+    sid    = "RunInstanceUsingManagedSecurityGroup"
+    effect = "Allow"
+    actions = [
+      "ec2:RunInstances"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*",
+    ]
+    dynamic "condition" {
+      for_each = var.abac_valid_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
+        values   = ["true"]
       }
     }
   }
 
-  ## OK ABAC  (statement copied from docs)
   statement {
     sid    = "CreateNetworkInterfaceNeededForPrivateSubnet"
     effect = "Allow"
@@ -240,15 +336,34 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:network-interface/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
-  ## Not sure if ABAC works here. When would EMR do this? (So that we can test)
+  statement {
+    sid    = "CreateManagedNetworkInterfaceNeededForPrivateSubnet"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateNetworkInterface"
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*",
+      "${local.arn_prefix_ec2_account}:network-interface/*"
+    ]
+    dynamic "condition" {
+      for_each = var.abac_valid_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:ResourceTag/for-use-with-amazon-emr-managed-policies"
+        values   = ["true"]
+      }
+    }
+  }
+
   statement {
     effect = "Allow"
     actions = [
@@ -259,11 +374,11 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:network-interface/*",
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
@@ -277,8 +392,11 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_region}::image/*",
     ]
   }
+}
+//The minimal policy document for the EMR service role
+data "aws_iam_policy_document" "emr_service_policy_2" {
+  version = "2012-10-17"
 
-  ## ABAC OK - Copied from Docs
   statement {
     sid    = "ManageEMRTaggedResources"
     effect = "Allow"
@@ -293,21 +411,14 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:*",
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
-}
-
-//The minimal policy document for the EMR service role
-data "aws_iam_policy_document" "emr_service_policy_2" {
-  version = "2012-10-17"
-
-  ## Not sure if ABAC works here. When would EMR do this? (So that we can test)
   statement {
     effect = "Allow"
     actions = [
@@ -317,15 +428,15 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "${local.arn_prefix_ec2_account}:volume/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
-  ## Not sure if ABAC works here. When would EMR do this? (So that we can test)
+
   statement {
     effect = "Allow"
     actions = [
@@ -336,16 +447,15 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "${local.arn_prefix_ec2_account}:instance/*",
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
 
-  ## ABAC OK - Copied from Docs
   statement {
     sid    = "CreateWithEMRTaggedLaunchTemplate"
     effect = "Allow"
@@ -358,16 +468,15 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "${local.arn_prefix_ec2_account}:launch-template/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
 
-  # ABAC OK - copied from docs
   statement {
     sid    = "CreateEMRTaggedLaunchTemplate"
     effect = "Allow"
@@ -378,15 +487,14 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "${local.arn_prefix_ec2_account}:launch-template/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
-  # ABAC OK - copied from docs
   statement {
     sid    = "CreateEMRTaggedInstancesAndVolumes"
     effect = "Allow"
@@ -399,15 +507,14 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "${local.arn_prefix_ec2_account}:instance/*"
     ]
     dynamic "condition" {
-      for_each = var.abac_tags
+      for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
         variable = "aws:RequestTag/${condition.key}"
-        values   = [condition.value]
+        values   = condition.value
       }
     }
   }
-  # ABAC OK - copied from docs
   statement {
     sid    = "ResourcesToLaunchEC2"
     effect = "Allow"
@@ -504,7 +611,6 @@ data "aws_iam_policy_document" "emr_service_policy_2" {
       "${local.arn_prefix_s3}:${var.s3_bucket_name_for_logs}/*"
     ]
   }
-  // ABAC OK
   //The following permission passes the EC2 instance profile role to the EC2 instances created by the EMR cluster
   statement {
     effect = "Allow"

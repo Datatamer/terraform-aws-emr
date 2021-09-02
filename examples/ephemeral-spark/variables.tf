@@ -22,7 +22,7 @@ variable "tags" {
   }
 }
 
-variable "abac_tags" {
+variable "abac_valid_tags" {
   type        = map(string)
   description = "A map of tags that will be inserted inside IAM Policies conditions for restricting EMR Service Role access"
   default = {

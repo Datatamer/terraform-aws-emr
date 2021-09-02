@@ -18,6 +18,22 @@ variable "bucket_name_for_logs" {
   description = "S3 bucket name for cluster logs."
 }
 
+variable "name_prefix" {
+  type        = string
+  description = "A string to prepend to names of the resources in the cluster"
+}
+
+variable "ingress_cidr_blocks" {
+  description = "CIDR blocks to attach to security groups for ingress"
+  type        = list(string)
+}
+
+variable "egress_cidr_blocks" {
+  description = "CIDR blocks to attach to security groups for egress"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
 variable "tags" {
   type        = map(string)
   description = "A map of tags to add to all resources created by this example."
@@ -27,10 +43,8 @@ variable "tags" {
   }
 }
 
-variable "abac_tags" {
-  type        = map(string)
-  description = "A map of tags that will be inserted inside IAM Policies conditions for restricting EMR Service Role access"
-  default = {
-    "tamr.com/role" = "emr"
-  }
+variable "abac_valid_tags" {
+  type        = map(list(string))
+  description = "Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here."
+  default     = {}
 }
