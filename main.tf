@@ -27,6 +27,7 @@ module "emr-iam" {
   permissions_boundary              = var.permissions_boundary
   tags                              = local.effective_tags
   abac_valid_tags                   = var.abac_valid_tags
+  require_abac_for_subnet           = var.require_abac_for_subnet
 }
 
 module "emr-cluster-config" {

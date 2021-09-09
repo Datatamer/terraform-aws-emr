@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v6.3.0 - September 9th, 2021
+* Adds new variable `require_abac_for_subnet` which disables ABAC for the subnet if set to false
+
 ## v6.2.0 - August 10th, 2021
 * Adds new variable `emr_service_access_sg_ids` to the nested security group module to support EMR 5.30 and newer
 * Updates `master_bid_price_as_percentage_of_on_demand_price` default value

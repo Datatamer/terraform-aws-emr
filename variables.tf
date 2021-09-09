@@ -365,3 +365,9 @@ variable "permissions_boundary" {
   description = "ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module"
   default     = null
 }
+
+variable "require_abac_for_subnet" {
+  type        = bool
+  description = "If abac_valid_tags is specified, choose whether or not to require ABAC also for actions related to the subnet"
+  default     = true
+}
