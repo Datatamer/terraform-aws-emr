@@ -264,6 +264,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:subnet/*"
     ]
     dynamic "condition" {
+      condition = var.require_abac_for_subnet
       for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
@@ -299,6 +300,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
       "${local.arn_prefix_ec2_account}:security-group/*",
     ]
     dynamic "condition" {
+      condition = var.require_abac_for_subnet
       for_each = var.abac_valid_tags
       content {
         test     = "StringEquals"
