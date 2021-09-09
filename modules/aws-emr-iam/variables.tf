@@ -77,7 +77,7 @@ variable "abac_valid_tags" {
 variable "require_abac_for_subnet" {
   type        = bool
   description = "If abac_valid_tags is specified, choose whether or not to require ABAC also for actions related to the subnet"
-  default     = false
+  default     = true
 }
 
 variable "vpc_id" {
