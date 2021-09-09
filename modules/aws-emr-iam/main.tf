@@ -301,7 +301,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
   }
 
   statement {
-    sid    = "CreateInTaggedNetwork"
+    sid    = "CreateInTaggedNetworkSG"
     effect = "Allow"
     actions = [
       "ec2:CreateNetworkInterface",
@@ -323,7 +323,7 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     }
   }
   statement {
-    sid    = "CreateInTaggedNetwork"
+    sid    = "CreateInTaggedNetworkSubnet"
     effect = "Allow"
     actions = [
       "ec2:CreateNetworkInterface",
