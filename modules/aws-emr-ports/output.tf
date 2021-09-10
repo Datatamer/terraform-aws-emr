@@ -5,7 +5,9 @@ locals {
   running_ganglia       = contains(local.applications, "ganglia")
   output_hbase_core     = local.running_hbase ? var.core_ports_hbase : []
   output_spark_core     = local.running_spark ? var.core_ports_spark : []
-  output_hbase_master   = local.running_hbase ? var.master_ports_hbase : []
+  pre_6x_hbase_master   = concat(var.master_ports_hbase_common, var.master_ports_hbase_pre_6x)
+  post_6x_hbase_master  = concat(var.master_ports_hbase_common, var.master_ports_hbase_6x)
+  output_hbase_master   = local.running_hbase ? (var.is_pre_6x ? local.pre_6x_hbase_master : local.post_6x_hbase_master) : []
   output_spark_master   = local.running_spark ? var.master_ports_spark : []
   output_ganglia_master = local.running_ganglia ? var.master_ports_ganglia : []
 }
@@ -27,7 +29,7 @@ output "ingress_core_ports" {
     setunion(
       local.output_hbase_core,
       local.output_spark_core,
-      var.core_ports_emr,
+      var.is_pre_6x ? var.core_ports_emr_pre_6x : var.core_ports_emr_6x,
       var.additional_ports
   ))
   description = "List of ingress core ports"
