@@ -97,7 +97,7 @@ No provider.
 | hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
 | json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
 | master\_bid\_price | Bid price for each EC2 instance in the master instance group, expressed in USD. By setting this attribute,<br>  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.<br>  Leave this blank to use On-Demand Instances | `string` | `""` | no |
-| master\_bid\_price\_as\_percentage\_of\_on\_demand\_price | Bid price as percentage of on-demand price for master instances | `number` | `1` | no |
+| master\_bid\_price\_as\_percentage\_of\_on\_demand\_price | Bid price as percentage of on-demand price for master instances | `number` | `100` | no |
 | master\_block\_duration\_minutes | Duration for master spot instances, in minutes | `number` | `0` | no |
 | master\_ebs\_size | The volume size, in gibibytes (GiB). | `string` | `"100"` | no |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 | `string` | `"gp2"` | no |
@@ -110,6 +110,7 @@ No provider.
 | master\_timeout\_duration\_minutes | Spot provisioning timeout for master instances, in minutes | `number` | `10` | no |
 | permissions\_boundary | ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module | `string` | `null` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
+| require\_abac\_for\_subnet | If abac\_valid\_tags is specified, choose whether or not to require ABAC also for actions related to the subnet | `bool` | `true` | no |
 | tags | A map of tags to add to all resources. Replaces `additional_tags`. | `map(string)` | `{}` | no |
 | utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
 

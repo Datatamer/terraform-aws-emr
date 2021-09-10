@@ -261,10 +261,26 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     ]
     resources = [
       "${local.arn_prefix_ec2_account}:security-group/*",
-      "${local.arn_prefix_ec2_account}:subnet/*"
     ]
     dynamic "condition" {
       for_each = var.abac_valid_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values   = condition.value
+      }
+    }
+  }
+  statement {
+    effect = "Allow"
+    actions = [
+      "ec2:RequestSpotInstances",
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:subnet/*"
+    ]
+    dynamic "condition" {
+      for_each = var.require_abac_for_subnet ? var.abac_valid_tags : {}
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
@@ -285,7 +301,29 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
   }
 
   statement {
-    sid    = "CreateInTaggedNetwork"
+    sid    = "CreateInTaggedNetworkSG"
+    effect = "Allow"
+    actions = [
+      "ec2:CreateNetworkInterface",
+      "ec2:RunInstances",
+      "ec2:CreateFleet",
+      "ec2:CreateLaunchTemplate",
+      "ec2:CreateLaunchTemplateVersion",
+    ]
+    resources = [
+      "${local.arn_prefix_ec2_account}:security-group/*",
+    ]
+    dynamic "condition" {
+      for_each = var.abac_valid_tags
+      content {
+        test     = "StringEquals"
+        variable = "aws:ResourceTag/${condition.key}"
+        values   = condition.value
+      }
+    }
+  }
+  statement {
+    sid    = "CreateInTaggedNetworkSubnet"
     effect = "Allow"
     actions = [
       "ec2:CreateNetworkInterface",
@@ -296,10 +334,9 @@ data "aws_iam_policy_document" "emr_service_policy_1" {
     ]
     resources = [
       "${local.arn_prefix_ec2_account}:subnet/*",
-      "${local.arn_prefix_ec2_account}:security-group/*",
     ]
     dynamic "condition" {
-      for_each = var.abac_valid_tags
+      for_each = var.require_abac_for_subnet ? var.abac_valid_tags : {}
       content {
         test     = "StringEquals"
         variable = "aws:ResourceTag/${condition.key}"
