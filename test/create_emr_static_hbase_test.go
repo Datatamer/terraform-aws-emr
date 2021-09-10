@@ -14,13 +14,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// EmrTestCase is a struct for defining tests for Elastic Map Reduce Module
-type EmrTestCase struct {
-	testName         string
-	vars             map[string]interface{}
-	expectApplyError bool
-}
-
 func initTestCases() []EmrTestCase {
 	return []EmrTestCase{
 		{
