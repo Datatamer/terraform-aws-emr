@@ -14,3 +14,8 @@ variable "tags" {
   description = "A map of tags to add to all resources."
   default     = {}
 }
+
+variable "emr_service_access_sg_ids" {
+  type        = list(string)
+  description = "List of EMR service access security group ids"
+}

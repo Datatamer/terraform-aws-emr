@@ -141,7 +141,7 @@ variable "master_bid_price" {
 
 variable "master_bid_price_as_percentage_of_on_demand_price" {
   type        = number
-  default     = 1
+  default     = 100
   description = "Bid price as percentage of on-demand price for master instances"
 }
 
@@ -364,4 +364,10 @@ variable "permissions_boundary" {
   type        = string
   description = "ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module"
   default     = null
+}
+
+variable "require_abac_for_subnet" {
+  type        = bool
+  description = "If abac_valid_tags is specified, choose whether or not to require ABAC also for actions related to the subnet"
+  default     = true
 }

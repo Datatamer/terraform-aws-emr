@@ -51,12 +51,12 @@ resource "aws_s3_bucket_object" "sample_bootstrap_script_2" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=6.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=6.2.0"
   source = "../.."
 
   # Configurations
   create_static_cluster         = true
-  release_label                 = "emr-5.29.0" # hbase 1.4.10
+  release_label                 = "emr-5.33.0" # hbase 1.4.13
   applications                  = local.this_application
   emr_config_file_path          = "../emr-config-template.json"
   bucket_path_to_logs           = "logs/hbase-test-cluster/"
@@ -102,15 +102,11 @@ module "emr-hbase" {
 
   # Scale
   master_instance_on_demand_count = 1
-  core_instance_spot_count        = 2
-  core_instance_on_demand_count   = 0
-  master_instance_type            = "m4.xlarge"
-  core_instance_type              = "r5.xlarge"
+  core_instance_on_demand_count   = 2
+  master_instance_type            = "m6g.xlarge"
+  core_instance_type              = "r6g.xlarge"
   master_ebs_size                 = 50
   core_ebs_size                   = 50
-
-  # Don't use spot instances for the master nodes
-  master_bid_price = ""
 
   # Security Group IDs
   emr_managed_master_sg_ids = module.aws-emr-sg-master.security_group_ids
@@ -119,7 +115,7 @@ module "emr-hbase" {
 }
 
 module "sg-ports" {
-  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.0.0"
+  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.2.0"
   source       = "../../modules/aws-emr-ports"
   applications = local.this_application
 }
@@ -150,7 +146,6 @@ module "aws-emr-sg-service-access" {
   source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
   vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
-  egress_cidr_blocks  = var.egress_cidr_blocks
   ingress_ports       = module.sg-ports.ingress_service_access_ports
   sg_name_prefix      = format("%s-%s", var.name_prefix, "-service-access")
   egress_protocol     = "all"
