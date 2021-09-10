@@ -19,13 +19,13 @@ variable "master_ports_spark" {
 
 variable "is_pre_6x" {
   type        = bool
-  description = "Ports used by AWS EMR"
+  description = "Is this a pre-6x EMR"
   default = true
 }
 
 variable "master_ports_hbase_common" {
   type        = list(number)
-  description = "Ports used by AWS EMR Master HBase"
+  description = "Common ports used by AWS EMR Master HBase"
   default = [
     2181,  // Zookeeper client
     8020,  // HDFS RPC
@@ -64,7 +64,7 @@ variable "master_ports_ganglia" {
 
 variable "core_ports_emr_pre_6x" {
   type        = list(number)
-  description = "Ports used by AWS EMR Core"
+  description = "Ports used by AWS EMR Core pre-6x"
   default = [
     50010, // HDFS DataNode 2
     50075  // HDFS DataNode 1
@@ -73,7 +73,7 @@ variable "core_ports_emr_pre_6x" {
 
 variable "core_ports_emr_6x" {
   type        = list(number)
-  description = "Ports used by AWS EMR Core"
+  description = "Ports used by AWS EMR Core 6x"
   default = [
     9864  // HDFS DataNode
   ]
