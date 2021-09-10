@@ -4,7 +4,7 @@ locals {
     Terratest = "true"
     },
     var.tags,
-    var.abac_tags)
+  var.abac_tags)
 }
 
 module "example_static_hbase" {

@@ -26,13 +26,13 @@ variable "egress_cidr_blocks" {
 variable "tags" {
   type        = map(string)
   description = "A map of tags to add to all resources created by this example."
-  default = {}
+  default     = {}
 }
 
 variable "abac_tags" {
   type        = map(string)
   description = "A map of tags to add to ABAC resources"
-  default = {}
+  default     = {}
 }
 
 variable "abac_valid_tags" {
