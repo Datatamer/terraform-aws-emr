@@ -1,6 +1,6 @@
 # TAMR AWS EMR module
 
-## v6.3.1 - September 10th, 2021
+## v7.0.0 - September 13th, 2021
 * Adds/renames variables to `aws_emr_ports` module for differentiating between ports required for pre-6x and 6x EMR
 * Adds variables:
   * `is_pre_6x`
