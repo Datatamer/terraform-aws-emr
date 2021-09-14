@@ -1,5 +1,18 @@
 # TAMR AWS EMR module
 
+## v7.0.0 - September 13th, 2021
+* Adds/renames variables to `aws_emr_ports` module for differentiating between ports required for pre-6x and 6x EMR
+* Adds variables:
+  * `is_pre_6x`
+  * `master_ports_hbase_common`
+  * `master_ports_hbase_pre_6x`
+  * `master_ports_hbase_6x`
+  * `core_ports_emr_pre_6x`
+  * `core_ports_emr_6x`
+* Removes variables:
+  * `master_ports_hbase`
+  * `core_ports_emr`
+
 ## v6.3.0 - September 9th, 2021
 * Adds new variable `require_abac_for_subnet` which disables ABAC for the subnet if set to false
 
