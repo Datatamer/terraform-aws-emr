@@ -17,9 +17,15 @@ variable "master_ports_spark" {
   ]
 }
 
-variable "master_ports_hbase" {
+variable "is_pre_6x" {
+  type        = bool
+  description = "Is this a pre-6x EMR"
+  default = true
+}
+
+variable "master_ports_hbase_common" {
   type        = list(number)
-  description = "Ports used by AWS EMR Master HBase"
+  description = "Common ports used by AWS EMR Master HBase"
   default = [
     2181,  // Zookeeper client
     8020,  // HDFS RPC
@@ -28,8 +34,23 @@ variable "master_ports_hbase" {
     9090,  // Thrift server
     9095,  // Thrift server UI
     16000, // Hbase Master
-    16010, // Hbase Master UI
+    16010  // Hbase Master UI
+  ]
+}
+
+variable "master_ports_hbase_pre_6x" {
+  type        = list(number)
+  description = "Ports used by AWS EMR Master HBase pre-6.x"
+  default = [
     50070  // HDFS NameNode
+  ]
+}
+
+variable "master_ports_hbase_6x" {
+  type        = list(number)
+  description = "Ports used by AWS EMR Master HBase post-6.x"
+  default = [
+    9870  // HDFS NameNode
   ]
 }
 
@@ -41,12 +62,20 @@ variable "master_ports_ganglia" {
   ]
 }
 
-variable "core_ports_emr" {
+variable "core_ports_emr_pre_6x" {
   type        = list(number)
-  description = "Ports used by AWS EMR Core"
+  description = "Ports used by AWS EMR Core pre-6x"
   default = [
     50010, // HDFS DataNode 2
     50075  // HDFS DataNode 1
+  ]
+}
+
+variable "core_ports_emr_6x" {
+  type        = list(number)
+  description = "Ports used by AWS EMR Core 6x"
+  default = [
+    9864  // HDFS DataNode
   ]
 }
 
