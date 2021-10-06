@@ -5,4 +5,5 @@ type EmrTestCase struct {
 	testName         string
 	vars             map[string]interface{}
 	expectApplyError bool
+	tfDir            string
 }
