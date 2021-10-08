@@ -49,17 +49,31 @@ func initTestCases() []EmrTestCase {
 			expectApplyError: false,
 			tfDir:            "test_examples/static-spark",
 		},
+		{
+			testName: "Ephem_Spark_Test_1",
+			vars: map[string]interface{}{
+				"vpc_cidr":       "172.24.0.0/20",
+				"public_subnets": []string{"172.24.3.0/24", "172.24.4.0/24"},
+				"tags":           make(map[string]string),
+				"abac_tags": map[string]string{
+					"for-use-with-amazon-emr-managed-policies": "true",
+				},
+				"abac_valid_tags": make(map[string][]string),
+			},
+			expectApplyError: false,
+			tfDir:            "test_examples/ephemeral-spark",
+		},
 	}
 }
-func TestCreateEmrStaticClusters(t *testing.T) {
+func TestCreateExamplesEmr(t *testing.T) {
 	// os.Setenv("TERRATEST_REGION", "us-east-1")
 
 	testCases := initTestCases()
 
 	for _, testCase := range testCases {
+		testCase := testCase
 		t.Run(testCase.testName, func(t *testing.T) {
 			t.Parallel()
-			testCase := testCase
 			// These will create a tempTestFolder for each bucketTestCase.
 			tempTestFolder := test_structure.CopyTerraformFolderToTemp(t, "..", testCase.tfDir)
 
@@ -114,7 +128,10 @@ func TestCreateEmrStaticClusters(t *testing.T) {
 				terraformOptions := test_structure.LoadTerraformOptions(t, tempTestFolder)
 				// brings all outputs inside a map
 				outAll := terraform.OutputAll(t, terraformOptions)
-				assert.NotNil(t, outAll)
+				require.NotNil(t, outAll)
+				for _, o := range outAll {
+					assert.NotNil(t, o)
+				}
 			})
 		})
 	}
