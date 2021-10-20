@@ -62,6 +62,7 @@ module "emr-cluster" {
   # Cluster instances
   subnet_id                                         = var.subnet_id
   key_pair_name                                     = var.key_pair_name
+  use_instance_fleets = var.use_instance_fleets
   master_instance_fleet_name                        = var.master_instance_fleet_name
   master_instance_type                              = var.master_instance_type
   master_instance_on_demand_count                   = var.master_instance_on_demand_count
