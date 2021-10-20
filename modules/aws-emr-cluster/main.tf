@@ -1,7 +1,7 @@
 locals {
   applications = [for app in var.applications : lower(app)]
-  fleets = var.use_instance_fleets ? {name: "fleet"} : {}
-  groups = !var.use_instance_fleets ?  {name: "group"} : {}
+  fleets = var.use_instance_fleets ? {name: "emr"} : {}
+  groups = !var.use_instance_fleets ?  {name: "emr"} : {}
 }
 
 data "aws_s3_bucket_object" "json_config" {
@@ -28,7 +28,7 @@ resource "aws_emr_cluster" "emr-cluster" {
   }
 
   dynamic "master_instance_group" {
-    for_each = local.groups
+    for_each = {} #local.groups
     content {
       name = var.master_instance_fleet_name
       instance_count = var.master_instance_on_demand_count
@@ -42,7 +42,7 @@ resource "aws_emr_cluster" "emr-cluster" {
   }
 
   dynamic "core_instance_group" {
-    for_each = local.groups
+    for_each = {} #local.groups
     content {
     name                      = var.core_instance_fleet_name
     instance_count            = var.core_instance_on_demand_count
