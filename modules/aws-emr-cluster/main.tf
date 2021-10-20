@@ -36,32 +36,15 @@ resource "aws_emr_cluster" "emr-cluster" {
       }
   }
 
-  core_instance_fleet {
+  core_instance_group {
     name                      = var.core_instance_fleet_name
-    target_on_demand_capacity = var.core_instance_on_demand_count
-    target_spot_capacity      = var.core_instance_spot_count
-    instance_type_configs {
-      bid_price                                  = var.core_bid_price
-      bid_price_as_percentage_of_on_demand_price = var.core_bid_price_as_percentage_of_on_demand_price
-      instance_type                              = var.core_instance_type
-      weighted_capacity                          = 1
-      ebs_config {
+    instance_count            = var.core_instance_on_demand_count
+    instance_type                              = var.core_instance_type
+    ebs_config {
         size                 = var.core_ebs_size
         type                 = var.core_ebs_type
         volumes_per_instance = var.core_ebs_volumes_count
       }
-    }
-    dynamic "launch_specifications" {
-      for_each = var.core_instance_spot_count > 0 ? [1] : []
-      content {
-        spot_specification {
-          allocation_strategy      = "capacity-optimized"
-          block_duration_minutes   = var.core_block_duration_minutes
-          timeout_action           = var.core_timeout_action
-          timeout_duration_minutes = var.core_timeout_duration_minutes
-        }
-      }
-    }
   }
 
   log_uri      = "s3n://${var.bucket_name_for_logs}/${var.bucket_path_to_logs}"
