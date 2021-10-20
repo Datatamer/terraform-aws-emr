@@ -1,5 +1,7 @@
 locals {
   applications = [for app in var.applications : lower(app)]
+  fleets = var.use_instance_fleets ? {name: "fleet"} : {}
+  groups = !var.use_instance_fleets ?  {name: "group"} : {}
 }
 
 data "aws_s3_bucket_object" "json_config" {
@@ -25,18 +27,23 @@ resource "aws_emr_cluster" "emr-cluster" {
     key_name                          = var.key_pair_name
   }
 
-  master_instance_group {
-    name                      = var.master_instance_fleet_name
-    instance_count = var.master_instance_on_demand_count
-    instance_type                              = var.master_instance_type
-    ebs_config {
-        size                 = var.master_ebs_size
-        type                 = var.master_ebs_type
+  dynamic "master_instance_group" {
+    for_each = local.groups
+    content {
+      name = var.master_instance_fleet_name
+      instance_count = var.master_instance_on_demand_count
+      instance_type = var.master_instance_type
+      ebs_config {
+        size = var.master_ebs_size
+        type = var.master_ebs_type
         volumes_per_instance = var.master_ebs_volumes_count
       }
+    }
   }
 
-  core_instance_group {
+  dynamic "core_instance_group" {
+    for_each = local.groups
+    content {
     name                      = var.core_instance_fleet_name
     instance_count            = var.core_instance_on_demand_count
     instance_type                              = var.core_instance_type
@@ -45,6 +52,7 @@ resource "aws_emr_cluster" "emr-cluster" {
         type                 = var.core_ebs_type
         volumes_per_instance = var.core_ebs_volumes_count
       }
+    }
   }
 
   log_uri      = "s3n://${var.bucket_name_for_logs}/${var.bucket_path_to_logs}"

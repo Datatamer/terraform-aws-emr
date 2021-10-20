@@ -371,3 +371,9 @@ variable "require_abac_for_subnet" {
   description = "If abac_valid_tags is specified, choose whether or not to require ABAC also for actions related to the subnet"
   default     = true
 }
+
+variable "use_instance_fleets" {
+  type = bool
+  description = "Whether or not to use instance fleets or instance groups for specifying master and core instances. Instance fleets are required for specifying on demand instances. Instance groups are required for specifying multiple master nodes"
+  default = true
+}
