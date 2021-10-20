@@ -25,32 +25,15 @@ resource "aws_emr_cluster" "emr-cluster" {
     key_name                          = var.key_pair_name
   }
 
-  master_instance_fleet {
+  master_instance_group {
     name                      = var.master_instance_fleet_name
-    target_on_demand_capacity = var.master_instance_on_demand_count
-    target_spot_capacity      = var.master_instance_spot_count
-    instance_type_configs {
-      bid_price                                  = var.master_bid_price
-      bid_price_as_percentage_of_on_demand_price = var.master_bid_price_as_percentage_of_on_demand_price
-      instance_type                              = var.master_instance_type
-      weighted_capacity                          = 1
-      ebs_config {
+    instance_count = var.master_instance_on_demand_count
+    instance_type                              = var.master_instance_type
+    ebs_config {
         size                 = var.master_ebs_size
         type                 = var.master_ebs_type
         volumes_per_instance = var.master_ebs_volumes_count
       }
-    }
-    dynamic "launch_specifications" {
-      for_each = var.master_instance_spot_count > 0 ? [1] : []
-      content {
-        spot_specification {
-          allocation_strategy      = "capacity-optimized"
-          block_duration_minutes   = var.master_block_duration_minutes
-          timeout_action           = var.master_timeout_action
-          timeout_duration_minutes = var.master_timeout_duration_minutes
-        }
-      }
-    }
   }
 
   core_instance_fleet {
