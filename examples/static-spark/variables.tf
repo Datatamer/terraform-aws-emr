@@ -26,5 +26,3 @@ variable "tags" {
     Environment = "Example"
   }
 }
-
-

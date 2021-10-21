@@ -122,7 +122,7 @@ data "aws_instance" "master" {
 
   filter {
     name   = "tag:aws:elasticmapreduce:job-flow-id"
-    values = [var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].id : "" ]
+    values = [var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].id : ""]
   }
 
   filter {
