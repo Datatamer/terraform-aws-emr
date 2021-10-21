@@ -74,7 +74,7 @@ output "master_instance_type" {
 
 output "master_instance" {
   value       = data.aws_instance.master
-  description = "The EC2 instance type of the master nodes"
+  description = "The EC2 instance of the master node"
 }
 
 output "master_ebs_volumes_count" {
