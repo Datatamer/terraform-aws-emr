@@ -139,6 +139,7 @@ No provider.
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 |
 | master\_ebs\_volumes\_count | Number of volumes to attach to the master nodes |
 | master\_fleet\_instance\_count | Number of on-demand and spot master instances configured |
+| master\_instance | The EC2 instance of the master |
 | master\_instance\_type | The EC2 instance type of the master nodes |
 | release\_label | The release label for the Amazon EMR release. |
 | subnet\_id | ID of the subnet where EMR cluster was created |

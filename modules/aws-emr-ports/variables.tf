@@ -20,7 +20,7 @@ variable "master_ports_spark" {
 variable "is_pre_6x" {
   type        = bool
   description = "Is this a pre-6x EMR"
-  default = true
+  default     = true
 }
 
 variable "master_ports_hbase_common" {
@@ -42,7 +42,7 @@ variable "master_ports_hbase_pre_6x" {
   type        = list(number)
   description = "Ports used by AWS EMR Master HBase pre-6.x"
   default = [
-    50070  // HDFS NameNode
+    50070 // HDFS NameNode
   ]
 }
 
@@ -50,7 +50,7 @@ variable "master_ports_hbase_6x" {
   type        = list(number)
   description = "Ports used by AWS EMR Master HBase post-6.x"
   default = [
-    9870  // HDFS NameNode
+    9870 // HDFS NameNode
   ]
 }
 
@@ -75,7 +75,7 @@ variable "core_ports_emr_6x" {
   type        = list(number)
   description = "Ports used by AWS EMR Core 6x"
   default = [
-    9864  // HDFS DataNode
+    9864 // HDFS DataNode
   ]
 }
 
