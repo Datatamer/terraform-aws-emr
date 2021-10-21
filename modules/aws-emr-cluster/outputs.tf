@@ -77,6 +77,11 @@ output "master_ebs_volumes_count" {
   description = "Number of volumes to attach to the master nodes"
 }
 
+output "master_instance" {
+  value       = data.aws_instance.master
+  description = "The EC2 instance of the master node"
+}
+
 output "master_ebs_size" {
   value       = var.master_ebs_size
   description = "The master EBS volume size, in gibibytes (GiB)."

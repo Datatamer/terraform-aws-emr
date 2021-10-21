@@ -117,3 +117,16 @@ resource "aws_emr_cluster" "emr-cluster" {
 
   tags = var.tags
 }
+
+data "aws_instance" "master" {
+
+  filter {
+    name   = "tag:aws:elasticmapreduce:job-flow-id"
+    values = [var.create_static_cluster ? aws_emr_cluster.emr-cluster[0].id : ""]
+  }
+
+  filter {
+    name   = "tag:aws:elasticmapreduce:instance-group-role"
+    values = ["MASTER"]
+  }
+}

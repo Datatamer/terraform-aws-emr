@@ -73,6 +73,11 @@ output "master_ebs_size" {
   description = "The master EBS volume size, in gibibytes (GiB)."
 }
 
+output "master_instance" {
+  value       = module.emr-cluster.master_instance
+  description = "The EC2 instance of the master"
+}
+
 output "master_ebs_type" {
   value       = module.emr-cluster.master_ebs_type
   description = "Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1"
