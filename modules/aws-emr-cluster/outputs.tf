@@ -72,8 +72,8 @@ output "master_instance_type" {
   description = "The EC2 instance type of the master nodes"
 }
 
-output "master_instance_id" {
-  value       = data.aws_instance.master.id
+output "master_instance" {
+  value       = data.aws_instance.master
   description = "The EC2 instance type of the master nodes"
 }
 

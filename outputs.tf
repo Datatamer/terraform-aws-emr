@@ -68,8 +68,8 @@ output "master_instance_type" {
   description = "The EC2 instance type of the master nodes"
 }
 
-output "master_instance_id" {
-  value       = module.emr-cluster.master_instance_id
+output "master_instance" {
+  value       = module.emr-cluster.master_instance
   description = "The EC2 instance id of the master nodes"
 }
 
