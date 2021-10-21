@@ -267,9 +267,3 @@ variable "custom_ami_id" {
   description = "The ID of a custom Amazon EBS-backed Linux AMI"
   default     = null
 }
-
-variable "use_instance_fleets" {
-  type = bool
-  description = "Whether or not to use instance fleets or instance groups for specifying master and core instances. Instance fleets are required for specifying on demand instances. Instance groups are required for specifying multiple master nodes"
-  default = true
-}
