@@ -72,6 +72,11 @@ output "master_instance_type" {
   description = "The EC2 instance type of the master nodes"
 }
 
+output "master_instance_id" {
+  value       = var.master_instance_type
+  description = "The EC2 instance type of the master nodes"
+}
+
 output "master_ebs_volumes_count" {
   value       = var.master_ebs_volumes_count
   description = "Number of volumes to attach to the master nodes"

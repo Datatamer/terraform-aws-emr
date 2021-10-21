@@ -117,3 +117,16 @@ resource "aws_emr_cluster" "emr-cluster" {
 
   tags = var.tags
 }
+
+data "aws_instance" "master" {
+
+  filter {
+    name   = "tag:Name"
+    values = ["${aws_emr_cluster.emr-cluster.name}"]
+  }
+
+  filter {
+    name   = "tag:aws:elasticmapreduce:instance-group-role"
+    values = ["MASTER"]
+  }
+}

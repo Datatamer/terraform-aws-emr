@@ -68,6 +68,11 @@ output "master_instance_type" {
   description = "The EC2 instance type of the master nodes"
 }
 
+output "master_instance_type" {
+  value       = module.emr-cluster.master_instance_id
+  description = "The EC2 instance id of the master nodes"
+}
+
 output "master_ebs_volumes_count" {
   value       = module.emr-cluster.master_ebs_volumes_count
   description = "Number of volumes to attach to the master nodes"
