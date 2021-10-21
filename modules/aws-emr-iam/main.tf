@@ -692,12 +692,6 @@ resource "aws_iam_role_policy_attachment" "emr_service_role_policy_2" {
   policy_arn = aws_iam_policy.emr_service_policy_2.arn
 }
 
-resource "aws_iam_role_policy_attachment" "emr_managed_placement_group_policy" {
-  count      = var.attach_emr_managed_placement_groups_policy ? 1 : 0
-  role       = aws_iam_role.emr_service_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonElasticMapReducePlacementGroupPolicy"
-}
-
 ###########################
 # EMR EC2 Instance Profile
 ###########################

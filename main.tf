@@ -14,21 +14,20 @@ module "emr-sgs" {
 module "emr-iam" {
   source = "./modules/aws-emr-iam"
 
-  vpc_id                                     = var.vpc_id
-  s3_bucket_name_for_logs                    = var.bucket_name_for_logs
-  s3_bucket_name_for_root_directory          = var.bucket_name_for_root_directory
-  s3_policy_arns                             = var.s3_policy_arns
-  emr_ec2_iam_policy_name                    = var.emr_ec2_iam_policy_name
-  emr_service_iam_policy_name                = var.emr_service_iam_policy_name
-  emr_service_role_name                      = var.emr_service_role_name
-  emr_ec2_instance_profile_name              = var.emr_ec2_instance_profile_name
-  emr_ec2_role_name                          = var.emr_ec2_role_name
-  arn_partition                              = var.arn_partition
-  permissions_boundary                       = var.permissions_boundary
-  attach_emr_managed_placement_groups_policy = var.master_instance_on_demand_count > 0
-  tags                                       = local.effective_tags
-  abac_valid_tags                            = var.abac_valid_tags
-  require_abac_for_subnet                    = var.require_abac_for_subnet
+  vpc_id                            = var.vpc_id
+  s3_bucket_name_for_logs           = var.bucket_name_for_logs
+  s3_bucket_name_for_root_directory = var.bucket_name_for_root_directory
+  s3_policy_arns                    = var.s3_policy_arns
+  emr_ec2_iam_policy_name           = var.emr_ec2_iam_policy_name
+  emr_service_iam_policy_name       = var.emr_service_iam_policy_name
+  emr_service_role_name             = var.emr_service_role_name
+  emr_ec2_instance_profile_name     = var.emr_ec2_instance_profile_name
+  emr_ec2_role_name                 = var.emr_ec2_role_name
+  arn_partition                     = var.arn_partition
+  permissions_boundary              = var.permissions_boundary
+  tags                              = local.effective_tags
+  abac_valid_tags                   = var.abac_valid_tags
+  require_abac_for_subnet           = var.require_abac_for_subnet
 }
 
 module "emr-cluster-config" {
