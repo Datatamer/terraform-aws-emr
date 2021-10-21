@@ -15,7 +15,23 @@ variable "vpc_id" {
 
 variable "subnet_id" {
   type        = string
-  description = "ID of the subnet where the EMR cluster will be created"
+  description = "ID of the subnet where the EMR cluster will be created. If `abac_valid_tags` key values are set, this subnet is required to have a valid key value tag as well."
+}
+
+variable "name_prefix" {
+  type        = string
+  description = "A string to prepend to names of the resources in the cluster"
+}
+
+variable "ingress_cidr_blocks" {
+  type        = list(string)
+  description = "CIDR blocks to attach to security groups for ingress"
+}
+
+variable "egress_cidr_blocks" {
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+  description = "CIDR blocks to attach to security groups for egress"
 }
 
 variable "tags" {
@@ -25,4 +41,10 @@ variable "tags" {
     Author      = "Tamr"
     Environment = "Example"
   }
+}
+
+variable "abac_valid_tags" {
+  type        = map(list(string))
+  description = "Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here."
+  default     = {}
 }

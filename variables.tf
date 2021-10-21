@@ -46,18 +46,6 @@ variable "cluster_name" {
   default     = "TAMR-EMR-Cluster"
 }
 
-variable "tamr_cidrs" {
-  type        = list(string)
-  description = "List of CIDRs for Tamr"
-  default     = []
-}
-
-variable "tamr_sgs" {
-  type        = list(string)
-  description = "Security Groups for the Tamr Instance"
-  default     = []
-}
-
 variable "additional_tags" {
   type        = map(string)
   description = "[DEPRECATED: Use `tags` instead] Additional tags to be attached to the resources created."
@@ -67,6 +55,12 @@ variable "additional_tags" {
 variable "tags" {
   type        = map(string)
   description = "A map of tags to add to all resources. Replaces `additional_tags`."
+  default     = {}
+}
+
+variable "abac_valid_tags" {
+  type        = map(list(string))
+  description = "Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here."
   default     = {}
 }
 
@@ -147,7 +141,7 @@ variable "master_bid_price" {
 
 variable "master_bid_price_as_percentage_of_on_demand_price" {
   type        = number
-  default     = 1
+  default     = 100
   description = "Bid price as percentage of on-demand price for master instances"
 }
 
@@ -263,6 +257,12 @@ variable "core_timeout_duration_minutes" {
   default     = 10
 }
 
+variable "emr_managed_sg_name" {
+  type        = string
+  description = "Name for the EMR managed security group"
+  default     = "TAMR-EMR-Internal"
+}
+
 variable "emr_managed_master_sg_name" {
   type        = string
   description = "Name for the EMR managed master security group"
@@ -275,22 +275,25 @@ variable "emr_managed_core_sg_name" {
   default     = "TAMR-EMR-Core"
 }
 
-variable "emr_additional_master_sg_name" {
-  type        = string
-  description = "Name for the EMR additional master security group"
-  default     = "TAMR-EMR-Master-Additional"
-}
-
-variable "emr_additional_core_sg_name" {
-  type        = string
-  description = "Name for the EMR additional core security group"
-  default     = "TAMR-EMR-Core-Additional"
-}
-
 variable "emr_service_access_sg_name" {
   type        = string
-  description = "Name for the EMR service access security group"
+  description = "Name for the EMR Service Access security group"
   default     = "TAMR-EMR-Service-Access"
+}
+
+variable "emr_managed_master_sg_ids" {
+  type        = list(string)
+  description = "List of EMR managed master security group ids"
+}
+
+variable "emr_managed_core_sg_ids" {
+  type        = list(string)
+  description = "List of EMR managed core security group ids"
+}
+
+variable "emr_service_access_sg_ids" {
+  type        = list(string)
+  description = "List of EMR service access security group ids"
 }
 
 variable "emr_service_iam_policy_name" {
@@ -361,4 +364,10 @@ variable "permissions_boundary" {
   type        = string
   description = "ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module"
   default     = null
+}
+
+variable "require_abac_for_subnet" {
+  type        = bool
+  description = "If abac_valid_tags is specified, choose whether or not to require ABAC also for actions related to the subnet"
+  default     = true
 }

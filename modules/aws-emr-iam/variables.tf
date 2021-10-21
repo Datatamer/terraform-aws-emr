@@ -67,3 +67,20 @@ variable "tags" {
   description = "A map of tags to add to all resources."
   default     = {}
 }
+
+variable "abac_valid_tags" {
+  type        = map(list(string))
+  description = "Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here."
+  default     = {}
+}
+
+variable "require_abac_for_subnet" {
+  type        = bool
+  description = "If abac_valid_tags is specified, choose whether or not to require ABAC also for actions related to the subnet"
+  default     = true
+}
+
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID of the network"
+}
