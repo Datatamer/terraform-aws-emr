@@ -4,7 +4,7 @@ locals {
   # Instance groups are required if deploying multi-master but instance fleets are required
   # if using both on-demand and spot instances.
   # Use instance group only if multi-master and no spot instances.
-  #Otherwise deploy as fleet which will result in AWS error
+  # Otherwise deploy as fleet which will result in AWS error
   use_instance_groups = (var.master_instance_on_demand_count > 1 && var.core_instance_spot_count == 0) ? true : false
 }
 

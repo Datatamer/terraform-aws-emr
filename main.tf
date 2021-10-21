@@ -25,6 +25,7 @@ module "emr-iam" {
   emr_ec2_role_name                 = var.emr_ec2_role_name
   arn_partition                     = var.arn_partition
   permissions_boundary              = var.permissions_boundary
+  attach_emr_managed_placement_groups_policy = var.master_instance_on_demand_count > 0
   tags                              = local.effective_tags
   abac_valid_tags                   = var.abac_valid_tags
   require_abac_for_subnet           = var.require_abac_for_subnet

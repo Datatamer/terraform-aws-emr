@@ -84,3 +84,8 @@ variable "vpc_id" {
   type        = string
   description = "VPC ID of the network"
 }
+
+variable "attach_emr_managed_placement_groups_policy" {
+  type = bool
+  description = "If true, attached the managed AmazonElasticMapReducePlacementGroupPolicy. When attached and multiple masters are specified, a SPREAD placement group strategy is set."
+}
