@@ -78,7 +78,7 @@ output "master_ebs_volumes_count" {
 }
 
 output "master_instance" {
-  value       = data.aws_instance.master
+  value       = var.create_static_cluster ? data.aws_instance.master : null
   description = "The EC2 instance of the master node"
 }
 
