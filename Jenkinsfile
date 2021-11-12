@@ -1,2 +1,2 @@
-@Library( 'ops' ) _
+@Library( 'ops@CA-50' ) _
 terraformModRepoBuilder()
