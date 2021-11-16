@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v7.1.0 - October 21st, 2021
+* Switch to using instance groups instead of instance fleets when multiple master nodes specified and no spot instances
+
 ## v7.0.0 - September 13th, 2021
 * Adds/renames variables to `aws_emr_ports` module for differentiating between ports required for pre-6x and 6x EMR
 * Adds variables:
