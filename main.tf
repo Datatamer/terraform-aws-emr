@@ -58,6 +58,7 @@ module "emr-cluster" {
   bucket_name_for_logs           = var.bucket_name_for_logs
   bucket_path_to_logs            = var.bucket_path_to_logs
   bootstrap_actions              = var.bootstrap_actions
+  security_configuration         = var.security_configuration
 
   # Cluster instances
   subnet_id                                         = var.subnet_id
