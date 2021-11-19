@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v7.2.1 - November 19th, 2021
+* Updates HBase configuration in `emr-config-template.json` with new recommended values
+
 ## v7.2.0 - November 16th, 2021
 * Adds new variable `security_configuration` which allows specifying an existing EMR Security Configuration by name
 
