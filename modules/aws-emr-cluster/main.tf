@@ -60,7 +60,7 @@ resource "aws_emr_cluster" "emr-cluster" {
   }
 
   dynamic "master_instance_fleet" {
-    for_each = ! local.use_instance_groups ? [1] : []
+    for_each = !local.use_instance_groups ? [1] : []
     content {
       name                      = var.master_instance_fleet_name
       target_on_demand_capacity = var.master_instance_on_demand_count
@@ -92,7 +92,7 @@ resource "aws_emr_cluster" "emr-cluster" {
   }
 
   dynamic "core_instance_fleet" {
-    for_each = ! local.use_instance_groups ? [1] : []
+    for_each = !local.use_instance_groups ? [1] : []
     content {
       name                      = var.core_instance_fleet_name
       target_on_demand_capacity = var.core_instance_on_demand_count

@@ -29,8 +29,8 @@ module "vpc" {
   name = "terratest-vpc"
   cidr = var.vpc_cidr
 
-  azs             = ["${data.aws_region.current.name}a", "${data.aws_region.current.name}b"]
-  public_subnets  = var.public_subnets
+  azs            = ["${data.aws_region.current.name}a", "${data.aws_region.current.name}b"]
+  public_subnets = var.public_subnets
 
   enable_ipv6 = false
 

@@ -30,7 +30,7 @@ module "ephemeral-spark-sgs" {
 
 module "ephemeral-spark-iam" {
   # source                            = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=6.2.0"
-  source                            = "../../modules/aws-emr-iam"
+  source = "../../modules/aws-emr-iam"
 
   vpc_id                            = var.vpc_id
   s3_bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
