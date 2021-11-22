@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v7.2.0 - November 16th, 2021
+* Adds new variable `security_configuration` which allows specifying an existing EMR Security Configuration by name
+
 ## v7.1.0 - October 21st, 2021
 * Switch to using instance groups instead of instance fleets when multiple master nodes specified and no spot instances
 

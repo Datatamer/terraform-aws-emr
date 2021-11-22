@@ -267,3 +267,9 @@ variable "custom_ami_id" {
   description = "The ID of a custom Amazon EBS-backed Linux AMI"
   default     = null
 }
+
+variable "security_configuration" {
+  type        = string
+  description = "The name of an EMR Security Configuration"
+  default     = null
+}

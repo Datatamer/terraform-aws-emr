@@ -347,6 +347,12 @@ variable "custom_ami_id" {
   default     = null
 }
 
+variable "security_configuration" {
+  type        = string
+  description = "The name of an EMR Security Configuration"
+  default     = null
+}
+
 variable "arn_partition" {
   type        = string
   description = <<EOF

@@ -14,11 +14,12 @@ data "aws_s3_bucket_object" "json_config" {
 }
 
 resource "aws_emr_cluster" "emr-cluster" {
-  count               = var.create_static_cluster ? 1 : 0
-  name                = var.cluster_name
-  release_label       = var.release_label
-  applications        = local.applications
-  configurations_json = data.aws_s3_bucket_object.json_config.body
+  count                  = var.create_static_cluster ? 1 : 0
+  name                   = var.cluster_name
+  release_label          = var.release_label
+  applications           = local.applications
+  configurations_json    = data.aws_s3_bucket_object.json_config.body
+  security_configuration = var.security_configuration
 
   ec2_attributes {
     subnet_id                         = var.subnet_id
