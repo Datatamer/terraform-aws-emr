@@ -39,18 +39,17 @@ variable "abac_valid_tags" {
   default     = {}
 }
 
-variable "key_pair" {
-  type = string
-}
-
 variable "vpc_id" {
-  type = string
+  type        = string
+  description = "VPC ID of the network."
 }
 
 variable "application_subnet_id" {
-  type = string
+  type        = string
+  description = "ID of the subnet where the Tamr VM and the Cloudwatch VPC Endpoint will be created. If `abac_valid_tags` key values are set, this subnet is required to have a valid key value tag as well."
 }
 
 variable "compute_subnet_id" {
-  type = string
+  type        = string
+  description = "ID of the subnet where the EMR cluster will be created. If `abac_valid_tags` key values are set, this subnet is required to have a valid key value tag as well."
 }
