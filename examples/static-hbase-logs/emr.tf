@@ -48,8 +48,7 @@ module "emr-hbase" {
   s3_policy_arns = [module.emr-logs-bucket.rw_policy_arn,
     module.emr-rootdir-bucket.rw_policy_arn,
   "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
-  #key_pair_name                  = module.emr_key_pair.key_pair_key_name
-  key_pair_name = var.key_pair
+  key_pair_name = module.emr_key_pair.key_pair_key_name
 
   # Names
   cluster_name                  = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Cluster")
