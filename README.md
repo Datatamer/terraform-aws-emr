@@ -83,7 +83,6 @@ No provider.
 | core\_timeout\_duration\_minutes | Spot provisioning timeout for core instances, in minutes | `number` | `10` | no |
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
 | custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `null` | no |
-| security\_configuration | The name of an EMR Security Configuration | `string` | `null` | no |
 | emr\_ec2\_iam\_policy\_name | Name for the IAM policy attached to the EMR service role | `string` | `"tamr-emr-ec2-policy"` | no |
 | emr\_ec2\_instance\_profile\_name | Name of the new instance profile for EMR EC2 instances | `string` | `"tamr_emr_ec2_instance_profile"` | no |
 | emr\_ec2\_role\_name | Name of the new IAM role for EMR EC2 instances | `string` | `"tamr_emr_ec2_role"` | no |
@@ -112,6 +111,7 @@ No provider.
 | permissions\_boundary | ARN of the policy that will be used to set the permissions boundary for all IAM Roles created by this module | `string` | `null` | no |
 | release\_label | The release label for the Amazon EMR release. | `string` | `"emr-5.29.0"` | no |
 | require\_abac\_for\_subnet | If abac\_valid\_tags is specified, choose whether or not to require ABAC also for actions related to the subnet | `bool` | `true` | no |
+| security\_configuration | The name of an EMR Security Configuration | `string` | `null` | no |
 | tags | A map of tags to add to all resources. Replaces `additional_tags`. | `map(string)` | `{}` | no |
 | utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
 
