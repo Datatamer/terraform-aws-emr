@@ -46,9 +46,8 @@ module "emr-spark" {
     module.emr-rootdir-bucket.rw_policy_arn,
   "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
   bucket_path_to_logs = "logs/spark-test-cluster/"
-  #key_pair_name                  = module.emr_key_pair.key_pair_key_name
-  key_pair_name = var.key_pair
-
+  key_pair_name                  = module.emr_key_pair.key_pair_key_name
+  
   # Names
   cluster_name                  = format("%s-%s", var.name_prefix, "Spark-Test-EMR-Cluster")
   emr_service_role_name         = format("%s-%s", var.name_prefix, "spark-test-service-role")
