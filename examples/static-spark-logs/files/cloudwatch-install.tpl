@@ -76,12 +76,6 @@ echo " {
                          \"timestamp_format\": \"%H: %M: %S%y%b%-d\"
                      },
                      {
-                         \"file_path\": \"/mnt/var/log/hbase/**.log\",
-                         \"log_group_name\": \"${log_group}\",
-                         \"log_stream_name\": \"$id-hbase-logs\",
-                         \"timestamp_format\": \"%H: %M: %S%y%b%-d\"
-                     },
-                     {
                          \"file_path\": \"/mnt/var/log/spark/**.log\",
                          \"log_group_name\": \"${log_group}\",
                          \"log_stream_name\": \"$id-spark-logs\",
