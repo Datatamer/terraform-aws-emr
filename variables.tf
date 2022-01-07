@@ -84,7 +84,14 @@ variable "emr_ec2_instance_profile_name" {
 
 variable "s3_policy_arns" {
   type        = list(string)
+  description = "[DEPRECATED] List of policy ARNs to attach to EMR EC2 instance profile. Use 'additional_policy_arns' instead."
+  default     = []
+}
+
+variable "additional_policy_arns" {
+  type        = list(string)
   description = "List of policy ARNs to attach to EMR EC2 instance profile."
+  default     = []
 }
 
 variable "hbase_config_path" {

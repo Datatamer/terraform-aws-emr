@@ -1,6 +1,7 @@
 locals {
-  applications   = [for app in var.applications : lower(app)]
-  effective_tags = length(var.tags) > 0 ? var.tags : var.additional_tags
+  applications          = [for app in var.applications : lower(app)]
+  effective_tags        = length(var.tags) > 0 ? var.tags : var.additional_tags
+  effective_policy_arns = length(var.additional_policy_arns) > 0 ? var.additional_policy_arns : var.s3_policy_arns
 }
 
 module "emr-sgs" {
@@ -17,7 +18,7 @@ module "emr-iam" {
   vpc_id                            = var.vpc_id
   s3_bucket_name_for_logs           = var.bucket_name_for_logs
   s3_bucket_name_for_root_directory = var.bucket_name_for_root_directory
-  s3_policy_arns                    = var.s3_policy_arns
+  additional_policy_arns            = local.effective_policy_arns
   emr_ec2_iam_policy_name           = var.emr_ec2_iam_policy_name
   emr_service_iam_policy_name       = var.emr_service_iam_policy_name
   emr_service_role_name             = var.emr_service_role_name

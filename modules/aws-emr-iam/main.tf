@@ -718,11 +718,11 @@ resource "aws_iam_role" "emr_ec2_instance_profile" {
   tags                 = var.tags
 }
 
-// The IAM role policy attachment(s) that attach s3 policy ARNs to the EMR EC2 iam role
+// IAM role policy attachment(s) that attach additional policy ARNs to the EMR EC2 iam role
 resource "aws_iam_role_policy_attachment" "emr_ec2_s3_policies" {
-  count      = length(var.s3_policy_arns)
+  count      = length(var.additional_policy_arns)
   role       = aws_iam_role.emr_ec2_instance_profile.name
-  policy_arn = element(var.s3_policy_arns, count.index)
+  policy_arn = element(var.additional_policy_arns, count.index)
 }
 
 //The IAM instance profile created from the above role for EMR EC2 instances

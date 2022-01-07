@@ -42,7 +42,7 @@ module "emr-spark" {
   # External resource references
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
-  s3_policy_arns = [module.emr-logs-bucket.rw_policy_arn,
+  additional_policy_arns = [module.emr-logs-bucket.rw_policy_arn,
     module.emr-rootdir-bucket.rw_policy_arn,
   "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
   bucket_path_to_logs = "logs/spark-test-cluster/"
