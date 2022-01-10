@@ -2,6 +2,7 @@
 
 ## v7.4.0 - January 7th, 2022
 * Deprecates `s3_policy_arns` in favor of `additional_policy_arns`.
+
 ## v7.3.0 - January 6th, 2022
 * Adds example usage of `cloudwatch log collection` in examples/static-hbase-logs.
 * Adds example usage of `cloudwatch log collection` in examples/static-spark-logs.
