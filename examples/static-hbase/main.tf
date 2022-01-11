@@ -38,14 +38,14 @@ module "emr_key_pair" {
 resource "aws_s3_bucket_object" "sample_bootstrap_script" {
   bucket                 = module.emr-rootdir-bucket.bucket_name
   key                    = "bootstrap-actions/downloadarchive.sh"
-  source                 = "./downloadarchive.sh"
+  source                 = "${path.module}/downloadarchive.sh"
   server_side_encryption = "AES256"
 }
 
 resource "aws_s3_bucket_object" "sample_bootstrap_script_2" {
   bucket                 = module.emr-rootdir-bucket.bucket_name
   key                    = "bootstrap-actions/catS3file.sh"
-  source                 = "./catS3file.sh"
+  source                 = "${path.module}/catS3file.sh"
   server_side_encryption = "AES256"
 }
 
@@ -84,7 +84,7 @@ module "emr-hbase" {
   # External resource references
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
-  s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
+  additional_policy_arns         = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
   key_pair_name                  = module.emr_key_pair.key_pair_key_name
 
   # Names

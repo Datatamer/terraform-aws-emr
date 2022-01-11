@@ -16,7 +16,7 @@ variable "emr_ec2_instance_profile_name" {
   default     = "tamr_emr_ec2_instance_profile"
 }
 
-variable "s3_policy_arns" {
+variable "additional_policy_arns" {
   type        = list(string)
   description = "List of policy ARNs to attach to EMR EC2 instance profile."
 }
