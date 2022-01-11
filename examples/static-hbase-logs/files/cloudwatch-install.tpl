@@ -2,6 +2,7 @@
 # Grab local variables
 os=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
 arch="amd64"
+# Grab instance ID using AWS Metadata Api Server v2
 id=$(TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` \
 && curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/instance-id)
 
