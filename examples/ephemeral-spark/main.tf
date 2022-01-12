@@ -33,7 +33,7 @@ module "ephemeral-spark-iam" {
   source                            = "../../modules/aws-emr-iam"
   s3_bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
-  s3_policy_arns                    = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
+  additional_policy_arns            = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
   emr_ec2_iam_policy_name           = "ephem-spark-test-ec2-policy"
   emr_service_iam_policy_name       = "ephem-spark-test-service-policy"
   emr_service_role_name             = "ephem-spark-test-service-role"
