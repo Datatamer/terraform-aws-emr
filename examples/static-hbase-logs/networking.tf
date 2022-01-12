@@ -1,5 +1,5 @@
 module "sg-ports" {
-  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=7.3.0"
+  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.2.0"
   source       = "../../modules/aws-emr-ports"
   applications = local.this_application
 }
@@ -12,8 +12,8 @@ module "aws-emr-sg-master" {
   egress_cidr_blocks      = var.egress_cidr_blocks
   ingress_ports           = module.sg-ports.ingress_master_ports
   sg_name_prefix          = format("%s-%s", var.name_prefix, "-master")
-  egress_protocol         = "all"
-  ingress_protocol        = "tcp"
+  egress_protocol         = "-1"
+  ingress_protocol        = "6"
 }
 
 module "aws-emr-sg-core" {
@@ -24,8 +24,8 @@ module "aws-emr-sg-core" {
   egress_cidr_blocks      = var.egress_cidr_blocks
   ingress_ports           = module.sg-ports.ingress_core_ports
   sg_name_prefix          = format("%s-%s", var.name_prefix, "-core")
-  egress_protocol         = "all"
-  ingress_protocol        = "tcp"
+  egress_protocol         = "-1"
+  ingress_protocol        = "6"
 }
 
 module "aws-emr-sg-service-access" {
@@ -35,6 +35,6 @@ module "aws-emr-sg-service-access" {
   egress_cidr_blocks  = var.egress_cidr_blocks
   ingress_ports       = module.sg-ports.ingress_service_access_ports
   sg_name_prefix      = format("%s-%s", var.name_prefix, "-service-access")
-  egress_protocol     = "all"
-  ingress_protocol    = "tcp"
+  egress_protocol     = "-1"
+  ingress_protocol    = "6"
 }
