@@ -12,8 +12,8 @@ module "aws-emr-sg-master" {
   egress_cidr_blocks      = var.egress_cidr_blocks
   ingress_ports           = module.sg-ports.ingress_master_ports
   sg_name_prefix          = format("%s-%s", var.name_prefix, "-master")
-  egress_protocol         = "-1"
-  ingress_protocol        = "6"
+  egress_protocol         = "all"
+  ingress_protocol        = "tcp"
 }
 
 module "aws-emr-sg-core" {
@@ -24,8 +24,8 @@ module "aws-emr-sg-core" {
   egress_cidr_blocks      = var.egress_cidr_blocks
   ingress_ports           = module.sg-ports.ingress_core_ports
   sg_name_prefix          = format("%s-%s", var.name_prefix, "-core")
-  egress_protocol         = "-1"
-  ingress_protocol        = "6"
+  egress_protocol         = "all"
+  ingress_protocol        = "tcp"
 }
 
 module "aws-emr-sg-service-access" {
@@ -35,6 +35,6 @@ module "aws-emr-sg-service-access" {
   egress_cidr_blocks  = var.egress_cidr_blocks
   ingress_ports       = module.sg-ports.ingress_service_access_ports
   sg_name_prefix      = format("%s-%s", var.name_prefix, "-service-access")
-  egress_protocol     = "-1"
-  ingress_protocol    = "6"
+  egress_protocol     = "all"
+  ingress_protocol    = "tcp"
 }
