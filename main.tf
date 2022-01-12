@@ -18,7 +18,7 @@ module "emr-iam" {
   vpc_id                            = var.vpc_id
   s3_bucket_name_for_logs           = var.bucket_name_for_logs
   s3_bucket_name_for_root_directory = var.bucket_name_for_root_directory
-  additional_policy_arns            = var.additional_policy_arns
+  additional_policy_arns            = local.effective_policy_arns
   emr_ec2_iam_policy_name           = var.emr_ec2_iam_policy_name
   emr_service_iam_policy_name       = var.emr_service_iam_policy_name
   emr_service_role_name             = var.emr_service_role_name
