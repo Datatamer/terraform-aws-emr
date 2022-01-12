@@ -1,5 +1,5 @@
 module "sg-ports" {
-  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.2.0"
+  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=7.3.0"
   source       = "../../modules/aws-emr-ports"
   applications = local.this_application
 }
