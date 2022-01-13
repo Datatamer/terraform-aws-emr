@@ -1,4 +1,9 @@
 # TAMR AWS EMR module
+# v7.3.0 - January 11th, 2022
+
+* Adds example usage of cloudwatch log collection in examples/static-hbase-logs.
+* Adds example usage of cloudwatch log collection in examples/static-spark-logs.
+* Deprecates `s3_policy_arns` in favor of `additional_policy_arns`.
 
 ## v7.2.0 - November 16th, 2021
 * Adds new variable `security_configuration` which allows specifying an existing EMR Security Configuration by name
