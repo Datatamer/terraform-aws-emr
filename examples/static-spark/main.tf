@@ -37,7 +37,7 @@ module "emr_key_pair" {
 
 # EMR Static Spark cluster
 module "emr-spark" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=6.2.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=7.3.0"
   source = "../.."
 
   # Configurations
@@ -55,7 +55,7 @@ module "emr-spark" {
   # External resource references
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
-  s3_policy_arns                 = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
+  additional_policy_arns         = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
   bucket_path_to_logs            = "logs/spark-test-cluster/"
   key_pair_name                  = module.emr_key_pair.key_pair_key_name
 
@@ -87,7 +87,7 @@ module "emr-spark" {
 }
 
 module "sg-ports" {
-  # source  = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=6.2.0"
+  # source  = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=7.3.0"
   source       = "../../modules/aws-emr-ports"
   applications = local.this_application
 }
