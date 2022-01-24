@@ -9,7 +9,6 @@ import (
 	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -125,12 +124,10 @@ func TestCreateExamplesEmr(t *testing.T) {
 
 			test_structure.RunTestStage(t, "validate", func() {
 				terraformOptions := test_structure.LoadTerraformOptions(t, tempTestFolder)
-				// brings all outputs inside a map
-				outAll := terraform.OutputAll(t, terraformOptions)
-				require.NotNil(t, outAll)
-				for _, o := range outAll {
-					assert.NotNil(t, o)
-				}
+				validateModuleOutputs(
+					t,
+					terraformOptions,
+				)
 			})
 		})
 	}
