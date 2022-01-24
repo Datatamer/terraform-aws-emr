@@ -35,7 +35,7 @@ module "ephemeral-spark-iam" {
   vpc_id                            = var.vpc_id
   s3_bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
-  s3_policy_arns                    = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
+  additional_policy_arns            = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
   emr_ec2_iam_policy_name           = format("%s-%s", var.name_prefix, "ephem-spark-test-ec2-policy")
   emr_service_iam_policy_name       = format("%s-%s", var.name_prefix, "ephem-spark-test-svc-policy")
   emr_service_role_name             = format("%s-%s", var.name_prefix, "ephem-spark-test-svc-role")

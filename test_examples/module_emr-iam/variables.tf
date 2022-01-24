@@ -4,7 +4,7 @@ variable "s3_bucket_name_for_logs" {
 variable "s3_bucket_name_for_root_directory" {
   type = string
 }
-variable "s3_policy_arns" {
+variable "additional_policy_arns" {
   type = list(string)
 }
 variable "emr_ec2_iam_policy_name" {

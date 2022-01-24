@@ -3,7 +3,7 @@ module "emr-iam" {
 
   s3_bucket_name_for_logs           = var.s3_bucket_name_for_logs
   s3_bucket_name_for_root_directory = var.s3_bucket_name_for_root_directory
-  s3_policy_arns                    = var.s3_policy_arns
+  additional_policy_arns            = var.additional_policy_arns
   emr_ec2_iam_policy_name           = var.emr_ec2_iam_policy_name
   emr_service_iam_policy_name       = var.emr_service_iam_policy_name
   emr_service_role_name             = var.emr_service_role_name

@@ -23,7 +23,7 @@ func TestModuleEmrIAM(t *testing.T) {
 	testVars := map[string]interface{}{
 		"s3_bucket_name_for_logs":           fmt.Sprintf("%s-%s", uniqueId, "emr-terratest-logs"),
 		"s3_bucket_name_for_root_directory": fmt.Sprintf("%s-%s", uniqueId, "emr-terratest-root"),
-		"s3_policy_arns":                    []string{"arn:aws:iam::aws:policy/AmazonS3FullAccess"},
+		"additional_policy_arns":            []string{"arn:aws:iam::aws:policy/AmazonS3FullAccess"},
 		"emr_ec2_iam_policy_name":           fmt.Sprintf("%s-%s", uniqueId, "terratest-ec2-policy"),
 		"emr_service_iam_policy_name":       fmt.Sprintf("%s-%s", uniqueId, "terratest-service-policy"),
 		"emr_service_role_name":             fmt.Sprintf("%s-%s", uniqueId, "terratest-service-role"),
