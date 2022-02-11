@@ -7,8 +7,8 @@ variable "create_static_cluster" {
 variable "vpc_id" {
   type        = string
   description = "VPC ID of the network"
-}
 
+}
 variable "key_pair_name" {
   type        = string
   description = "Name of the Key Pair that will be attached to the EC2 instances"

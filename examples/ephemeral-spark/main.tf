@@ -22,7 +22,7 @@ module "ephemeral-spark-sgs" {
   # source              = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=6.2.0"
   source                    = "../../modules/aws-emr-sgs"
   vpc_id                    = var.vpc_id
-  emr_managed_sg_name       = "Ephem-Spark-Test-EMR-Spark-Internal"
+  emr_managed_sg_name       = format("%s-%s", var.name_prefix, "Ephem-Spark-Test-EMR-Spark-Internal")
   emr_service_access_sg_ids = []
 
   tags = var.tags
@@ -30,15 +30,17 @@ module "ephemeral-spark-sgs" {
 
 module "ephemeral-spark-iam" {
   # source                            = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=6.2.0"
-  source                            = "../../modules/aws-emr-iam"
+  source = "../../modules/aws-emr-iam"
+
+  vpc_id                            = var.vpc_id
   s3_bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
   s3_bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
   additional_policy_arns            = [module.emr-logs-bucket.rw_policy_arn, module.emr-rootdir-bucket.rw_policy_arn]
-  emr_ec2_iam_policy_name           = "ephem-spark-test-ec2-policy"
-  emr_service_iam_policy_name       = "ephem-spark-test-service-policy"
-  emr_service_role_name             = "ephem-spark-test-service-role"
-  emr_ec2_instance_profile_name     = "ephem-spark-test-instance-profile"
-  emr_ec2_role_name                 = "ephem-spark-test-ec2-role"
+  emr_ec2_iam_policy_name           = format("%s-%s", var.name_prefix, "ephem-spark-test-ec2-policy")
+  emr_service_iam_policy_name       = format("%s-%s", var.name_prefix, "ephem-spark-test-svc-policy")
+  emr_service_role_name             = format("%s-%s", var.name_prefix, "ephem-spark-test-svc-role")
+  emr_ec2_instance_profile_name     = format("%s-%s", var.name_prefix, "ephem-spark-test-instance-profile")
+  emr_ec2_role_name                 = format("%s-%s", var.name_prefix, "ephem-spark-test-ec2-role")
   tags                              = var.tags
   abac_valid_tags                   = var.abac_valid_tags
 }
@@ -48,6 +50,6 @@ module "ephemeral-spark-config" {
   source                         = "../../modules/aws-emr-config"
   create_static_cluster          = false
   cluster_name                   = "" # unused
-  emr_config_file_path           = "../emr-config-template.json"
+  emr_config_file_path           = "${path.module}/../emr-config-template.json"
   bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
 }

@@ -13,6 +13,11 @@ variable "bucket_name_for_logs" {
   description = "S3 bucket name for cluster logs."
 }
 
+variable "name_prefix" {
+  type        = string
+  description = "A string to prepend to names of the resources in the cluster"
+}
+
 variable "tags" {
   type        = map(string)
   description = "A map of tags to add to all resources created by this example."
@@ -23,9 +28,7 @@ variable "tags" {
 }
 
 variable "abac_valid_tags" {
-  type        = map(string)
+  type        = map(list(string))
   description = "A map of tags that will be inserted inside IAM Policies conditions for restricting EMR Service Role access"
-  default = {
-    "tamr.com/role" = "emr"
-  }
+  default     = {}
 }

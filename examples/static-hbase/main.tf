@@ -58,7 +58,7 @@ module "emr-hbase" {
   create_static_cluster         = true
   release_label                 = "emr-5.33.0" # hbase 1.4.13
   applications                  = local.this_application
-  emr_config_file_path          = "../emr-config-template.json"
+  emr_config_file_path          = "${path.module}/../emr-config-template.json"
   bucket_path_to_logs           = "logs/hbase-test-cluster/"
   json_configuration_bucket_key = "tamr/emr/emr.json"
   utility_script_bucket_key     = "tamr/emr/upload_config.sh"
@@ -102,7 +102,7 @@ module "emr-hbase" {
 
   # Scale
   master_instance_on_demand_count = 1
-  core_instance_on_demand_count   = 2
+  core_instance_on_demand_count   = 1
   master_instance_type            = "m6g.xlarge"
   core_instance_type              = "r6g.xlarge"
   master_ebs_size                 = 50
