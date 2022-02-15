@@ -4,7 +4,7 @@
 * Updates version file to prevent the major upgrade to the AWS provider version 4.0.
 * Updates examples to use the newest version of the s3-module.
 
-# v7.3.0 - January 11th, 2022
+## v7.3.0 - January 11th, 2022
 
 * Adds example usage of cloudwatch log collection in examples/static-hbase-logs.
 * Adds example usage of cloudwatch log collection in examples/static-spark-logs.
