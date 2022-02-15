@@ -4,7 +4,7 @@ locals {
 
 # Set up logs bucket with read/write permissions
 module "emr-logs-bucket" {
-  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.0"
+  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.1"
   bucket_name = var.bucket_name_for_logs
   read_write_actions = [
     "s3:HeadBucket",
@@ -16,7 +16,7 @@ module "emr-logs-bucket" {
 
 # Set up root directory bucket
 module "emr-rootdir-bucket" {
-  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.0"
+  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.1"
   bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
   tags             = var.tags
