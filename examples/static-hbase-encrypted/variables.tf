@@ -78,11 +78,11 @@ variable "enable_in_transit_encryption" {
 variable "enable_at_rest_encryption" {
   type        = bool
   description = "Specify true to enable at-rest encryption and false to disable it."
-  default     = false
+  default     = true
 }
 
 variable "enable_ebs_encryption" {
   type        = bool
   description = "Specify true to enable EBS encryption. EBS encryption encrypts the EBS root device volume and attached storage volumes."
-  default     = false
+  default     = true
 }

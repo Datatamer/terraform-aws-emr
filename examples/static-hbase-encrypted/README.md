@@ -36,8 +36,8 @@ No requirements.
 | vpce\_logs\_endpoint\_dnsname | Cloudwatch VPC Interface Endpoint DNS name which will be provided to the script to install and configure the Cloudwatch agent. | `string` | n/a | yes |
 | abac\_valid\_tags | Valid tags for maintaining resources when using ABAC IAM Policies with Tag Conditions. Make sure `tags` contain a key value specified here. | `map(list(string))` | `{}` | no |
 | egress\_cidr\_blocks | CIDR blocks to attach to security groups for egress | `list(string)` | <pre>[<br>  "0.0.0.0/0"<br>]</pre> | no |
-| enable\_at\_rest\_encryption | Specify true to enable at-rest encryption and false to disable it. | `bool` | `false` | no |
-| enable\_ebs\_encryption | Specify true to enable EBS encryption. EBS encryption encrypts the EBS root device volume and attached storage volumes. | `bool` | `false` | no |
+| enable\_at\_rest\_encryption | Specify true to enable at-rest encryption and false to disable it. | `bool` | `true` | no |
+| enable\_ebs\_encryption | Specify true to enable EBS encryption. EBS encryption encrypts the EBS root device volume and attached storage volumes. | `bool` | `true` | no |
 | enable\_in\_transit\_encryption | Specify true to enable in-transit encryption and false to disable it. | `bool` | `false` | no |
 | kms\_key\_arn | Customer Managed key ARN used to encrypt the EBS drives. | `string` | `""` | no |
 | tags | A map of tags to add to all resources created by this example. | `map(string)` | <pre>{<br>  "Author": "Tamr",<br>  "Environment": "Example"<br>}</pre> | no |
