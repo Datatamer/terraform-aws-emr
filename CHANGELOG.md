@@ -1,4 +1,8 @@
 # TAMR AWS EMR module
+
+# v7.3.1 - March 31st, 2022
+* Adds example usage of EBS encryption in examples/static-hbase-encrypted.
+
 # v7.3.0 - January 11th, 2022
 
 * Adds example usage of cloudwatch log collection in examples/static-hbase-logs.
