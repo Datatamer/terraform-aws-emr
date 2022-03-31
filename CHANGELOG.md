@@ -4,7 +4,6 @@
 * Adds example usage of EBS encryption in examples/static-hbase-encrypted.
 
 # v7.3.0 - January 11th, 2022
-
 * Adds example usage of cloudwatch log collection in examples/static-hbase-logs.
 * Adds example usage of cloudwatch log collection in examples/static-spark-logs.
 * Deprecates `s3_policy_arns` in favor of `additional_policy_arns`.
