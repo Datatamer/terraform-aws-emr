@@ -1,9 +1,13 @@
 # TAMR AWS EMR module
 
-# v7.3.1 - March 31st, 2022
+## v7.3.2 - March 31st, 2022
 * Adds example usage of EBS encryption in examples/static-hbase-encrypted.
 
-# v7.3.0 - January 11th, 2022
+## v7.3.1 - February 15th 2022
+* Updates version file to prevent the major upgrade to the AWS provider version 4.0.
+* Updates examples to use the newest version of the s3-module.
+
+## v7.3.0 - January 11th, 2022
 * Adds example usage of cloudwatch log collection in examples/static-hbase-logs.
 * Adds example usage of cloudwatch log collection in examples/static-spark-logs.
 * Deprecates `s3_policy_arns` in favor of `additional_policy_arns`.
