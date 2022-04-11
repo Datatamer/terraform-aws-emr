@@ -89,7 +89,7 @@ module "emr-cluster" {
   core_timeout_action                               = var.core_timeout_action
   core_timeout_duration_minutes                     = var.core_timeout_duration_minutes
   custom_ami_id                                     = var.custom_ami_id
-  
+
   # Security groups
   emr_managed_master_sg_id  = module.emr-sgs.emr_managed_sg_id
   emr_managed_master_sg_ids = var.emr_managed_master_sg_ids

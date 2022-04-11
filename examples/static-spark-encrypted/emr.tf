@@ -21,14 +21,14 @@ module "emr-spark" {
   source = "../.."
 
   # Configurations
-  create_static_cluster = true
-  release_label         = "emr-5.29.0" # spark 2.4.4
-  applications          = local.this_application
-  emr_config_file_path  = "../emr-config-template.json"
-  tags                  = var.tags
-  abac_valid_tags       = var.abac_valid_tags
+  create_static_cluster  = true
+  release_label          = "emr-5.29.0" # spark 2.4.4
+  applications           = local.this_application
+  emr_config_file_path   = "../emr-config-template.json"
+  tags                   = var.tags
+  abac_valid_tags        = var.abac_valid_tags
   security_configuration = aws_emr_security_configuration.secconfig.name
-  
+
   bootstrap_actions = [
     {
       name = "cw_agent_install",
