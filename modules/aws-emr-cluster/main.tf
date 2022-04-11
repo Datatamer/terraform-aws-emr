@@ -20,7 +20,7 @@ resource "aws_emr_cluster" "emr-cluster" {
   applications           = local.applications
   configurations_json    = data.aws_s3_bucket_object.json_config.body
   security_configuration = var.security_configuration
-
+  
   ec2_attributes {
     subnet_id                         = var.subnet_id
     emr_managed_master_security_group = var.emr_managed_master_sg_id
