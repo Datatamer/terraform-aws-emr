@@ -43,3 +43,6 @@ ops-makefile
 
 # Ignore tfvars
 **/*.tfvars
+
+# Ignore cloudwatch shell script
+**/tempfiles/cloudwatch-install.sh

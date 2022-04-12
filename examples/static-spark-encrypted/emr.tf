@@ -93,11 +93,7 @@ resource "aws_emr_security_configuration" "secconfig" {
 			                                      }
 	                                        	},
         "AtRestEncryptionConfiguration": {
-             "S3EncryptionConfiguration": {
-			        	"EncryptionMode": "SSE-KMS",
-				        "AwsKmsKey": "${local.effective_kms_key_arn}"
-			},
-            "LocalDiskEncryptionConfiguration": {
+                "LocalDiskEncryptionConfiguration": {
                 "EnableEbsEncryption": ${var.enable_ebs_encryption},
                 "EncryptionKeyProviderType": "AwsKms",
                 "AwsKmsKey": "${local.effective_kms_key_arn}"
