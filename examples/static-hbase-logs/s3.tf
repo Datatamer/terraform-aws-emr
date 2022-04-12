@@ -22,7 +22,7 @@ resource "aws_s3_bucket_object" "sample_bootstrap_script" {
   depends_on = [local_file.cloudwatch-install]
 
   bucket                 = module.emr-rootdir-bucket.bucket_name
-  key                    = "bootstrap-actions/cloudwatch-install.sh"
-  source                 = "${path.module}/tempfiles/cloudwatch-install.sh"
+  key                    = "bootstrap-actions/cloudwatch-install-hbase.sh"
+  source                 = "${path.module}/tempfiles/cloudwatch-install-hbase.sh"
   server_side_encryption = "AES256"
 }

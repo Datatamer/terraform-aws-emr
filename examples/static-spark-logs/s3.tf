@@ -19,10 +19,10 @@ module "emr-rootdir-bucket" {
 }
 
 resource "aws_s3_bucket_object" "sample_bootstrap_script" {
-  depends_on = [local_file.postfix_config]
+  depends_on = [local_file.cloudwatch-install]
 
   bucket                 = module.emr-rootdir-bucket.bucket_name
-  key                    = "bootstrap-actions/cloudwatch-install.sh"
-  source                 = "${path.module}/files/cloudwatch-install.sh"
+  key                    = "bootstrap-actions/cloudwatch-install-spark.sh"
+  source                 = "${path.module}/files/cloudwatch-install-spark.sh"
   server_side_encryption = "AES256"
 }
