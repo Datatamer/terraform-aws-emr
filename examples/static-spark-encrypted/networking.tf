@@ -35,38 +35,3 @@ module "aws-emr-sg-service-access" {
   egress_protocol         = "all"
   ingress_protocol        = "tcp"
 }
-
-# Creates KMS VPC Endpoint
-# module "endpoints" {
-#   source = "terraform-aws-modules/vpc/aws//modules/vpc-endpoints"
-
-#   vpc_id = var.vpc_id
-
-#   endpoints = {
-#     kms = {
-#       service_type        = "Interface"
-#       service             = "kms"
-#       tags                = { Name = format("%s-%s", var.name_prefix, "kmss-interface-endpoint") }
-#       private_dns_enabled = true
-#       security_group_ids  = [aws_security_group.kms_interface_endpoint.id]
-#       subnet_ids          = [var.compute_subnet_id]
-#     }
-#   }
-#   tags = var.tags
-# }
-
-# # Creates KMS VPC Endpoint Security Group
-# resource "aws_security_group" "kms_interface_endpoint" {
-#   name        = format("%s-%s", var.name_prefix, "kms-interface-endpoint-sg")
-#   description = "Security Group to be attached to the KMS Endpoint interface, which allows TCP traffic to the KMS service."
-#   vpc_id      = var.vpc_id
-
-#   ingress {
-#     description = "KMS API"
-#     from_port   = 443
-#     to_port     = 443
-#     protocol    = "TCP"
-#     cidr_blocks = [var.compute_subnet_cidr_block]
-#   }
-#   tags = var.tags
-# }

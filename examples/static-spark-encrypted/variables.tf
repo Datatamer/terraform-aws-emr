@@ -87,11 +87,6 @@ variable "enable_ebs_encryption" {
   default     = true
 }
 
-# variable "pem_file_name" {
-#   type        = string
-#   description = "Specify the S3 path where the PEM file is located."
-# }
-
 variable "arn_partition" {
   type        = string
   description = <<EOF
