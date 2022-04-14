@@ -3,8 +3,8 @@ This example depends on an existing VPC and subnet with configurations that meet
 # Cloudwatch log collection example for an EMR Static Spark cluster
 
 Pre-requisites:
-- In case in-transit encryption is enabled there is a need to ensure that the bucket hosting the PEM file allows
-S3 actions comming from external resources like for instance, EMR cluster.
+
+Enabling encryption for EMR requires PEM files located in S3, so the EMR cluster's instance profile will need to allow read operations on the bucket that hosts said files.
 
 What does the example do?
 
