@@ -1,11 +1,12 @@
 This example depends on an existing VPC and subnet with configurations that meets [EMR cluster requirements](https://aws.amazon.com/blogs/big-data/launching-and-running-an-amazon-emr-cluster-inside-a-vpc/).
 
-# Cloudwatch log collection example for an EMR Static Spark cluster
+# At rest and In-transit encryption example for an EMR Static Spark cluster
+
+This example will enable `at rest`encryption for EBS drives and `in-transit`encryption for the EMR cluster by default.
 
 ## Pre-requisites:
 
 Enabling encryption for EMR requires PEM files located in S3, so the EMR cluster's instance profile will need to allow read operations on the bucket that hosts said files.
-
 
 ## How to create a PEM file?
 
