@@ -7,6 +7,7 @@ data "aws_caller_identity" "current" {}
 
 //The minimal policy document for the KMS key
 data "aws_iam_policy_document" "kms_key" {
+  count   = var.kms_key_arn == "" ? 1 : 0
   version = "2012-10-17"
 
   statement {
@@ -70,7 +71,7 @@ data "aws_iam_policy_document" "kms_key" {
 resource "aws_kms_key" "kms_encryption_key" {
   count                   = var.kms_key_arn == "" ? 1 : 0
   description             = "KMS for EBS encryption"
-  policy                  = data.aws_iam_policy_document.kms_key.json
+  policy                  = data.aws_iam_policy_document.kms_key[0].json
   deletion_window_in_days = 7
 }
 

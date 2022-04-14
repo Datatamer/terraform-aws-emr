@@ -54,8 +54,8 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
-| cluster | n/a |
-| logs-bucket | n/a |
-| rootdir-bucket | n/a |
+| cluster | EMR Cluster output information. |
+| logs-bucket | S3 bucket where EMR cluster logs objects are stored. |
+| rootdir-bucket | S3 bucket where EMR cluster root objects are stored. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
