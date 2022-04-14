@@ -7,13 +7,14 @@ No requirements.
 
 ## Providers
 
-No providers are required to be specified.
+No provider.
 
 ## Inputs
 
-No inputs are required. The required inputs are being automatically obtained from the terraform variables.
+No input.
+
 ## Outputs
 
-No ouputs are required.
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
