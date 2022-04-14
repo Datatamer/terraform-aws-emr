@@ -1,4 +1,4 @@
-# Cloudwatch agent deploy template
+# Cloudwatch agent deploy template files
 
 This folder hosts the template files used to download, install and configure the Cloudwatch Agent for the EMR Cluster.
 
