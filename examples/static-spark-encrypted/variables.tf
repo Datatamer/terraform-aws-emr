@@ -103,5 +103,5 @@ variable "arn_partition" {
 variable "s3_pem_file_location" {
   type        = string
   description = "Specify the S3 path where the PEM zip file is located."
-  default     = "s3://aws-logs-327120324092-us-east-2/my-certs.zip"
+  default     = ""
 }

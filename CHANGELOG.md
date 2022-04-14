@@ -1,8 +1,5 @@
 # TAMR AWS EMR module
 
-## v7.3.2 - April 11st, 2022
-* Adds example usage of EBS encryption in examples/static-spark-encrypted.
-
 ## v7.3.1 - February 15th 2022
 * Updates version file to prevent the major upgrade to the AWS provider version 4.0.
 * Updates examples to use the newest version of the s3-module.
