@@ -6,7 +6,7 @@ module "emr-logs-bucket" {
     "s3:HeadBucket",
     "s3:PutObject",
   ]
-  read_write_paths = ["logs/hbase-test-cluster"] # r/w policy permitting specified rw actions on entire bucket
+  read_write_paths = [""] # r/w policy permitting specified rw actions on entire bucket
   tags             = var.tags
 }
 
@@ -22,7 +22,7 @@ resource "aws_s3_bucket_object" "sample_bootstrap_script" {
   depends_on = [local_file.cloudwatch-install]
 
   bucket                 = module.emr-rootdir-bucket.bucket_name
-  key                    = "bootstrap-actions/cloudwatch-install-hbase.sh"
-  source                 = "${path.module}/tempfiles/cloudwatch-install-hbase.sh"
+  key                    = "bootstrap-actions/cloudwatch-install-spark.sh"
+  source                 = "${path.module}/tempfiles/cloudwatch-install-spark.sh"
   server_side_encryption = "AES256"
 }

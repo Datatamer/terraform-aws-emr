@@ -17,7 +17,7 @@ module "emr_key_pair" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=7.3.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=7.3.2"
   source = "../.."
 
   # Configurations

@@ -27,12 +27,11 @@ module "aws-emr-sg-core" {
 }
 
 module "aws-emr-sg-service-access" {
-  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
-  vpc_id              = var.vpc_id
-  ingress_cidr_blocks = var.ingress_cidr_blocks
-  egress_cidr_blocks  = var.egress_cidr_blocks
-  ingress_ports       = module.sg-ports.ingress_service_access_ports
-  sg_name_prefix      = format("%s-%s", var.name_prefix, "-service-access")
-  egress_protocol     = "all"
-  ingress_protocol    = "tcp"
+  source                  = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  vpc_id                  = var.vpc_id
+  ingress_security_groups = module.aws-emr-sg-master.security_group_ids
+  ingress_ports           = module.sg-ports.ingress_service_access_ports
+  sg_name_prefix          = format("%s-%s", var.name_prefix, "-service-access")
+  egress_protocol         = "all"
+  ingress_protocol        = "tcp"
 }
