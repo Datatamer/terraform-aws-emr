@@ -12,19 +12,19 @@ fi
 # Set current time
 time=$(date +'%Y%m%d-%H%M%S')
 
-# List all tables
+# List all tables and create snapshots
 echo "list" | hbase shell -n | sed -e '1,/seconds/ d' |
   while IFS='' read -r tableName || [[ -n "$tableName" ]]; do
     if [[ $tableName =~ ^\s*$ ]]; then
       continue
     fi
     # Create snapshot of each table
-    echo "snapshot '${tableName}', '${time}_${tableName}'" | hbase shell -n &&
-      echo "Snapshot created: ${time}_${tableName}"
-  done
+    echo "snapshot '${tableName}', '${time}_${tableName#*:}'" | hbase shell -n &&
+      echo "Snapshot created: ${time}_${tableName#*:}"
+  don
 
 # Export snapshots to another cluster
-echo "list_snapshots" | hbase shell -n | sed '1,/seconds/ d' |
+echo "list_snapshots" | hbase shell -n | sed '1,/seconds/ d' | grep $time
   while IFS='' read -r snapshotName || [[ -n "$snapshotName" ]]; do
     hbase org.apache.hadoop.hbase.snapshot.ExportSnapshot -snapshot "${snapshotName}" -copy-to "$1" -mappers 16
     status_code=$?$()
