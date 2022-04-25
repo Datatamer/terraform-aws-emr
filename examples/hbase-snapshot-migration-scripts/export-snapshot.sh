@@ -21,7 +21,7 @@ echo "list" | hbase shell -n | sed -e '1,/seconds/ d' |
     # Create snapshot of each table
     echo "snapshot '${tableName}', '${time}_${tableName#*:}'" | hbase shell -n &&
       echo "Snapshot created: ${time}_${tableName#*:}"
-  don
+  done
 
 # Export snapshots to another cluster
 echo "list_snapshots" | hbase shell -n | sed '1,/seconds/ d' | grep $time
