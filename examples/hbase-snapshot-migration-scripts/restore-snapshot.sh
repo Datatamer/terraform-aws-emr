@@ -1,6 +1,6 @@
 #! /bin/bash
 # This script restores snapshots on the cluster
-# Run this script on HBase 2x cluster
+# Run this script on the master node of HBase 2x cluster
 # Usage: ./restore-snapshot.sh <namespace>
 
 # Parse the argument
