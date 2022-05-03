@@ -1,8 +1,8 @@
 #! /bin/bash
 # This script creates and exports hbase snapshots to another cluster
-# Run this script on the master node of HBase 1x cluster
+# Run this script on the master node of source HBase cluster
 # Usage: ./export-snapshot.sh <path/to/root/dir>
-#         <path/to/root/dir> should be what hbase.rootdir is set to
+#         <path/to/root/dir> should be what hbase.rootdir is set to for the target HBase cluster
 
 # Parse the argument
 if [ -z "$1" ] || [ "$1" == '-h' ]; then
