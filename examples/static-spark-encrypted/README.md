@@ -68,7 +68,7 @@ No requirements.
 | enable\_ebs\_encryption | Specify true to enable EBS encryption. EBS encryption encrypts the EBS root device volume and attached storage volumes. | `bool` | `true` | no |
 | enable\_in\_transit\_encryption | Specify true to enable in-transit encryption and false to disable it. | `bool` | `true` | no |
 | kms\_key\_arn | Customer Managed key ARN used to encrypt the EBS drives. | `string` | `""` | no |
-| s3\_pem\_file\_location | Specify the S3 path where the PEM zip file is located. | `string` | `"s3://aws-logs-327120324092-us-east-2/my-certs.zip"` | no |
+| s3\_pem\_file\_location | Specify the S3 path where the PEM zip file is located. | `string` | `""` | no |
 | tags | A map of tags to add to all resources created by this example. | `map(string)` | <pre>{<br>  "Author": "Tamr",<br>  "Environment": "Example"<br>}</pre> | no |
 
 ## Outputs
