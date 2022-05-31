@@ -121,7 +121,7 @@ func TestCreateExamplesEmr(t *testing.T) {
 						"AWS_REGION": awsRegion,
 					},
 					BackendConfig: backendConfig,
-					MaxRetries:    5,
+					MaxRetries:    2,
 				})
 
 				test_structure.SaveTerraformOptions(t, tempTestFolder, terraformOptions)
