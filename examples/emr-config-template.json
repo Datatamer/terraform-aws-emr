@@ -16,8 +16,8 @@
       "hbase.hregion.memstore.block.multiplier":"8",
       "hbase.hregion.memstore.flush.size":"536870912",
       "hbase.rpc.timeout":"600000",
-      "hbase.zookeeper.property.tickTime":"3000",
-      "zookeeper.session.timeout":"60000"
+      "hbase.zookeeper.property.tickTime":"12000",
+      "zookeeper.session.timeout":"240000"
     }
   },
   {

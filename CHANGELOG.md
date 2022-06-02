@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v7.3.2 - May 26th 2022
+* Updates HBase configuration in `emr-config-template.json` with new recommended values
+
 ## v7.3.1 - February 15th 2022
 * Updates version file to prevent the major upgrade to the AWS provider version 4.0.
 * Updates examples to use the newest version of the s3-module.
