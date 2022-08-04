@@ -1,5 +1,9 @@
 # TAMR AWS EMR module
 
+## v7.3.3 - August 4th 2022
+* Adjusts AWS provider constraints to allow newer versions
+* Updates example HBase configuration in `emr-config-template.json` with new root directory path
+
 ## v7.3.2 - May 26th 2022
 * Updates HBase configuration in `emr-config-template.json` with new recommended values
 
