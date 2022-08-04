@@ -11,7 +11,7 @@
   {
     "Classification": "hbase-site",
     "Properties": {
-      "hbase.rootdir": "s3://${emr_hbase_s3_bucket_root_dir}/",
+      "hbase.rootdir": "s3://${emr_hbase_s3_bucket_root_dir}/hbase-data/",
       "hbase.client.scanner.timeout.period":"600000",
       "hbase.hstore.blockingStoreFiles":"200",
       "hbase.hregion.memstore.block.multiplier":"8",
