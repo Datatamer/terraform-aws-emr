@@ -118,9 +118,9 @@ output "subnet_id" {
   description = "ID of the subnet where EMR cluster was created"
 }
 
-output "json_config_s3_key" {
-  value       = module.emr-cluster-config.json_config_s3_key
-  description = "The name of the json configuration object in the bucket."
+output "emr_configuration_json" {
+  value       = module.emr-cluster-config.emr_configuration_json
+  description = "EMR cluster configuration in JSON format"
 }
 
 output "upload_config_script_s3_key" {

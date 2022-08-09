@@ -39,7 +39,6 @@ module "emr-cluster-config" {
   bucket_name_for_root_directory = var.bucket_name_for_root_directory
   hbase_config_path              = var.hbase_config_path
   hadoop_config_path             = var.hadoop_config_path
-  json_configuration_bucket_key  = var.json_configuration_bucket_key
   utility_script_bucket_key      = var.utility_script_bucket_key
 }
 
@@ -52,7 +51,7 @@ module "emr-cluster" {
   create_static_cluster          = var.create_static_cluster
   cluster_name                   = var.cluster_name
   release_label                  = var.release_label
-  json_configuration_bucket_key  = module.emr-cluster-config.json_config_s3_key
+  emr_configuration_json         = module.emr-cluster-config.emr_configuration_json
   utility_script_bucket_key      = module.emr-cluster-config.upload_config_script_s3_key
   applications                   = local.applications
   bucket_name_for_root_directory = var.bucket_name_for_root_directory
