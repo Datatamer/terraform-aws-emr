@@ -8,8 +8,6 @@ This example directly invokes this submodule.
 
 # Resources Created
 This module creates:
-* A bucket object with the cluster's JSON configuration in the root directory S3 bucket
-
 If you are creating a static cluster, this module also creates:
 * A bucket object with a bash script to upload HBase/Hadoop configuration to S3
 * An EMR security configuration
@@ -38,16 +36,14 @@ If you are creating a static cluster, this module also creates:
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
 | hadoop\_config\_path | Path in root directory bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
 | hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
-| json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
 | utility\_script\_bucket\_key | Key (i.e. path) to upload the utility script to | `string` | `"util/upload_hbase_config.sh"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| emr\_config\_file\_path | Path to the EMR JSON configuration file that was uploaded to S3. |
+| emr\_configuration\_json | EMR cluster configuration in JSON format |
 | hbase\_config\_path | Path in the root directory bucket that HBase config was uploaded to |
-| json\_config\_s3\_key | The name of the json configuration object in the bucket. |
 | upload\_config\_script\_s3\_key | The name of the upload config script object in the bucket. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

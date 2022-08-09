@@ -58,6 +58,7 @@ This module creates:
 | applications | List of applications to run on EMR | `list(string)` | n/a | yes |
 | bucket\_name\_for\_logs | S3 bucket name for cluster logs. | `string` | n/a | yes |
 | bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory | `string` | n/a | yes |
+| emr\_configuration\_json | EMR cluster configuration in JSON format | `string` | n/a | yes |
 | emr\_ec2\_instance\_profile\_arn | ARN of the EMR EC2 instance profile | `string` | n/a | yes |
 | emr\_managed\_core\_sg\_id | Security group id for internal communication | `string` | n/a | yes |
 | emr\_managed\_core\_sg\_ids | List of security group ids of the EMR Managed Core Security Group | `list(string)` | n/a | yes |
@@ -84,7 +85,6 @@ This module creates:
 | core\_timeout\_duration\_minutes | Spot provisioning timeout for core instances, in minutes | `number` | `10` | no |
 | create\_static\_cluster | True if the module should create a static cluster. False if the module should create supporting infrastructure but not the cluster itself. | `bool` | `true` | no |
 | custom\_ami\_id | The ID of a custom Amazon EBS-backed Linux AMI | `string` | `null` | no |
-| json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
 | master\_bid\_price | Bid price for each EC2 instance in the master instance fleet, expressed in USD. By setting this attribute,<br>  the instance fleet is being declared as a Spot Instance, and will implicitly create a Spot request.<br>  Leave this blank to use On-Demand Instances | `string` | `""` | no |
 | master\_bid\_price\_as\_percentage\_of\_on\_demand\_price | Bid price as percentage of on-demand price for master instances | `number` | `100` | no |
 | master\_block\_duration\_minutes | Duration for master spot instances, in minutes | `number` | `0` | no |
