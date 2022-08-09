@@ -29,7 +29,7 @@ This module creates:
     * Tamr EMR service IAM role
     * Tamr EMR EC2 IAM role
 * 1 IAM instance profile for EMR EC2 instances
-* 1 bucket object with the cluster's JSON configuration in the root directory S3 bucket
+* 1 bucket object with the cluster's startup script
 
 If you are creating a static HBase or Spark cluster, this module also creates:
 * 1 EMR Cluster and associated EMR Security Configuration
@@ -95,7 +95,6 @@ No provider.
 | enable\_http\_port | EMR services like Ganglia run on the http port | `bool` | `false` | no |
 | hadoop\_config\_path | Path in root directory bucket to upload Hadoop config to | `string` | `"config/hadoop/conf/"` | no |
 | hbase\_config\_path | Path in root directory bucket to upload HBase config to | `string` | `"config/hbase/conf.dist/"` | no |
-| json\_configuration\_bucket\_key | Key (i.e. path) of JSON configuration bucket object in the root directory bucket | `string` | `"config.json"` | no |
 | master\_bid\_price | Bid price for each EC2 instance in the master instance group, expressed in USD. By setting this attribute,<br>  the instance group is being declared as a Spot Instance, and will implicitly create a Spot request.<br>  Leave this blank to use On-Demand Instances | `string` | `""` | no |
 | master\_bid\_price\_as\_percentage\_of\_on\_demand\_price | Bid price as percentage of on-demand price for master instances | `number` | `100` | no |
 | master\_block\_duration\_minutes | Duration for master spot instances, in minutes | `number` | `0` | no |
@@ -125,6 +124,7 @@ No provider.
 | core\_ebs\_volumes\_count | Number of volumes to attach to the core nodes |
 | core\_fleet\_instance\_count | Number of on-demand and spot core instances configured |
 | core\_instance\_type | The EC2 instance type of the core nodes |
+| emr\_configuration\_json | EMR cluster configuration in JSON format |
 | emr\_ec2\_instance\_profile\_arn | ARN of the EMR EC2 instance profile created |
 | emr\_ec2\_instance\_profile\_name | Name of the EMR EC2 instance profile created |
 | emr\_ec2\_role\_arn | ARN of the EMR EC2 role created for EC2 instances |
@@ -134,8 +134,7 @@ No provider.
 | emr\_service\_access\_sg\_ids | List of security group ids of the EMR Service Access Security Group |
 | emr\_service\_role\_arn | ARN of the EMR service role created |
 | emr\_service\_role\_name | Name of the EMR service role created |
-| hbase\_config\_path | Path in the root directory bucket that HBase config was uploaded to. |
-| json\_config\_s3\_key | The name of the json configuration object in the bucket. |
+| hbase\_config\_path | Path in the root directory bucket that HBase config was uploaded to |
 | log\_uri | The path to the S3 location where logs for this cluster are stored. |
 | master\_ebs\_size | The master EBS volume size, in gibibytes (GiB). |
 | master\_ebs\_type | Type of volumes to attach to the master nodes. Valid options are gp2, io1, standard and st1 |

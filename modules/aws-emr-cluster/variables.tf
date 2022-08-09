@@ -10,10 +10,9 @@ variable "create_static_cluster" {
   default     = true
 }
 
-variable "json_configuration_bucket_key" {
+variable "emr_configuration_json" {
   type        = string
-  description = "Key (i.e. path) of JSON configuration bucket object in the root directory bucket"
-  default     = "config.json"
+  description = "EMR cluster configuration in JSON format"
 }
 
 variable "bucket_name_for_root_directory" {

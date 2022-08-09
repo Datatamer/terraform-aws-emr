@@ -17,7 +17,7 @@ module "emr_key_pair" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=7.3.2"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=8.0.0"
   source = "../.."
 
   # Configurations
@@ -26,7 +26,6 @@ module "emr-hbase" {
   applications                  = local.this_application
   emr_config_file_path          = "../emr-config-template.json"
   bucket_path_to_logs           = "logs/hbase-test-cluster/"
-  json_configuration_bucket_key = "tamr/emr/emr.json"
   utility_script_bucket_key     = "tamr/emr/upload_config.sh"
   tags                          = var.tags
   abac_valid_tags               = var.abac_valid_tags

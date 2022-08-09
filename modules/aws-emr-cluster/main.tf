@@ -8,17 +8,12 @@ locals {
   use_instance_groups = (var.master_instance_on_demand_count > 1 && var.core_instance_spot_count == 0) ? true : false
 }
 
-data "aws_s3_bucket_object" "json_config" {
-  bucket = var.bucket_name_for_root_directory
-  key    = var.json_configuration_bucket_key
-}
-
 resource "aws_emr_cluster" "emr-cluster" {
   count                  = var.create_static_cluster ? 1 : 0
   name                   = var.cluster_name
   release_label          = var.release_label
   applications           = local.applications
-  configurations_json    = data.aws_s3_bucket_object.json_config.body
+  configurations_json    = var.emr_configuration_json
   security_configuration = var.security_configuration
 
   ec2_attributes {
