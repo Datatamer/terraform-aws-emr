@@ -1,5 +1,17 @@
 # TAMR AWS EMR module
 
+## v8.0.0 - August 9th 2022
+* Following input variables removed from the main, `aws-emr-config`, and `aws-emr-clusters` modules
+  * `json_configuration_bucket_key`
+* Following output variables removed
+  * main module
+    * `json_config_s3_key`
+  * `aws-emr-config` module
+    * `emr_config_file_path`
+    * `json_config_s3_key`
+* Following output variables added to the main module
+  * `emr_configuration_json`
+
 ## v7.3.3 - August 4th 2022
 * Adjusts AWS provider constraints to allow newer versions
 * Updates example HBase configuration in `emr-config-template.json` with new root directory path
