@@ -270,24 +270,6 @@ variable "emr_managed_sg_name" {
   default     = "TAMR-EMR-Internal"
 }
 
-variable "emr_managed_master_sg_name" {
-  type        = string
-  description = "Name for the EMR managed master security group"
-  default     = "TAMR-EMR-Master"
-}
-
-variable "emr_managed_core_sg_name" {
-  type        = string
-  description = "Name for the EMR managed core security group"
-  default     = "TAMR-EMR-Core"
-}
-
-variable "emr_service_access_sg_name" {
-  type        = string
-  description = "Name for the EMR Service Access security group"
-  default     = "TAMR-EMR-Service-Access"
-}
-
 variable "emr_managed_master_sg_ids" {
   type        = list(string)
   description = "List of EMR managed master security group ids"
@@ -309,21 +291,9 @@ variable "emr_service_iam_policy_name" {
   default     = "tamr-emr-service-policy"
 }
 
-variable "emr_ec2_iam_policy_name" {
-  type        = string
-  description = "Name for the IAM policy attached to the EMR service role"
-  default     = "tamr-emr-ec2-policy"
-}
-
 variable "applications" {
   type        = list(string)
   description = "List of applications to run on EMR"
-}
-
-variable "enable_http_port" {
-  type        = bool
-  description = "EMR services like Ganglia run on the http port"
-  default     = false
 }
 
 variable "utility_script_bucket_key" {

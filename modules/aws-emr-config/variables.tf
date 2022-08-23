@@ -26,12 +26,6 @@ variable "hadoop_config_path" {
   default     = "config/hadoop/conf/"
 }
 
-variable "cluster_name" {
-  type        = string
-  description = "Name for the EMR cluster to be created"
-  default     = "TAMR-EMR-Cluster"
-}
-
 variable "utility_script_bucket_key" {
   type        = string
   description = "Key (i.e. path) to upload the utility script to"

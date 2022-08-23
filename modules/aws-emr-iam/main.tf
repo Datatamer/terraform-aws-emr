@@ -3,12 +3,10 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 locals {
-  arn_prefix_ec2_region        = format("arn:%s:ec2:%s", var.arn_partition, data.aws_region.current.name)
-  arn_prefix_ec2_account       = format("%s:%s", local.arn_prefix_ec2_region, data.aws_caller_identity.current.account_id)
-  arn_prefix_s3                = format("arn:%s:s3::", var.arn_partition)
-  arn_prefix_cloudwatch        = format("arn:%s:cloudwatch:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
-  arn_prefix_resource_groups   = format("arn:%s:resource-groups:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
-  arn_prefix_elastic_inference = format("arn:%s:elastic-inference:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
+  arn_prefix_ec2_region  = format("arn:%s:ec2:%s", var.arn_partition, data.aws_region.current.name)
+  arn_prefix_ec2_account = format("%s:%s", local.arn_prefix_ec2_region, data.aws_caller_identity.current.account_id)
+  arn_prefix_s3          = format("arn:%s:s3::", var.arn_partition)
+  arn_prefix_cloudwatch  = format("arn:%s:cloudwatch:%s:%s", var.arn_partition, data.aws_region.current.name, data.aws_caller_identity.current.account_id)
 }
 
 ####################

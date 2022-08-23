@@ -1,17 +1,6 @@
 # Tamr AWS EMR IAM Terraform Module
-This terraform module creates the required IAM roles and instance profile to run an EMR cluster.
+This Terraform module creates the required IAM roles and instance profile to run an EMR cluster.
 
-# Examples
-## Basic
-Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
-```
-module "emr_iam" {
-  source                                  = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-iam?ref=x.y.z"
-  s3_bucket_name_for_logs                 = "example-emr-logs"
-  s3_bucket_name_for_root_directory       = "example-emr-rootdir"
-  s3_policy_arns                          = ["arn:aws:iam::123456789101:policy/example-rootdir-read-write", "arn:aws:iam::123456789101:policy/example-logs-read-write"]
-}
-```
 ## Minimal
 This example directly invokes this submodule.
 - [Ephemeral Spark Example](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/ephemeral-spark)

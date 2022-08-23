@@ -1,41 +1,9 @@
 # Terraform AWS EMR Cluster Terraform Module
-This terraform module creates a EMR cluster.
-
-# Examples
-## Basic
-Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
-```
-module "emr-cluster" {
-  source                         = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-cluster?ref=x.y.z"
-
-  # Cluster configuration
-  cluster_name                   = "example-cluster"
-  applications                   = ["Spark", "HBase"]
-  bucket_name_for_root_directory = module.emr-rootdir-bucket.bucket_name
-  bucket_name_for_logs           = module.emr-logs-bucket.bucket_name
-
-  # Cluster instances
-  subnet_id                   = "example-subnet"
-  key_pair_name               = module.emr_key_pair.key_pair_key_name
-  master_instance_group_name  = "Example-MasterInstanceGroup"
-  core_instance_group_name    = "Example-CoreInstanceGroup"
-
-  # Security groups
-  emr_managed_master_sg_id    = module.emr-sgs.emr_managed_master_sg_id
-  emr_additional_master_sg_id = module.emr-sgs.emr_additional_master_sg_id
-  emr_managed_core_sg_id      = module.emr-sgs.emr_managed_core_sg_id
-  emr_additional_core_sg_id   = module.emr-sgs.emr_additional_core_sg_id
-  emr_service_access_sg_id    = module.emr-sgs.emr_service_access_sg_id
-
-  # IAM
-  emr_service_role_arn         = module.emr-iam.emr_service_role_arn
-  emr_ec2_instance_profile_arn = module.emr-iam.emr_ec2_instance_profile_arn
-}
-```
+This Terraform module creates a EMR cluster.
 
 # Resources Created
 This module creates:
-* a EMR cluster
+* EMR cluster
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
