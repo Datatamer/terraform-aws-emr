@@ -25,7 +25,6 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| application\_subnet\_id | ID of the subnet where the Tamr VM and the Cloudwatch VPC Endpoint will be created. If `abac_valid_tags` key values are set, this subnet is required to have a valid key value tag as well. | `string` | n/a | yes |
 | bucket\_name\_for\_logs | S3 bucket name for cluster logs. | `string` | n/a | yes |
 | bucket\_name\_for\_root\_directory | S3 bucket name for storing root directory. | `string` | n/a | yes |
 | compute\_subnet\_id | ID of the subnet where the EMR cluster will be created. If `abac_valid_tags` key values are set, this subnet is required to have a valid key value tag as well. | `string` | n/a | yes |
