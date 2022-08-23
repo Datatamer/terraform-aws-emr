@@ -4,7 +4,7 @@ locals {
 
 # Set up logs bucket with read/write permissions
 module "emr-logs-bucket" {
-  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.1"
+  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.3.2"
   bucket_name = var.bucket_name_for_logs
   read_write_actions = [
     "s3:HeadBucket",
@@ -16,7 +16,7 @@ module "emr-logs-bucket" {
 
 # Set up root directory bucket
 module "emr-rootdir-bucket" {
-  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.1"
+  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.3.2"
   bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
   tags             = var.tags
@@ -37,7 +37,7 @@ module "emr_key_pair" {
 
 # EMR Static Spark cluster
 module "emr-spark" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=8.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=9.0.0"
   source = "../.."
 
   # Configurations
@@ -65,12 +65,8 @@ module "emr-spark" {
   emr_ec2_role_name             = format("%s-%s", var.name_prefix, "spark-test-ec2-role")
   emr_ec2_instance_profile_name = format("%s-%s", var.name_prefix, "spark-test-instance-profile")
   emr_service_iam_policy_name   = format("%s-%s", var.name_prefix, "spark-test-service-policy")
-  emr_ec2_iam_policy_name       = format("%s-%s", var.name_prefix, "spark-test-ec2-policy")
   master_instance_fleet_name    = format("%s-%s", var.name_prefix, "Spark-Test-MasterInstanceFleet")
   core_instance_fleet_name      = format("%s-%s", var.name_prefix, "Spark-Test-CoreInstanceFleet")
-  emr_managed_master_sg_name    = format("%s-%s", var.name_prefix, "Spark-Test-EMR-Spark-Master")
-  emr_managed_core_sg_name      = format("%s-%s", var.name_prefix, "Spark-Test-EMR-Spark-Core")
-  emr_service_access_sg_name    = format("%s-%s", var.name_prefix, "Spark-Test-EMR-Spark-Service-Access")
 
   # Scale
   master_instance_on_demand_count = 1
@@ -87,13 +83,13 @@ module "emr-spark" {
 }
 
 module "sg-ports" {
-  # source  = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=8.0.0"
+  # source  = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=9.0.0"
   source       = "../../modules/aws-emr-ports"
   applications = local.this_application
 }
 
 module "aws-emr-sg-master" {
-  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.1"
   vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
   egress_cidr_blocks  = var.egress_cidr_blocks
@@ -104,7 +100,7 @@ module "aws-emr-sg-master" {
 }
 
 module "aws-emr-sg-core" {
-  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.1"
   vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
   egress_cidr_blocks  = var.egress_cidr_blocks
@@ -115,7 +111,7 @@ module "aws-emr-sg-core" {
 }
 
 module "aws-emr-sg-service-access" {
-  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.1"
   vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
   egress_cidr_blocks  = var.egress_cidr_blocks

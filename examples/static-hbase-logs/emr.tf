@@ -17,18 +17,18 @@ module "emr_key_pair" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=8.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=9.0.0"
   source = "../.."
 
   # Configurations
-  create_static_cluster         = true
-  release_label                 = "emr-5.33.0" # hbase 1.4.13
-  applications                  = local.this_application
-  emr_config_file_path          = "../emr-config-template.json"
-  bucket_path_to_logs           = "logs/hbase-test-cluster/"
-  utility_script_bucket_key     = "tamr/emr/upload_config.sh"
-  tags                          = var.tags
-  abac_valid_tags               = var.abac_valid_tags
+  create_static_cluster     = true
+  release_label             = "emr-5.33.0" # hbase 1.4.13
+  applications              = local.this_application
+  emr_config_file_path      = "../emr-config-template.json"
+  bucket_path_to_logs       = "logs/hbase-test-cluster/"
+  utility_script_bucket_key = "tamr/emr/upload_config.sh"
+  tags                      = var.tags
+  abac_valid_tags           = var.abac_valid_tags
   bootstrap_actions = [
     {
       name = "cw_agent_install",
@@ -55,12 +55,8 @@ module "emr-hbase" {
   emr_ec2_role_name             = format("%s-%s", var.name_prefix, "hbase-test-ec2-role")
   emr_ec2_instance_profile_name = format("%s-%s", var.name_prefix, "hbase-test-instance-profile")
   emr_service_iam_policy_name   = format("%s-%s", var.name_prefix, "hbase-test-service-policy")
-  emr_ec2_iam_policy_name       = format("%s-%s", var.name_prefix, "hbase-test-ec2-policy")
   master_instance_fleet_name    = format("%s-%s", var.name_prefix, "HBase-Test-MasterInstanceFleet")
   core_instance_fleet_name      = format("%s-%s", var.name_prefix, "Hbase-Test-CoreInstanceFleet")
-  emr_managed_master_sg_name    = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Hbase-Master")
-  emr_managed_core_sg_name      = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Hbase-Core")
-  emr_service_access_sg_name    = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Hbase-Service-Access")
 
   # Scale
   master_instance_on_demand_count = 1

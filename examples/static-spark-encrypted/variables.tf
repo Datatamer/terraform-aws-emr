@@ -44,11 +44,6 @@ variable "abac_valid_tags" {
   default     = {}
 }
 
-variable "application_subnet_id" {
-  type        = string
-  description = "ID of the subnet where the Tamr VM and the Cloudwatch VPC Endpoint will be created. If `abac_valid_tags` key values are set, this subnet is required to have a valid key value tag as well."
-}
-
 variable "compute_subnet_id" {
   type        = string
   description = "ID of the subnet where the EMR cluster will be created. If `abac_valid_tags` key values are set, this subnet is required to have a valid key value tag as well."
@@ -59,10 +54,6 @@ variable "vpce_logs_endpoint_dnsname" {
   description = "DNS name of the Cloudwatch VPC Interface Endpoint which will be provided to the script to install and configure the Cloudwatch agent."
 }
 
-variable "compute_subnet_cidr_block" {
-  type        = string
-  description = "The EMR Cluster subnet CIDR range"
-}
 variable "kms_key_arn" {
   type        = string
   description = "Customer Managed key ARN used to encrypt the EBS drives."
@@ -85,19 +76,6 @@ variable "enable_ebs_encryption" {
   type        = bool
   description = "Specify true to enable EBS encryption. EBS encryption encrypts the EBS root device volume and attached storage volumes."
   default     = true
-}
-
-variable "arn_partition" {
-  type        = string
-  description = <<EOF
-  The partition in which the resource is located. A partition is a group of AWS Regions.
-  Each AWS account is scoped to one partition.
-  The following are the supported partitions:
-    aws -AWS Regions
-    aws-cn - China Regions
-    aws-us-gov - AWS GovCloud (US) Regions
-  EOF
-  default     = "aws"
 }
 
 variable "s3_pem_file_location" {
