@@ -1,17 +1,6 @@
 # Tamr AWS EMR Security Groups Terraform Module
-This terraform module creates all the security groups and rules required for an AWS EMR cluster.
+This Terraform module creates all the security groups and rules required for an AWS EMR cluster.
 
-# Examples
-## Basic
-Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
-```
-module "emr_security_groups" {
-  source = "git::git@github.com:Datatamer/terraform-aws-emr.git//modules/aws-emr-sgs?ref=x.y.z"
-
-  vpc_id                    = "vpc-examplevpcid"
-  emr_service_access_sg_ids = ["sg-1234567890"]
-}
-```
 ## Minimal
 This example directly invokes this submodule.
 - [Ephemeral Spark Example](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/ephemeral-spark)

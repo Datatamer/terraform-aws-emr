@@ -15,26 +15,23 @@ module "emr-sgs" {
 module "emr-iam" {
   source = "./modules/aws-emr-iam"
 
-  vpc_id                            = var.vpc_id
-  s3_bucket_name_for_logs           = var.bucket_name_for_logs
-  s3_bucket_name_for_root_directory = var.bucket_name_for_root_directory
-  additional_policy_arns            = local.effective_policy_arns
-  emr_ec2_iam_policy_name           = var.emr_ec2_iam_policy_name
-  emr_service_iam_policy_name       = var.emr_service_iam_policy_name
-  emr_service_role_name             = var.emr_service_role_name
-  emr_ec2_instance_profile_name     = var.emr_ec2_instance_profile_name
-  emr_ec2_role_name                 = var.emr_ec2_role_name
-  arn_partition                     = var.arn_partition
-  permissions_boundary              = var.permissions_boundary
-  tags                              = local.effective_tags
-  abac_valid_tags                   = var.abac_valid_tags
-  require_abac_for_subnet           = var.require_abac_for_subnet
+  vpc_id                        = var.vpc_id
+  s3_bucket_name_for_logs       = var.bucket_name_for_logs
+  additional_policy_arns        = local.effective_policy_arns
+  emr_service_iam_policy_name   = var.emr_service_iam_policy_name
+  emr_service_role_name         = var.emr_service_role_name
+  emr_ec2_instance_profile_name = var.emr_ec2_instance_profile_name
+  emr_ec2_role_name             = var.emr_ec2_role_name
+  arn_partition                 = var.arn_partition
+  permissions_boundary          = var.permissions_boundary
+  tags                          = local.effective_tags
+  abac_valid_tags               = var.abac_valid_tags
+  require_abac_for_subnet       = var.require_abac_for_subnet
 }
 
 module "emr-cluster-config" {
   source                         = "./modules/aws-emr-config"
   create_static_cluster          = var.create_static_cluster
-  cluster_name                   = var.cluster_name
   emr_config_file_path           = var.emr_config_file_path
   bucket_name_for_root_directory = var.bucket_name_for_root_directory
   hbase_config_path              = var.hbase_config_path

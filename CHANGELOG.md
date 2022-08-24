@@ -1,5 +1,19 @@
 # TAMR AWS EMR module
 
+## v9.0.0 - August 23rd 2022
+* Following input variables removed from the main module
+  * `emr_ec2_iam_policy_name`
+  * `emr_managed_core_sg_name`
+  * `emr_managed_master_sg_name`
+  * `emr_service_access_sg_name`
+  * `enable_http_port`
+* Following input variables removed from `aws-emr-config` module:
+  * `cluster_name`
+* Following input variables removed from `aws-emr-iam` module:
+  * `emr_ec2_iam_policy_name`
+  * `s3_bucket_name_for_root_directory`
+* Removes unused variables from examples
+
 ## v8.0.0 - August 9th 2022
 * Following input variables removed from the main, `aws-emr-config`, and `aws-emr-clusters` modules
   * `json_configuration_bucket_key`

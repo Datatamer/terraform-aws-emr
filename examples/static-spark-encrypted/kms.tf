@@ -28,8 +28,8 @@ data "aws_iam_policy_document" "kms_key" {
     principals {
       type = "AWS"
       identifiers = [
-        "${module.emr-spark.emr_ec2_role_arn}",
-        "${module.emr-spark.emr_service_role_arn}"
+        module.emr-spark.emr_ec2_role_arn,
+        module.emr-spark.emr_service_role_arn
       ]
     }
     actions = [
@@ -49,8 +49,8 @@ data "aws_iam_policy_document" "kms_key" {
     principals {
       type = "AWS"
       identifiers = [
-        "${module.emr-spark.emr_ec2_role_arn}",
-        "${module.emr-spark.emr_service_role_arn}"
+        module.emr-spark.emr_ec2_role_arn,
+        module.emr-spark.emr_service_role_arn
       ]
     }
     actions = [

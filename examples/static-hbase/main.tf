@@ -4,7 +4,7 @@ locals {
 
 # Set up logs bucket with read/write permissions
 module "emr-logs-bucket" {
-  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.1"
+  source      = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.3.2"
   bucket_name = var.bucket_name_for_logs
   read_write_actions = [
     "s3:HeadBucket",
@@ -16,7 +16,7 @@ module "emr-logs-bucket" {
 
 # Set up root directory bucket
 module "emr-rootdir-bucket" {
-  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.1.1"
+  source           = "git::git@github.com:Datatamer/terraform-aws-s3.git?ref=1.3.2"
   bucket_name      = var.bucket_name_for_root_directory
   read_write_paths = [""] # r/w policy permitting default rw actions on entire bucket
   tags             = var.tags
@@ -51,18 +51,18 @@ resource "aws_s3_bucket_object" "sample_bootstrap_script_2" {
 
 # EMR Static HBase cluster
 module "emr-hbase" {
-  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=8.0.0"
+  # source = "git::git@github.com:Datatamer/terraform-aws-emr.git?ref=9.0.0"
   source = "../.."
 
   # Configurations
-  create_static_cluster         = true
-  release_label                 = "emr-5.33.0" # hbase 1.4.13
-  applications                  = local.this_application
-  emr_config_file_path          = "${path.module}/../emr-config-template.json"
-  bucket_path_to_logs           = "logs/hbase-test-cluster/"
-  utility_script_bucket_key     = "tamr/emr/upload_config.sh"
-  tags                          = var.tags
-  abac_valid_tags               = var.abac_valid_tags
+  create_static_cluster     = true
+  release_label             = "emr-5.33.0" # hbase 1.4.13
+  applications              = local.this_application
+  emr_config_file_path      = "${path.module}/../emr-config-template.json"
+  bucket_path_to_logs       = "logs/hbase-test-cluster/"
+  utility_script_bucket_key = "tamr/emr/upload_config.sh"
+  tags                      = var.tags
+  abac_valid_tags           = var.abac_valid_tags
   bootstrap_actions = [
     {
       name = "sample_bootstrap_action",
@@ -92,12 +92,8 @@ module "emr-hbase" {
   emr_ec2_role_name             = format("%s-%s", var.name_prefix, "hbase-test-ec2-role")
   emr_ec2_instance_profile_name = format("%s-%s", var.name_prefix, "hbase-test-instance-profile")
   emr_service_iam_policy_name   = format("%s-%s", var.name_prefix, "hbase-test-service-policy")
-  emr_ec2_iam_policy_name       = format("%s-%s", var.name_prefix, "hbase-test-ec2-policy")
   master_instance_fleet_name    = format("%s-%s", var.name_prefix, "HBase-Test-MasterInstanceFleet")
   core_instance_fleet_name      = format("%s-%s", var.name_prefix, "Hbase-Test-CoreInstanceFleet")
-  emr_managed_master_sg_name    = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Hbase-Master")
-  emr_managed_core_sg_name      = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Hbase-Core")
-  emr_service_access_sg_name    = format("%s-%s", var.name_prefix, "HBase-Test-EMR-Hbase-Service-Access")
 
   # Scale
   master_instance_on_demand_count = 1
@@ -114,13 +110,13 @@ module "emr-hbase" {
 }
 
 module "sg-ports" {
-  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=8.0.0"
+  # source               = "git::https://github.com/Datatamer/terraform-aws-emr.git//modules/aws-emr-ports?ref=9.0.0"
   source       = "../../modules/aws-emr-ports"
   applications = local.this_application
 }
 
 module "aws-emr-sg-master" {
-  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.1"
   vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
   egress_cidr_blocks  = var.egress_cidr_blocks
@@ -131,7 +127,7 @@ module "aws-emr-sg-master" {
 }
 
 module "aws-emr-sg-core" {
-  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.1"
   vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
   egress_cidr_blocks  = var.egress_cidr_blocks
@@ -142,7 +138,7 @@ module "aws-emr-sg-core" {
 }
 
 module "aws-emr-sg-service-access" {
-  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.0"
+  source              = "git::git@github.com:Datatamer/terraform-aws-security-groups.git?ref=1.0.1"
   vpc_id              = var.vpc_id
   ingress_cidr_blocks = var.ingress_cidr_blocks
   ingress_ports       = module.sg-ports.ingress_service_access_ports
