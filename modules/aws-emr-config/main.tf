@@ -20,5 +20,5 @@ resource "aws_s3_bucket_object" "upload_hbase_config_script" {
       hadoop_config_path             = var.hadoop_config_path
     }
   )
-  server_side_encryption = "AES256"
+  server_side_encryption = var.server_side_encryption
 }

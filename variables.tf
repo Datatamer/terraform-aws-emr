@@ -348,3 +348,9 @@ variable "require_abac_for_subnet" {
   description = "If abac_valid_tags is specified, choose whether or not to require ABAC also for actions related to the subnet"
   default     = true
 }
+
+variable "server_side_encryption" {
+  type        = string
+  description = "Type of encryption for emr data bucket"
+  default     = "AES256"
+}

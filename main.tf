@@ -37,6 +37,7 @@ module "emr-cluster-config" {
   hbase_config_path              = var.hbase_config_path
   hadoop_config_path             = var.hadoop_config_path
   utility_script_bucket_key      = var.utility_script_bucket_key
+  server_side_encryption         = var.server_side_encryption
 }
 
 module "emr-cluster" {
