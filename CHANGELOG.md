@@ -1,5 +1,8 @@
 # TAMR AWS EMR module
 
+## v10.0.0 - August 23rd 2022
+* Remove deprecated aws object and increase required provider
+
 ## v9.0.0 - August 23rd 2022
 * Following input variables removed from the main module
   * `emr_ec2_iam_policy_name`
