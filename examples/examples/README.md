@@ -1,18 +1,25 @@
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 No requirements.
 
 ## Providers
 
-No provider.
+No providers.
+
+## Modules
+
+No modules.
+
+## Resources
+
+No resources.
 
 ## Inputs
 
-No input.
+No inputs.
 
 ## Outputs
 
-No output.
-
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+No outputs.
+<!-- END_TF_DOCS -->
