@@ -8,7 +8,7 @@ locals {
 }
 
 # Script for uploading HBase/Hadoop configuration to S3
-resource "aws_s3_bucket_object" "upload_hbase_config_script" {
+resource "aws_s3_object" "upload_hbase_config_script" {
   count  = var.create_static_cluster ? 1 : 0
   bucket = var.bucket_name_for_root_directory
   key    = var.utility_script_bucket_key
