@@ -1,3 +1,41 @@
+This module creates the entire AWS infrastructure required for Tamr to work with AWS EMR. Currently, this module supports 3 patterns of use:
+1. Creation of infrastruction for static HBase cluster
+2. Creation of infrastructure for static Spark cluster
+3. Creation of infrastructure for ephemeral Spark cluster (the cluster itself is not created)
+
+# Examples
+## Minimal
+Fully working examples for each pattern of use. These examples might require extra resources to run the examples.
+### Invokes the root module:
+- [Static HBase Cluster](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/static-hbase)
+- [Static Spark Cluster](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/static-spark)
+### Invokes submodules:
+- [Ephemeral Spark Cluster](https://github.com/Datatamer/terraform-aws-emr/tree/master/examples/ephemeral-spark)
+
+# Resources Created
+This module creates:
+* 5 Security Groups
+    * One security group for EMR Managed Master instance(s)
+    * One security group for EMR Managed Core instance(s)
+    * One security group for additional ports for Master instance(s)
+    * One security group for additional ports for Core instance(s)
+    * One service access security group that can be attached to any instance
+* Security group rules. The number of the security group rules varies based on the number of CIDRs or source SGs provided.
+* 2 IAM Policies:
+    * Minimum required EMR service policy
+    * Minimum required EMR EC2 policy
+* 2 IAM roles:
+    * Tamr EMR service IAM role
+    * Tamr EMR EC2 IAM role
+* 1 IAM instance profile for EMR EC2 instances
+* 1 bucket object with the cluster's startup script
+
+If you are creating a static HBase or Spark cluster, this module also creates:
+* 1 EMR Cluster and associated EMR Security Configuration
+
+Note: For creating the logs and root directory buckets and/or S3-related permissions, use the [terraform-aws-s3](https://github.com/Datatamer/terraform-aws-s3) module.
+
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -117,3 +155,34 @@ No resources.
 | <a name="output_tamr_emr_cluster_name"></a> [tamr\_emr\_cluster\_name](#output\_tamr\_emr\_cluster\_name) | Name of the AWS EMR cluster created |
 | <a name="output_upload_config_script_s3_key"></a> [upload\_config\_script\_s3\_key](#output\_upload\_config\_script\_s3\_key) | The name of the upload config script object in the bucket. |
 <!-- END_TF_DOCS -->
+
+
+# References
+This repo is based on:
+* [Terraform standard module structure](https://www.terraform.io/docs/modules/index.html#standard-module-structure)
+* [AWS EMR HBase](https://aws.amazon.com/emr/features/hbase/)
+* [AWS EMR Cluster Terraform Docs](https://www.terraform.io/docs/providers/aws/r/emr_cluster.html)
+* [Default IAM roles for EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-roles.html)
+* [Service role for EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-role.html)
+* [EC2 role for EMR (Instance Profile)](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-iam-role-for-ec2.html)
+* [Best Practices for EMR](https://aws.amazon.com/blogs/big-data/best-practices-for-securing-amazon-emr/)
+* [AWS EMR Security Groups](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-man-sec-groups.html)
+* [AWS EMR Additional Security Groups](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-sg-specify.html)
+* [AWS EMR Security Configuration](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-create-security-configuration.html)
+* [AWS EMR Bootstrap Actions](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-bootstrap.html)
+
+# Development
+## Generating Docs
+Run `make terraform/docs` to generate the section of docs around terraform inputs, outputs and requirements.
+
+## Checkstyles
+Run `make lint`, this will run terraform fmt, in addition to a few other checks to detect whitespace issues.
+NOTE: this requires having docker working on the machine running the test
+
+## Releasing new versions
+* Update version contained in `VERSION`
+* Document changes in `CHANGELOG.md`
+* Create a tag in github for the commit associated with the version
+
+# License
+Apache 2 Licensed. See LICENSE for full details.

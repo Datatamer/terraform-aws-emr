@@ -1,3 +1,40 @@
+This example depends on an existing VPC and subnet with configurations that meets [EMR cluster requirements](https://aws.amazon.com/blogs/big-data/launching-and-running-an-amazon-emr-cluster-inside-a-vpc/).
+
+# At rest and In-transit encryption example for an EMR Static Spark cluster
+
+This example will enable `at rest`encryption for EBS drives and `in-transit`encryption for the EMR cluster by default.
+
+## Pre-requisites:
+
+Enabling encryption for EMR requires PEM files located in S3, so the EMR cluster's instance profile will need to allow read operations on the bucket that hosts said files.
+
+## How to create a PEM file?
+
+The following example demonstrates how to use OpenSSL to generate a self-signed X.509 certificate with a 1024-bit RSA private key. The key allows access to the issuer's Amazon EMR cluster instances in the us-east-2 (Ohio) region as specified by the *.us-east-2.compute.internal domain name as the common name.
+
+Other optional subject items, such as country (C), state (S), and Locale (L), are specified. Because a self-signed certificate is generated, the second command in the example copies the certificateChain.pem file to the trustedCertificates.pem file. The third command uses zip to create the my-certs.zip file that contains the certificates.
+
+The following steps can be run in order to create a PEM zip file for in-transit encryption and then upload it to a bucket:
+
+- $ openssl req -x509 -newkey rsa:1024 -keyout privateKey.pem -out certificateChain.pem -days 365 -nodes -subj '/C=US/ST=Ohio/L=Columbus/O=MyOrg/OU=MyDept/CN=*.us-east-2.compute.internal'
+- $ cp certificateChain.pem trustedCertificates.pem
+- $ zip -r -X my-certs.zip certificateChain.pem privateKey.pem trustedCertificates.pem
+- Upload the zip PEM file to a bucket that you own.
+- Ensure that the bucket can be accessed by EMR.
+- Provide the S3 PEM zip file object URL path to `s3_pem_file_location` variable.
+
+## IMPORTANT
+This example is a proof-of-concept demonstration only. Using self-signed certificates is not recommended and presents a potential security risk. For production systems, use a trusted certification authority (CA) to issue certificates.
+
+## What else this example do?
+
+The example will also deploy the necessary resources on every instance that belongs to an EMR Cluster in order to:
+
+- Download the Cloudwatch agent.
+- Install the Cloudwatch agent.
+- Create and mount the configuration file.
+- Enable the Cloudwatch agent.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

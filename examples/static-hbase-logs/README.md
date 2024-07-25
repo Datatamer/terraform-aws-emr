@@ -1,3 +1,13 @@
+This example depends on an existing VPC and subnet with configurations that meets [EMR cluster requirements](https://aws.amazon.com/blogs/big-data/launching-and-running-an-amazon-emr-cluster-inside-a-vpc/).
+
+# Cloudwatch log collection example for an EMR Static HBase cluster
+
+The following example will deploy the necessary resources on every instance that belongs to an EMR Cluster in order to:
+- Download the Cloudwatch agent.
+- Install the Cloudwatch agent.
+- Create and mount the configuration file.
+- Enable the Cloudwatch agent.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

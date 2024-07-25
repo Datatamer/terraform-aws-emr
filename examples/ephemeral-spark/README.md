@@ -1,3 +1,5 @@
+This example depends on an existing VPC and subnet with configurations that meets [EMR cluster requirements](https://aws.amazon.com/blogs/big-data/launching-and-running-an-amazon-emr-cluster-inside-a-vpc/).
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
